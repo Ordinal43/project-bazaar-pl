@@ -18,3 +18,11 @@ public/css/
 public/js/
 
 public/mix-manifest.json
+
+public/fonts/vendor/\@mdi/materialdesignicons-webfont.eot
+
+public/fonts/vendor/\@mdi/materialdesignicons-webfont.ttf
+
+public/fonts/vendor/\@mdi/materialdesignicons-webfont.woff
+
+public/fonts/vendor/\@mdi/materialdesignicons-webfont.woff2

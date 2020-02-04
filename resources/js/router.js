@@ -4,6 +4,24 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+    // { 
+    //     path:'/', 
+    //     component: () => import('./components/RootCustomer' /* webpackChunkName: "js/chunk-root-customer" */),
+    //     children: [
+    //         { 
+    //             path: '/', 
+    //             component: () => import('./components/Customer/AppBazaar' /* webpackChunkName: "js/chunk-app-bazaar" */),
+    //         },
+    //         { 
+    //             path: '/stands', 
+    //             component: () => import('./components/Customer/AppAllStands' /* webpackChunkName: "js/chunk-app-all-stands" */),
+    //         },
+    //         { 
+    //             path: '/products',
+    //             component: () => import('./components/Customer/AppAllProducts' /* webpackChunkName: "js/chunk-app-all-products" */),
+    //         },
+    //     ]
+    // },
     { 
         path:'/',
         component: () => import('./components/RootAdmin' /* webpackChunkName: "js/chunk-root-admin" */),

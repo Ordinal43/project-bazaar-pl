@@ -39,9 +39,6 @@ class NotaController extends Controller
                     'nota_id' => $nota->id
                 ]);
 
-                // $product = Product::find($detail['product_id']);
-                // $product->units -= $detail['quantity'];
-                // $product->save();
             }
         }, 3);
 

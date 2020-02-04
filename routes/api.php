@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 //Register Login
 Route::post('login', 'UserController@login');
-Route::post('register', 'UserController@register');
+Route::post('register/seller', 'UserController@register'); //register Seller
+Route::post('register/customer', 'UserController@registerCustomer'); //register Customer
 
 //Upload Image
 Route::post('/upload-image', 'ProductController@uploadImage');

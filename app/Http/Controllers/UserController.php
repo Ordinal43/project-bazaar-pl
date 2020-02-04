@@ -32,7 +32,31 @@ class UserController extends Controller
 
             return response()->json($response, $status);
         }
+        
+        //Register Customer
+        public function registerCustomer(Request $request){
+            $validator = Validator::make($request->all(),[
+                'name' => 'required|max:50',
+                'email' => 'required|unique:users',
+                'password' => 'required|min:6',
+                'c_password' => 'required|same:password',
+            ]);
 
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 401);
+            }
+            $data = $request->only(['name', 'role_id', 'email', 'password']);
+            $data['password'] = bcrypt($data['password']);
+            $data['role_id'] = 0;
+            $user = User::create($data);
+
+            return response()->json([
+                'user' => $user,
+                'token' => $user->createToken('bazaar')->accessToken,
+            ]);
+        }
+        
+        //Register Seller
         public function register(Request $request)
         {
             DB::transaction(function () use ($request, & $user, & $stand, &$data){
@@ -47,9 +71,11 @@ class UserController extends Controller
                 return response()->json(['error' => $validator->errors()], 401);
             }
             
+            
             //create user
-            $data = $request->only(['name', 'email', 'password']);
+            $data = $request->only(['name', 'email', 'password', 'role_id']);
             $data['password'] = bcrypt($data['password']);
+            $data['role_id'] = 2;
             $user = User::create($data);
             //create stand
             $stand = Stand::create([

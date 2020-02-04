@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->boolean('is_admin')->default(false);
+            $table->Integer('role_id');
             $table->string('password');
             $table->softDeletes();
             $table->rememberToken();

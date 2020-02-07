@@ -76,7 +76,7 @@ import { mapGetters, mapMutations } from 'vuex'
 
 export default {
     components: {
-        ProductCard: () => import('./ProductCard' /* webpackChunkName: "js/chunk-product-card" */),
+        ProductCard: () => import('../../ProductCard' /* webpackChunkName: "js/chunk-product-card" */),
     },
     data() {
         return {

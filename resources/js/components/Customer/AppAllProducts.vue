@@ -33,11 +33,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import ProductCard from './ProductCard'
 
 export default {
     components: {
-        ProductCard,
+        ProductCard: () => import('../ProductCard' /* webpackChunkName: "js/chunk-product-card" */),
     },
     data() {
         return {

@@ -2,13 +2,13 @@
     <v-app>
         <v-content>
             <v-container grid-list-lg fill-height>
-                <v-layout row wrap justify-center align-content-center>
+                <v-layout row wrap justify-center align-content-space-around>
                     <v-flex xs12 md5 lg3>
                         <v-img
                             src="/assets/logo-pkwu.png"
                             contain
                             position="center center"
-                            height="300"
+                            height="240"
                         ></v-img>
                     </v-flex>
                     <v-flex xs12 md7 lg9 style="max-width: 600px">
@@ -24,30 +24,28 @@
                                 <v-text-field
                                     label="Password"
                                     v-model="password"
-                                    type="password"
                                     :rules="[rules.required]"
+                                    :append-icon="showPassword ? 'visibility_off' : 'visibility'"
+                                    @click:append="showPassword = !showPassword"
+                                    :type="showPassword ? 'text' : 'password'"
                                 ></v-text-field>
                             </v-card-text>
                             <v-card-text class="text-xs-center">
                                 <v-btn color="primary" 
                                     :loading="loading"
-                                    outline round large type="submit"
+                                    round large block type="submit"
                                 >
-                                    Login
+                                    masuk
                                 </v-btn>
                             </v-card-text>
                             <v-card-text class="text-xs-center">
-                                <v-btn color="grey" small round outline to="/register">
+                                <span>Belum punya akun?</span>
+                                <v-btn color="grey darken-2" round outline to="/register">
                                     daftar
                                 </v-btn>
                             </v-card-text>
                         </v-form>
                         </v-card>
-                    </v-flex>
-                    <v-flex xs12 class="text-xs-center">
-                        <v-btn color="primary" round large outline @click="$router.push('/etalase')">
-                            Ke Etalase
-                        </v-btn>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -59,6 +57,7 @@ export default {
     data: () => ({
         email: null,
         password: null,
+        showPassword: false,
         loading: false,
         rules: {
             required: v => !!v || 'Harus diisi',

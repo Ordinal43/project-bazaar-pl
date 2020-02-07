@@ -16,7 +16,7 @@
         
         <v-card-actions v-if="item.units > 0">
             <v-spacer></v-spacer>
-            <v-btn color="primary" round @click="$emit('addItem', item)"
+            <v-btn color="primary" round @click="addItem(item)"
                 :disabled="isEnough"
             >
                 <v-icon left>add_shopping_cart</v-icon>
@@ -48,5 +48,10 @@ export default {
             }
         },
     },
+    methods: {
+        addItem(item) {
+            EventBus.$emit('addItem', item);
+        }
+    }
 }
 </script>

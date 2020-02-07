@@ -1,4 +1,4 @@
-window.Vue = require('vue');
+window.Vue = require('vue')
 
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
@@ -19,7 +19,7 @@ Vue.use(Vuetify, {
     }
 });
 
-Vue.component('VInputNumber', VInputNumber);
+Vue.component('VInputNumber', VInputNumber)
 
 Vue.prototype.$rupiahFormat = function(value) {
     value = parseFloat(value)
@@ -29,16 +29,14 @@ Vue.prototype.$rupiahFormat = function(value) {
 }
 
 import User from './helpers/User'
-Vue.prototype.$user = User;
+Vue.prototype.$user = User
 
 // vue sweet-alert
 import VueSwal from 'vue-swal'
- 
-Vue.use(VueSwal);
+Vue.use(VueSwal)
 
 // html to paper
-import VueHtmlToPaper from 'vue-html-to-paper';
- 
+import VueHtmlToPaper from 'vue-html-to-paper'
 Vue.use(VueHtmlToPaper, {
     name: '_blank',
     specs: [
@@ -53,7 +51,7 @@ Vue.use(VueHtmlToPaper, {
 });
 
 import AppRoot from './components/AppRoot'
-const app = new Vue({
+new Vue({
     el: '#app',
     router,
     store,

@@ -124,13 +124,11 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import ProductCard from './ProductCard'
-import StandCard from './StandCard'
 
 export default {
     components: {
-        ProductCard,
-        StandCard,
+        ProductCard: () => import('../ProductCard' /* webpackChunkName: "js/chunk-product-card" */),
+        StandCard: () => import('./StandCard' /* webpackChunkName: "js/chunk-cust-stand-card" */),
     },
     data() {
         return {

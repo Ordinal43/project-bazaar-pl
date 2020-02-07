@@ -4,89 +4,100 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-    // { 
-    //     path:'/', 
-    //     component: () => import('./components/RootCustomer' /* webpackChunkName: "js/chunk-root-customer" */),
-    //     children: [
-    //         { 
-    //             path: '/', 
-    //             component: () => import('./components/Customer/AppBazaar' /* webpackChunkName: "js/chunk-app-bazaar" */),
-    //         },
-    //         { 
-    //             path: '/stands', 
-    //             component: () => import('./components/Customer/AppAllStands' /* webpackChunkName: "js/chunk-app-all-stands" */),
-    //         },
-    //         { 
-    //             path: '/products',
-    //             component: () => import('./components/Customer/AppAllProducts' /* webpackChunkName: "js/chunk-app-all-products" */),
-    //         },
-    //     ]
-    // },
-    { 
-        path:'/',
-        component: () => import('./components/RootAdmin' /* webpackChunkName: "js/chunk-root-admin" */),
+    {
+        path: '/etalase',
+        component: () => import('./components/StoreFront' /* webpackChunkName: "js/chunk-store-front" */), 
+    },
+    {
+        path: '/login',
+        component: () => import('./components/AppLogin' /* webpackChunkName: "js/chunk-app-login" */),
+    },
+    {
+        path: '/register',
+        component: () => import('./components/AppRegister' /* webpackChunkName: "js/chunk-app-register" */), 
+    },
+    {
+        path:'/', 
+        component: () => import('./components/Customer/RootCustomer' /* webpackChunkName: "js/chunk-root-customer" */),
         children: [
             {
-                path: '/login', 
-                component: () => import('./components/Admin/AppLogin' /* webpackChunkName: "js/chunk-app-login" */),
-            },
-            {
-                path: '/register', 
-                component: () => import('./components/Admin/AppRegister' /* webpackChunkName: "js/chunk-app-register" */), 
-            },
-            {
-                path: '/etalase', 
-                component: () => import('./components/StoreFront' /* webpackChunkName: "js/chunk-store-front" */), 
-            },
-            { 
                 path: '', 
-                component: () => import('./components/Admin/AppDashboard' /* webpackChunkName: "js/chunk-app-dashboard" */), 
-                children: [
-                    { 
-                        path: '', 
-                        redirect: 'order-menu',
-                    },
-                    { 
-                        path: 'cart', 
-                        component: () => import('./components/Admin/Pages/AppCart' /* webpackChunkName: "js/chunk-app-order" */),
-                        meta: { forAdmin: false },
-                    },
-                    { 
-                        path: 'order-menu', 
-                        component: () => import('./components/Admin/Pages/AppOrder' /* webpackChunkName: "js/chunk-app-order" */),
-                        meta: { forAdmin: false },
-                    },
-                    { 
-                        path: 'my-stand', 
-                        component: () => import('./components/Admin/Pages/AppStandDetails' /* webpackChunkName: "js/chunk-app-my-stand-details" */),
-                        meta: { forAdmin: false },
-                    },
-                    { 
-                        path: 'stand-transactions', 
-                        component: () => import('./components/Admin/Pages/AppStandTransactions' /* webpackChunkName: "js/chunk-app-stand-transactions" */),
-                        meta: { forAdmin: false },
-                    },
-                    {
-                        path: 'all-stands', 
-                        component: () => import('./components/Admin/Pages/AppAdminAllStands' /* webpackChunkName: "js/chunk-app-admin-all-stands" */),
-                        meta: { forAdmin: true },
-                    },
-                    {
-                        path: 'stands/:standId', 
-                        component: () => import('./components/Admin/Pages/AppStandDetails' /* webpackChunkName: "js/chunk-app-stand-details" */),
-                        meta: { forAdmin: true },
-                    },
-                    { 
-                        path: 'transactions', 
-                        component: () => import('./components/Admin/Pages/AppAdminTransaction' /* webpackChunkName: "js/chunk-app-admin-transaction" */), 
-                        meta: { forAdmin: true },
-                    },
-                ],
-                meta: { requiresAuth: true },
+                redirect: 'home',
+            },
+            {
+                path: 'home', 
+                component: () => import('./components/Customer/AppBazaar' /* webpackChunkName: "js/chunk-app-bazaar" */),
+                meta: { roleId: 3 },
+            },
+            {
+                path: 'stands', 
+                component: () => import('./components/Customer/AppAllStands' /* webpackChunkName: "js/chunk-app-all-stands" */),
+                meta: { roleId: 3 },
+            },
+            {
+                path: 'stands/:standId', 
+                component: () => import('./components/Customer/AppStandDetails' /* webpackChunkName: "js/chunk-app-cust-stand-details" */),
+                meta: { roleId: 3 },
+            },
+            {
+                path: 'products',
+                component: () => import('./components/Customer/AppAllProducts' /* webpackChunkName: "js/chunk-app-all-products" */),
+                meta: { roleId: 3 },
+            },
+            {
+                path: 'cart', 
+                component: () => import('./components/Customer/AppCart' /* webpackChunkName: "js/chunk-app-cart" */),
+                meta: { roleId: 3 },
             },
         ],
+        meta: { requiresAuth: true },
     },
-    { 
+    {
+        path: '/register/seller',
+        component: () => import('./components/Admin/AppRegister' /* webpackChunkName: "js/chunk-app-seller-register" */), 
+    },
+    {
+        path: '/',
+        component: () => import('./components/Admin/AppDashboard' /* webpackChunkName: "js/chunk-app-dashboard" */), 
+        children: [
+            {
+                path: '', 
+                redirect: 'all-stands',
+            },
+            {
+                path: 'all-stands', 
+                component: () => import('./components/Admin/Pages/AppAdminAllStands' /* webpackChunkName: "js/chunk-app-admin-all-stands" */),
+                meta: { roleId: 1 },
+            },
+            {
+                path: 'admin-stands/:standId', 
+                component: () => import('./components/Admin/Pages/AppStandDetails' /* webpackChunkName: "js/chunk-app-admin-stand-details" */),
+                meta: { roleId: 1 },
+            },
+            {
+                path: 'transactions', 
+                component: () => import('./components/Admin/Pages/AppAdminTransaction' /* webpackChunkName: "js/chunk-app-admin-transaction" */), 
+                meta: { roleId: 1 },
+            },
+            // {
+            //     path: 'order-menu', 
+            //     component: () => import('./components/Admin/Pages/AppOrder' /* webpackChunkName: "js/chunk-app-order" */),
+            //     meta: { roleId: 2 },
+            // },
+            {
+                path: 'my-stand', 
+                component: () => import('./components/Admin/Pages/AppStandDetails' /* webpackChunkName: "js/chunk-app-my-stand-details" */),
+                meta: { roleId: 2 },
+            },
+            {
+                path: 'stand-transactions', 
+                component: () => import('./components/Admin/Pages/AppStandTransactions' /* webpackChunkName: "js/chunk-app-stand-transactions" */),
+                meta: { roleId: 2 },
+            },
+        ],
+        meta: { requiresAuth: true },
+    },
+    {
         path: '*', 
         redirect: '/' 
     },
@@ -103,6 +114,7 @@ import User from './helpers/User';
 const NOLOGINPATHS = [
     "/login",
     "/register",
+    "/admin/register",
     "/etalase",
 ];
 
@@ -112,15 +124,21 @@ router.beforeEach(async (to, from, next) => {
             next({path: '/login', replace: true})
             return
         } else {
-            if(to.matched.some(route => route.meta.forAdmin)) {
-                if(!User.info().is_admin) {
-                    next({path: '/order-menu', replace: true})
-                    return
-                }
-            } else {
-                if(User.info().is_admin) {
-                    next({path: '/all-stands', replace: true})
-                    return
+            // check if there's a valid roleId meta tag 
+            if(to.matched.some(route => (route.meta.roleId >= 0 && route.meta.roleId <= 3))) {
+                if(User.info().role_id != to.meta.roleId) {
+                    // redirect according
+                    switch(User.info().role_id) {
+                        case 1:
+                            next({path: '/all-stands', replace: true});
+                            return;
+                        case 2:
+                            next({path: '/my-stand', replace: true});
+                            return;
+                        case 3:
+                            next({path: '/home', replace: true});
+                            return;
+                    }
                 }
             }
         }
@@ -133,7 +151,7 @@ router.beforeEach(async (to, from, next) => {
     
     if(NOLOGINPATHS.includes(to.path)) {
         if(User.loggedIn()) {
-            next({path: '/', replace: true})
+            next({path: '/login', replace: true})
             return
         }
     }

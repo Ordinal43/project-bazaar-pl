@@ -12,7 +12,7 @@
         </v-layout>
         <div v-show="!loading">
             <v-layout row align-center>
-                <v-btn fab dark color="primary" to="/all-stands" v-if="$user.info().is_admin">
+                <v-btn fab dark color="primary" to="/all-stands" v-if="$user.info().role_id == 1">
                     <v-icon>arrow_back</v-icon>
                 </v-btn>
                 <div class="ml-4">
@@ -40,7 +40,6 @@
                 <v-layout row align-center class="mt-2 mb-3">
                     <v-flex xs6 class="title font-weight-bold">
                         Daftar Menu
-                        
                     </v-flex>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="openProductDialog">

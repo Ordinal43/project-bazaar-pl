@@ -16,7 +16,7 @@
                         <v-form ref="login_form" @submit.prevent="register">
                             <v-card-title>
                                 <h3 class="headline">
-                                    Data Akun
+                                    Buat akun baru
                                 </h3>
                             </v-card-title>
                             <v-card-text>
@@ -48,27 +48,6 @@
                                     @click:append="showCPassword = !showCPassword"
                                     :type="showCPassword ? 'text' : 'password'"
                                 ></v-text-field>
-                            </v-card-text>
-
-                            <v-card-title>
-                                <h3 class="headline">
-                                    Data Stand
-                                </h3>
-                            </v-card-title>
-                            <v-card-text>
-                                <v-text-field
-                                    label="Nama stand"
-                                    prefix="Stand"
-                                    v-model="standName"
-                                    :rules="[rules.required]"
-                                    ref="name"
-                                ></v-text-field>
-                                <v-textarea
-                                    label="Deskripsi stand"
-                                    v-model="standDescription"
-                                    :rules="[rules.required]"
-                                    rows="3"
-                                ></v-textarea>
                             </v-card-text>
 
                             <v-card-text class="text-xs-center">
@@ -103,8 +82,6 @@ export default {
         showPassword: false,
         cpassword: null,
         showCPassword: false,
-        standName: null,
-        standDescription: null,
         loading: false,
 
         rules: {
@@ -123,11 +100,9 @@ export default {
                         email: this.email,
                         password: this.password,
                         c_password: this.cpassword,
-                        stand_name: this.standName,
-                        description: this.standDescription,
                     };
 
-                    const res = await this.$user.signupSeller(request)
+                    const res = await this.$user.signupCustomer(request)
                     this.$user.storeSession(res.data)
                     this.$router.replace({path: "/"});
                 } catch (err) {

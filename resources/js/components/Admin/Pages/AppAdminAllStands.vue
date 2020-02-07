@@ -32,7 +32,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="indigo" flat round  :to="`/stands/${item.id}`">
+                        <v-btn color="indigo" flat round  :to="`/admin-stands/${item.id}`">
                             <v-icon left>info</v-icon>
                             detail
                         </v-btn>

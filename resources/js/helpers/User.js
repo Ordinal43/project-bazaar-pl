@@ -9,9 +9,18 @@ class User {
             }
         })
     }
-        
-    signup(data) {
-        return axios.post('/api/register', data, {
+    
+    signupCustomer(data) {
+        return axios.post('/api/register/customer', data, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+            }
+        })
+    }
+
+    signupSeller(data) {
+        return axios.post('/api/register/seller', data, {
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json',

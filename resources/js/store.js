@@ -26,7 +26,7 @@ export default new Vuex.Store({
         getCartItems: (state) => state.cartItems,
     },
     mutations: {
-        initialiseStore(state) {
+        initializeStore(state) {
             const localStorageArray = localStorage.getItem(CART_KEY);
 			if(localStorageArray) {
 				state.cartItems = JSON.parse(localStorageArray);

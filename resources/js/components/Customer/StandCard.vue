@@ -9,7 +9,7 @@
         ></v-img>
 
         <v-card-title>
-            <span class="headline">{{ item.name }}</span>
+            <span class="headline">{{ item.stand_name }}</span>
         </v-card-title>
         <v-card-text class="grey--text text--darken-2 pt-0">
             {{ item.description }}

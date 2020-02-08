@@ -42,7 +42,7 @@
                                     <v-list-tile-content>
                                         <div class="item-wrapper">
                                             <div class="item-wrapper__name pr-2">
-                                                {{ item.name }} {{ item.name }} {{ item.name }} {{ item.name }}
+                                                {{ item.name }}
                                             </div>
                                             <div class="item-wrapper__price primary--text">
                                                 {{ $rupiahFormat(item.price) }}
@@ -163,8 +163,8 @@
                                 </div>
                             </div>
                             <div>
-                                <v-btn color="primary" round large to="/cart">
-                                    lihat keranjang
+                                <v-btn color="primary" icon large to="/cart">
+                                    <v-icon>shopping_cart</v-icon>
                                 </v-btn>
                             </div>
                         </v-card-text>

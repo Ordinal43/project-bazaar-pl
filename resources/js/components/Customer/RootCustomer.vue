@@ -193,9 +193,7 @@ export default {
             'getCartItems'
         ]),
         getMenuAmount() {
-            return this.getCartItems.reduce((acc, item) => 
-                acc + item.qty
-            ,0);
+            return this.getCartItems.reduce((acc, item) => acc + item.qty, 0);
         },
     },
     methods: {

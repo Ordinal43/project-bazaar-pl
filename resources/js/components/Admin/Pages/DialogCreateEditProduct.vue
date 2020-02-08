@@ -87,7 +87,7 @@
                     <v-icon left>
                         {{ !!productId? 'save' : 'add'}}
                     </v-icon>
-                    {{ !!productId? 'simpan' : 'buat produk'}}
+                    {{ !!productId? 'simpan' : 'tambah menu'}}
                 </v-btn>
             </v-card-actions>
         </v-form>

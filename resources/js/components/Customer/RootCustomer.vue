@@ -154,11 +154,14 @@
                                     >
                                 </div>
                                 <div class="pl-3 card__container__contents subheading grey--text text--darken-1">
-                                    <div class="mb-2">
+                                    <div>
                                         {{ selectedItem.name }}
                                     </div>
-                                    <div class="primary--text">
+                                    <div class="primary--text mb-2">
                                         {{ $rupiahFormat(selectedItem.price) }}
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        {{ selectedItem.qty }} porsi
                                     </div>
                                 </div>
                             </div>

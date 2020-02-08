@@ -35,31 +35,7 @@
                 </v-layout>
                 <v-layout row wrap>
                     <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
-                        <v-card class="rounded menu-card" height="100%">
-                            <div>
-                            <v-img class="menu-img"
-                            :src="item.image"
-                            :aspect-ratio="16/9"
-                            ></v-img>
-
-                            <v-card-text>
-                                <p class="title font-weight-regular">{{ item.name }}</p>
-                                <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
-                                <div class="subheading">Sisa {{ item.units }}</div>
-                            </v-card-text>
-                            </div>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="warning" flat round @click="editProduct(item.id)">
-                                    <v-icon left>create</v-icon>
-                                    edit
-                                </v-btn>
-                                <v-btn color="error" flat round @click="deleteProduct(item.id)">
-                                    <v-icon left>delete</v-icon>
-                                    delete
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
+                        <product-card :item="item"></product-card>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -70,6 +46,9 @@
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
+    components: {
+        ProductCard: () => import('../ProductCard' /* webpackChunkName: "js/chunk-product-card" */),
+    },
     data: (vm) => ({
         stand: vm.$route.params.standId,
         productId: 0,

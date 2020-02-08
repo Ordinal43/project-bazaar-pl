@@ -155,10 +155,10 @@ export default {
     },
     methods: {
         ...mapActions([
+            'addToCart',
             'removeFromCart',
         ]),
         ...mapMutations([
-            'addToCart',
             'subtractFromCart',
         ]),
         openDialogConfirm() {

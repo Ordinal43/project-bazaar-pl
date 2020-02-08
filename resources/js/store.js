@@ -7,6 +7,7 @@ Vue.use(Vuex)
 const cartListener = store => {
     store.subscribe((mutation, state) => {
         if( mutation.type === 'addToCart' || 
+            mutation.type === 'addNewToCart' ||
             mutation.type === 'subtractFromCart' ||
             mutation.type === 'removeFromCart') {
             localStorage.setItem(CART_KEY, JSON.stringify(state.cartItems))
@@ -31,18 +32,14 @@ export default new Vuex.Store({
 			if(localStorageArray) {
 				state.cartItems = JSON.parse(localStorageArray);
 			}
-		},
-        addToCart(state, item) {
-            const inCartIdx = state.cartItems.findIndex(obj => {
-                return obj.id == item.id;
-            });
-
-            if(inCartIdx !== -1) {
-                state.cartItems[inCartIdx].qty++;
-            } else {
-                item.qty++;
-                state.cartItems.push(item);
-            }
+        },
+        addNewToCart(state, item) {
+            item.qty = 1;
+            state.cartItems.push(item);
+        },
+        addToCart(state, { item, inCartIdx }) {
+            state.cartItems[inCartIdx].qty++;
+            item.qty = state.cartItems[inCartIdx].qty;
         },
         subtractFromCart(state, item) {
             const inCartIdx = state.cartItems.findIndex(obj => {
@@ -68,11 +65,53 @@ export default new Vuex.Store({
                 state.cartItems.splice(inCartIdx, 1);
             }
         },
-        emptyCart(state) {
+        emptyCart(state, item) {
             state.cartItems = [];
+            item.qty = 0;
         },
     },
     actions: {
+        async addToCart({ commit, state }, item) {
+            const inCartIdx = state.cartItems.findIndex(obj => obj.id == item.id);
+
+            // check if current menu exists
+            if(inCartIdx !== -1) {
+                commit('addToCart', { item, inCartIdx });
+            } else {
+                // check if cart is not empty and current menu is from a different stand
+                if(!state.cartItems.some(cartItem => cartItem.stand_id === item.stand_id)
+                    && state.cartItems.length > 0) {
+                    const res = await swal({
+                        title: "Perbarui Keranjang?",
+                        text: "Keranjang anda terisi menu toko lain! yakin ingin buat keranjang baru?",
+                        icon: "warning",
+                        buttons: {
+                            cancel: {
+                                text: "Kembali",
+                                value: false,
+                                visible: true,
+                                closeModal: true,
+                            },
+                            confirm: {
+                                text: "Buat baru",
+                                value: true,
+                                visible: true,
+                                closeModal: true
+                            }
+                        }
+                    });
+                    
+                    if(res) {
+                        commit('emptyCart', item);
+                    } else {
+                        return Promise.resolve(false);
+                    }
+                }
+                commit('addNewToCart', item);
+            }
+            return Promise.resolve(true);
+        
+        },
         removeFromCart({ commit, state }, item) {
             const inCartIdx = state.cartItems.findIndex(obj => {
                 return obj.id == item.id;

@@ -175,7 +175,7 @@
     </v-app>
 </template>
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data: () => ({
@@ -196,14 +196,6 @@ export default {
         },
     },
     methods: {
-        ...mapMutations([
-            'addToCart',
-        ]),
-        addItem(item) {
-            this.dialogConfirm = true;
-            this.selectedItem = item
-            this.addToCart(item);
-        },
         async logout() {
             try {
                 await this.$user.logout();
@@ -219,8 +211,9 @@ export default {
         },
     },
     mounted() {
-        EventBus.$on('addItem', item => {
-            this.addItem(item);
+        EventBus.$on('showConfirmMenu', item => {
+            this.selectedItem = item
+            this.dialogConfirm = true;
         })
     },
 }

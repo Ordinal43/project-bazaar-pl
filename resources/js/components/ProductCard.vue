@@ -26,7 +26,7 @@
     </v-card>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: {
@@ -49,8 +49,16 @@ export default {
         },
     },
     methods: {
-        addItem(item) {
-            EventBus.$emit('addItem', item);
+        ...mapActions([
+            'addToCart',
+        ]),
+        async addItem(item) {
+            // Pass a new object because we only need the value, not the reference
+            const newItemObj = { ...item }
+            const showConfirm = await this.addToCart(newItemObj);
+            if(showConfirm) {
+                EventBus.$emit('showConfirmMenu', newItemObj);
+            }
         }
     }
 }

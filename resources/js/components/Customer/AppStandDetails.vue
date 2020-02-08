@@ -63,10 +63,6 @@ export default {
         ]),
     },
     methods: {
-        ...mapMutations({
-            addToCartVuex: 'addToCart',
-            subtractFromCartVuex: 'subtractFromCart',
-        }),
         async getStandDetails() {
             this.loading = true;
             try {

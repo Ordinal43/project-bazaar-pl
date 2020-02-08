@@ -72,7 +72,7 @@
     </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     components: {
@@ -93,7 +93,7 @@ export default {
         ]),
     },
     methods: {
-        ...mapMutations([
+        ...mapActions([
             'addToCart',
         ]),
         addItem(item) {

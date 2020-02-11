@@ -12,6 +12,12 @@ Route::post('/upload-image', 'ProductController@uploadImage');
 Route::post('/products/{product}', 'ProductController@update');
 
 
+
+
+//Voucher
+Route::post('/voucher', 'VoucherController@store');
+Route::patch('/voucher/{qrcode}/{userid}', 'VoucherController@redeem');
+
 //Users
 Route::get('/users','UserController@index');
 Route::get('users/{user}','UserController@show');

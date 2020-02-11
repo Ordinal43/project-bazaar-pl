@@ -41,11 +41,10 @@ export default {
         getFilteredStands() {
             if(!!this.querySearch) {
                 return this.stands.filter((item) => {
-                    const hasName = item.name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch.toLowerCase()) >= 0
-
+                    const hasName = item.stand_name.toLowerCase().replace(/ /g,'').indexOf(this.querySearch.toLowerCase()) >= 0
                     const hasDesc = item.description.toLowerCase().replace(/ /g,'').indexOf(this.querySearch.toLowerCase()) >= 0
                     
-                    return (hasName || hasDesc);
+                    return hasName || hasDesc;
                 });
             } else {
                 return this.stands;

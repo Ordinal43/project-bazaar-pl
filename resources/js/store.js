@@ -6,17 +6,19 @@ Vue.use(Vuex)
 
 const cartListener = store => {
     store.subscribe((mutation, state) => {
-        if( mutation.type === 'addToCart' || 
-            mutation.type === 'addNewToCart' ||
-            mutation.type === 'subtractFromCart' ||
-            mutation.type === 'removeFromCart') {
-            localStorage.setItem(CART_KEY, JSON.stringify(state.cartItems))
-        } else if(mutation.type === 'emptyCart') {
-            localStorage.removeItem(CART_KEY);
+        switch(mutation.type) {
+            case 'addToCart':
+            case 'addNewToCart':
+            case 'subtractFromCart':
+            case 'removeFromCart':
+                localStorage.setItem(CART_KEY, JSON.stringify(state.cartItems));
+                break;
+            case 'emptyCart':
+                localStorage.removeItem(CART_KEY);
+                break;
         }
     })
 }
-
   
 export default new Vuex.Store({
     plugins: [cartListener],
@@ -56,14 +58,8 @@ export default new Vuex.Store({
                 }
             }
         },
-        removeFromCart(state, item) {
-            const inCartIdx = state.cartItems.findIndex(obj => {
-                return obj.id == item.id;
-            });
-
-            if(inCartIdx !== -1) {
-                state.cartItems.splice(inCartIdx, 1);
-            }
+        removeFromCart(state, inCartIdx) {
+            state.cartItems.splice(inCartIdx, 1);
         },
         emptyCart(state, item) {
             state.cartItems = [];
@@ -138,7 +134,7 @@ export default new Vuex.Store({
                     }
                 }).then(res => {
                     if(res) {
-                        commit('removeFromCart', item);
+                        commit('removeFromCart', inCartIdx);
                     }
                 });
             }

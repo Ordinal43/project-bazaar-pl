@@ -15,7 +15,8 @@ Vue.use(Vuetify, {
     iconfont: 'md',
     // override colors
     theme: {
-        primary: "#ff5722",
+        primary: "#512DA8",
+        accent: "#FF4081",
     }
 });
 

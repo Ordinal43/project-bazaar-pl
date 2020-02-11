@@ -47,7 +47,7 @@ class UserController extends Controller
             }
             $data = $request->only(['name', 'role_id', 'email', 'password']);
             $data['password'] = bcrypt($data['password']);
-            $data['role_id'] = 0;
+            $data['role_id'] = 3;
             $user = User::create($data);
 
             return response()->json([

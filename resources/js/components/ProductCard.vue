@@ -2,16 +2,16 @@
     <v-card class="rounded menu-card" height="100%">
         <div>
             <v-img class="menu-img"
-            :src="item.image"
-            :aspect-ratio="16/9"
-        ></v-img>
-        
-        <v-card-text class="text">
-            <p class="title font-weight-regular">{{ item.name }}</p>
-            <p class="subheading">{{ $rupiahFormat(item.price) }}</p>
-            <div class="title blue--text" v-if="item.units > 0">Sisa {{ item.units }}</div>
-            <div class="title red--text text-uppercase" v-else>habis!</div>
-        </v-card-text>
+                :src="item.image"
+                :aspect-ratio="4/3"
+            ></v-img>
+
+            <v-card-text class="text">
+                <div class="title font-weight-light mb-2">{{ item.name }}</div>
+                <div class="title mb-4">{{ $rupiahFormat(item.price) }}</div>
+                <div class="subheading blue--text font-weight-bold" v-if="item.units > 0">Sisa {{ item.units }}</div>
+                <div class="subheading red--text text-uppercase font-weight-bold" v-else>habis!</div>
+            </v-card-text>
         </div>
         
         <v-card-actions v-if="item.units > 0">

@@ -1,15 +1,10 @@
 <template>
-    <v-container grid-list-lg class="my-5">
-        <v-layout align-center>
-            <v-btn fab dark color="primary" @click="$router.go(-1)">
-                <v-icon>arrow_back</v-icon>
-            </v-btn>
-            <div class="ml-4 headline font-weight-bold">
-                Semua Menu
-            </div>
-        </v-layout>
+    <v-container grid-list-lg>
+        <div class="subheading font-weight-bold">
+            Semua Menu
+        </div>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="my-2"></v-divider>
 
         <v-layout row wrap justify-center>
             <v-flex xs12 sm8 lg6>

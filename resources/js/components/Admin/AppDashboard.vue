@@ -115,20 +115,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-    .item-wrapper {
-        width: 100%;
-        display: flex;
-        flex-flow: row wrap;
-        &__name {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            flex: 1;
-        }
-        &__price {
-            flex-basis: 0 0 auto;
-        }
-    }
-</style>

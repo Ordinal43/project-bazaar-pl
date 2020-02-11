@@ -2,10 +2,12 @@
     <v-app>
         <v-toolbar app>
             <v-toolbar-side-icon
+                class="hidden-md-and-down"
                 @click.stop="drawer = !drawer"
             ></v-toolbar-side-icon>
+            <v-toolbar-title class="primary--text">Bazaar PKWU</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-sm-and-down">
+            <v-toolbar-items class="hidden-md-and-down">
                 <v-menu
                     v-model="cartMenu"
                     bottom offset-y left
@@ -101,18 +103,25 @@
                 </v-menu>
             </v-toolbar-items>
         </v-toolbar>
-        <v-navigation-drawer app v-model="drawer">
+
+        <v-navigation-drawer
+            app 
+            v-model="drawer"
+            class="hidden-md-and-down"
+        >
             <v-list>
                 <v-list-tile
-                    to="/stands"
+                    v-for="(item, i) in routes" :key="`navdraw-${i}`"
+                    router
+                    :to="item.route"
                     class="my-3"
                 >
                     <v-list-tile-action>
-                        <v-icon>mdi-food-fork-drink</v-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>Cari Stand</v-list-tile-title>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -127,9 +136,27 @@
                 </v-list-tile>
             </v-list>
         </v-navigation-drawer>
+        
         <v-content>
             <router-view :key="routerKey"></router-view>
         </v-content>
+
+        <v-bottom-nav
+            :value="true"
+            app
+            class="hidden-lg-and-up"
+        >
+            <v-btn
+                v-for="(item, i) in routes" :key="`btmnav-${i}`"
+                color="primary"
+                flat 
+                :to="item.route"
+            >
+                <span>{{ item.title }}</span>
+                <v-icon>{{ item.icon }}</v-icon>
+            </v-btn>
+        </v-bottom-nav>
+        
         <v-dialog
             v-model="dialogConfirm" lazy
             persistent max-width="600px"
@@ -183,7 +210,21 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data: () => ({
         routerKey: 0,
-        drawer: true,
+        drawer: false,
+        routes: [
+            {
+                icon: "home",
+                title: "Beranda",
+                route: "/home",
+                for_admin: false,
+            },
+            {
+                icon: "store_mall_directory",
+                title: "Daftar Stand",
+                route: "/stands",
+                for_admin: false,
+            },
+        ],
         cartMenu: false,
         dialogConfirm: false,
         selectedItem: null,

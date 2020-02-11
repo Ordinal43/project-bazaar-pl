@@ -1,15 +1,10 @@
 <template>
-    <v-container grid-list-lg class="my-5">
-        <v-layout align-center>
-            <v-btn fab dark color="primary" @click="$router.go(-1)">
-                <v-icon>arrow_back</v-icon>
-            </v-btn>
-            <div class="ml-4 headline font-weight-bold">
-                Semua Stand
-            </div>
-        </v-layout>
+    <v-container grid-list-lg>
+        <div class="subheading font-weight-bold">
+            Semua Stand
+        </div>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="my-2"></v-divider>
         
         <v-layout row wrap justify-center>
             <v-flex xs12 sm8 lg6>
@@ -25,18 +20,16 @@
         </v-layout>
 
         <v-layout row wrap>
-            <v-flex xs12 md6 xl4 v-for="(item, id) in getFilteredStands" :key="`stand-${id}`">
+            <v-flex xs6 md4 lg3 v-for="(item, id) in getFilteredStands" :key="`stand-${id}`">
                 <stand-card :item="item"></stand-card>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 <script>
-import StandCard from './StandCard'
-
 export default {
     components: {
-        StandCard,
+        StandCard: () => import('./StandCard' /* webpackChunkName: "js/chunk-stand-card" */),
     },
     data() {
         return {

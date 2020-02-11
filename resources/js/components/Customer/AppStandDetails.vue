@@ -11,34 +11,23 @@
             </v-flex>
         </v-layout>
         <div v-show="!loading">
-            <v-layout row align-center>
-                <v-btn fab dark color="primary" to="/all-stands" v-if="$user.info().role_id == 1">
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
-                <div class="ml-4">
-                    <v-layout row wrap align-center>
-                        <span class="headline font-weight-bold mr-1">
-                            Stand {{ name }}
-                        </span>
-                    </v-layout>
-                    <v-layout row wrap>
-                        <div class="subheading">{{ description }}</div>
-                    </v-layout>
+            <div class="mt-2">
+                <div class="subheading font-weight-bold">
+                    Stand {{ name }}
                 </div>
+                <div>{{ description }}</div>
+            </div>
+
+            <v-divider class="my-2"></v-divider>
+            
+            <div class="font-weight-medium">
+                Daftar Menu
+            </div>
+            <v-layout row wrap>
+                <v-flex xs6 md4 lg3 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                    <product-card :item="item"></product-card>
+                </v-flex>
             </v-layout>
-            <v-divider class="mt-4"></v-divider>
-            <v-container grid-list-lg>
-                <v-layout row align-center class="mt-2 mb-3">
-                    <v-flex xs6 class="title font-weight-bold">
-                        Daftar Menu
-                    </v-flex>
-                </v-layout>
-                <v-layout row wrap>
-                    <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
-                        <product-card :item="item"></product-card>
-                    </v-flex>
-                </v-layout>
-            </v-container>
         </div>
     </v-container>
 </template>

@@ -127,7 +127,7 @@ router.beforeEach(async (to, from, next) => {
             // check if there's a valid roleId meta tag 
             if(to.matched.some(route => (route.meta.roleId >= 0 && route.meta.roleId <= 3))) {
                 if(User.info().role_id != to.meta.roleId) {
-                    // redirect according
+                    // redirect accordingly
                     switch(User.info().role_id) {
                         case 1:
                             next({path: '/all-stands', replace: true});

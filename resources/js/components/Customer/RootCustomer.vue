@@ -158,6 +158,22 @@
         </v-bottom-nav>
         
         <v-dialog
+            v-model="dialogBasket" lazy
+            persistent max-width="600px"
+        >
+            <v-card class="rounded">
+                <v-card-title>
+                    <h3 class="title">Keranjang</h3>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="dialogBasket = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </v-card-title>
+                <CartPreview />
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
             v-model="dialogConfirm" lazy
             persistent max-width="600px"
         >
@@ -208,6 +224,9 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    components: {
+        CartPreview: () => import('./CartPreview' /* webpackChunkName: "js/chunk-cart-preview" */),
+    },
     data: () => ({
         routerKey: 0,
         drawer: false,

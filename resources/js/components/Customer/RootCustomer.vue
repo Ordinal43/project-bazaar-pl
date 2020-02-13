@@ -139,6 +139,21 @@
         
         <v-content>
             <router-view :key="routerKey"></router-view>
+
+            <v-expand-x-transition>
+                <div class="basket" v-if="getMenuAmount > 0">
+                    <v-btn 
+                        color="accent" dark
+                        class="basket__button rounded"
+                        large
+                        @click="dialogBasket = true"
+                        v-if="$route.path !== '/cart'"
+                    >
+                        <v-icon left>shopping_basket</v-icon>
+                        {{ getMenuAmount }} menu
+                    </v-btn>
+                </div>
+            </v-expand-x-transition>
         </v-content>
 
         <v-bottom-nav
@@ -247,6 +262,7 @@ export default {
         cartMenu: false,
         dialogConfirm: false,
         selectedItem: null,
+        dialogBasket: false,
     }),
     computed: {
         ...mapGetters([
@@ -314,6 +330,17 @@ export default {
             &__contents {
                 flex: 1 0 auto;
             }
+
+    .basket {
+        position: fixed;
+        bottom: 60px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__button {
+            width: 95%;
+            max-width: 400px;
         }
     }
 </style>

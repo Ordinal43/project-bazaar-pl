@@ -2,106 +2,8 @@
     <v-app>
         <v-toolbar app>
             <v-toolbar-side-icon
-                class="hidden-md-and-down"
                 @click.stop="drawer = !drawer"
             ></v-toolbar-side-icon>
-            <v-toolbar-title class="primary--text">Bazaar PKWU</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items class="hidden-md-and-down">
-                <v-menu
-                    v-model="cartMenu"
-                    bottom offset-y left
-                    open-on-hover
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn flat large
-                            v-on="on"
-                            to="/cart"
-                        >
-                            <v-badge left color="red" :value="!!getMenuAmount">
-                                <template v-slot:badge>
-                                    <span>{{ getMenuAmount }}</span>
-                                </template>
-                                <v-icon left>shopping_cart</v-icon>
-                                KERANJANG
-                            </v-badge>
-                        </v-btn>
-                    </template>
-
-                    <v-card class="py-2" width="400px">
-                        <template v-if="!!getMenuAmount">
-                            <v-list>
-                                <v-list-tile 
-                                    avatar 
-                                    v-for="(item, index) in getCartItems.slice(0, 2)" 
-                                    :key="`cart-${index}`"
-                                    class="mb-3"
-                                >
-                                    <v-list-tile-avatar>
-                                        <img :src="item.image" :alt="item.name">
-                                    </v-list-tile-avatar>
-
-                                    <v-list-tile-content>
-                                        <div class="item-wrapper">
-                                            <div class="item-wrapper__name pr-2">
-                                                {{ item.name }}
-                                            </div>
-                                            <div class="item-wrapper__price primary--text">
-                                                {{ $rupiahFormat(item.price) }}
-                                            </div>
-                                        </div>
-                                        <v-list-tile-sub-title>{{ item.qty }} porsi</v-list-tile-sub-title>
-                                    </v-list-tile-content>
-                                </v-list-tile>
-                            </v-list>
-                        <div 
-                            v-if="!!getCartItems.slice(2).length"
-                            class="text-xs-center pb-3 subheading grey--text text--darken-1"
-                        >
-                            ...dan {{ getCartItems.slice(2).length }} menu lainnya
-                        </div>
-
-                        <v-card-title class="subheading">
-                            <div>
-                                Total: 
-                                <span class="font-weight-bold">
-                                    {{ getMenuAmount }} porsi
-                                </span>
-                            </div>
-                            <v-spacer></v-spacer>
-                            <router-link to="/cart" class="primary--text font-weight-bold">
-                                Lihat semua
-                            </router-link>
-                        </v-card-title>
-                        </template>
-                        <template v-else>
-                            <v-card-title class="pt-5">
-                                <v-img
-                                    src="/assets/svg/empty_cart.svg"
-                                    height="130"
-                                    contain
-                                ></v-img>
-                            </v-card-title>
-                            <v-card-text class="text-xs-center">
-                                <p class="subheading grey--text text--darken-1">
-                                    Keranjangmu masih kosong nih. Yuk mulai pesan!
-                                </p>
-                            </v-card-text>
-                            <v-card-text>
-                                <div>
-                                    <v-btn
-                                        color="primary"
-                                        large round block
-                                        to="/"
-                                    >
-                                        lihat daftar menu
-                                    </v-btn>
-                                </div>
-                            </v-card-text>
-                        </template>
-                    </v-card>
-                </v-menu>
-            </v-toolbar-items>
         </v-toolbar>
 
         <v-navigation-drawer
@@ -259,7 +161,6 @@ export default {
                 for_admin: false,
             },
         ],
-        cartMenu: false,
         dialogConfirm: false,
         selectedItem: null,
         dialogBasket: false,

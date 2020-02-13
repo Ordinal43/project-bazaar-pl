@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-lg>
+    <v-container grid-list-lg class="mb-5">
         <v-layout row wrap v-if="loading">
             <v-flex xs12 class="text-xs-center">
                 <v-progress-circular
@@ -25,7 +25,7 @@
             </div>
             <v-layout row wrap>
                 <v-flex xs6 md4 lg3 v-for="(item, i) in standProducts" :key="`am-${i}`">
-                    <product-card :item="item"></product-card>
+                    <ProductCard :item="item" :noAddButton="false" />
                 </v-flex>
             </v-layout>
         </div>

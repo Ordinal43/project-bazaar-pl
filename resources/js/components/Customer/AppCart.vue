@@ -1,15 +1,11 @@
 <template>
     <v-container grid-list-lg>
-        <v-layout align-center>
-            <v-btn fab dark color="primary" @click="$router.go(-1)">
-                <v-icon>arrow_back</v-icon>
-            </v-btn>
-            <div class="ml-4 headline font-weight-bold">
-                Keranjang Anda
-            </div>
-        </v-layout>
+        <div class="subheading font-weight-bold">
+            Keranjang anda
+        </div>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="my-2"></v-divider>
+
         <v-layout row wrap>
             <template v-if="!!getCartItems.length">
                 <v-flex xs12 sm7 lg8>
@@ -38,7 +34,7 @@
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn 
-                                        icon outline color="grey lighten-1"
+                                        icon outline color="grey"
                                         class="mr-2" 
                                         @click="removeFromCart(item)"
                                     >

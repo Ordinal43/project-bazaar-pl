@@ -1,15 +1,18 @@
 <template>
     <v-app>
         <v-toolbar app>
+            <v-toolbar-title class="primary--text ml-0">
+                PKWU
+            </v-toolbar-title>
+            <v-spacer></v-spacer>
             <v-toolbar-side-icon
                 @click.stop="drawer = !drawer"
             ></v-toolbar-side-icon>
         </v-toolbar>
 
         <v-navigation-drawer
-            app 
+            app right
             v-model="drawer"
-            class="hidden-md-and-down"
         >
             <v-list>
                 <v-list-tile
@@ -59,9 +62,8 @@
         </v-content>
 
         <v-bottom-nav
-            :value="true"
             app
-            class="hidden-lg-and-up"
+            value="true"
         >
             <v-btn
                 v-for="(item, i) in routes" :key="`btmnav-${i}`"
@@ -96,7 +98,7 @@
         >
             <v-card class="rounded" v-if="!!selectedItem">
                 <v-card-title>
-                    <h3 class="title">Berhasil ditambahkan</h3>
+                    <h3 class="subheading font-weight-bold">Berhasil ditambahkan!</h3>
                     <v-spacer></v-spacer>
                     <v-btn icon @click="dialogConfirm = false">
                         <v-icon>close</v-icon>
@@ -104,33 +106,33 @@
                 </v-card-title>
                 <v-card-text>
                     <v-card class="rounded">
-                        <v-card-text class="card">
-                            <div class="card__container">
-                                <div class="card__container__thumbnail">
-                                    <img 
-                                        :src="selectedItem.image" 
-                                        :alt="selectedItem.name"
-                                        class="card__container__thumbnail__image"
-                                    >
-                                </div>
-                                <div class="pl-3 card__container__contents subheading grey--text text--darken-1">
-                                    <div>
-                                        {{ selectedItem.name }}
-                                    </div>
-                                    <div class="primary--text mb-2">
-                                        {{ $rupiahFormat(selectedItem.price) }}
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        {{ selectedItem.qty }} porsi
-                                    </div>
-                                </div>
+                        <v-card-text class="item-added-dialog">
+                            <div class="item-added-dialog__thumbnail">
+                                <img 
+                                    :src="selectedItem.image" 
+                                    :alt="selectedItem.name"
+                                    class="item-added-dialog__thumbnail__image"
+                                >
                             </div>
-                            <div>
-                                <v-btn color="primary" icon large to="/cart">
-                                    <v-icon>shopping_cart</v-icon>
-                                </v-btn>
+                            <div class="pl-3 item-added-dialog__contents subheading grey--text text--darken-1">
+                                <div class="item-added-dialog__contents__name">
+                                    {{ selectedItem.name }}
+                                </div>
+                                <div class="primary--text mb-2">
+                                    {{ $rupiahFormat(selectedItem.price) }}
+                                </div>
+                                <div class="font-weight-bold">
+                                    {{ selectedItem.qty }} porsi
+                                </div>
                             </div>
                         </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="accent" round to="/cart">
+                                <v-icon left>shopping_basket</v-icon>
+                                keranjang
+                            </v-btn>
+                        </v-card-actions>
                     </v-card>
                 </v-card-text>
             </v-card>
@@ -198,39 +200,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .item-wrapper {
-        width: 100%;
+    .item-added-dialog {
         display: flex;
-        flex-flow: row wrap;
-        &__name {
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            flex: 1;
+        &__thumbnail {
+            flex: 0 0 76px;
+            &__image {
+                height: 76px;
+                width: 76px;
+                border-radius: 6px;
+                object-fit: cover;
+            }
         }
-        &__price {
-            flex-basis: 0 0 auto;
+        &__contents {
+            flex: 1;
+            &__name {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
         }
     }
-
-    .card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        &__container {
-            display: flex;
-            &__thumbnail {
-                flex: 0 0 76px;
-                &__image {
-                    height: 76px;
-                    width: 76px;
-                    border-radius: 6px;
-                    object-fit: cover;
-                }
-            }
-            &__contents {
-                flex: 1 0 auto;
-            }
 
     .basket {
         position: fixed;

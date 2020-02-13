@@ -14,7 +14,7 @@
         <v-card-text class="grey--text text--darken-2 pt-0 stand-desc">
             {{ item.description }}
         </v-card-text>
-        <v-card-text class="title accent--text">
+        <v-card-text class="subheading accent--text">
             {{ item.products.length }} MENU
         </v-card-text>
     </v-card>

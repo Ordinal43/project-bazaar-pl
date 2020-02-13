@@ -1,10 +1,10 @@
 <template>
     <v-container grid-list-lg>
         <v-layout justify-space-between align-center>
-            <v-flex class="title primary--text">
-                Menu Hari Ini! 
+            <v-flex class="subheading font-weight-bold">
+                Menu hari ini! 
             </v-flex>
-            <v-btn color="primary" icon large @click="loadRandomProduct" :loading="randomProductLoading">
+            <v-btn color="primary" icon @click="loadRandomProduct" :loading="randomProductLoading">
                 <v-icon>replay</v-icon>
             </v-btn>
         </v-layout>

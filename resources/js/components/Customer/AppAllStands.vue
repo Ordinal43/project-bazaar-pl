@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-lg>
+    <v-container grid-list-lg class="mb-5">
         <div class="subheading font-weight-bold">
             Semua Stand
         </div>

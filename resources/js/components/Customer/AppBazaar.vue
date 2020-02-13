@@ -1,5 +1,29 @@
 <template>
-    <v-container grid-list-lg>
+<div>
+    <v-sheet color="primary" height="60"></v-sheet>
+    <v-container class="pl-pay">
+        <v-card class="rounded">
+            <v-card-text>
+                <div class="font-weight-medium grey--text text--darken-1">
+                    PL Pay
+                </div>
+                <div class="pl-pay__contents primary--text">
+                    <div class="d-flex">
+                        <span class="mr-1 font-weight-bold">
+                            Rp
+                        </span>
+                        <span class="headline font-weight-bold">
+                            {{ balanceFormat(1000000) }}
+                        </span>
+                    </div>
+                    <v-btn round color="accent" class="ma-0" to="/topup">
+                        top up
+                    </v-btn>
+                </div>
+            </v-card-text>
+        </v-card>
+    </v-container>
+    <v-container grid-list-lg class="mb-5">
         <v-layout justify-space-between align-center>
             <v-flex class="subheading font-weight-bold">
                 Menu hari ini! 
@@ -51,6 +75,7 @@
             </v-flex>
         </v-layout>
     </v-container>
+</div>
 </template>
 
 <script>
@@ -75,6 +100,12 @@ export default {
         ]),
     },
     methods: {
+        balanceFormat(value) {
+            value = parseFloat(value);
+            return value.toLocaleString(
+                "de-DE", { minimumFractionDigits: 0 }
+            );
+        },
         loadRandomStand() {
             return new Promise(async (resolve, reject) => {
                 this.randomStandLoading = true;
@@ -119,3 +150,14 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+    .pl-pay {
+        margin-top: -55px;
+        &__contents {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+</style>

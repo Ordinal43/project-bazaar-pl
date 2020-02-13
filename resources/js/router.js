@@ -30,6 +30,11 @@ const routes = [
                 meta: { roleId: 3 },
             },
             {
+                path: 'topup', 
+                component: () => import('./components/Customer/AppTopup' /* webpackChunkName: "js/chunk-app-topup" */),
+                meta: { roleId: 3 },
+            },
+            {
                 path: 'stands', 
                 component: () => import('./components/Customer/AppAllStands' /* webpackChunkName: "js/chunk-app-all-stands" */),
                 meta: { roleId: 3 },

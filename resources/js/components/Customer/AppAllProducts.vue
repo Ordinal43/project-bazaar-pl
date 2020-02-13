@@ -20,7 +20,7 @@
         </v-layout>
 
         <v-layout row wrap>
-            <v-flex xs6 md4 lg3 v-for="(item, id) in getFilteredProducts" :key="`produk-${id}`">
+            <v-flex xs6 md4 lg3 xl2 v-for="(item, id) in getFilteredProducts" :key="`produk-${id}`">
                 <ProductCard :item="item" :noAddButton="true" />
             </v-flex>
         </v-layout>

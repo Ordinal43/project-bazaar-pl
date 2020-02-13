@@ -24,7 +24,7 @@
                 Daftar Menu
             </div>
             <v-layout row wrap>
-                <v-flex xs6 md4 lg3 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                <v-flex xs6 md4 lg3 xl2 v-for="(item, i) in standProducts" :key="`am-${i}`">
                     <ProductCard :item="item" :noAddButton="false" />
                 </v-flex>
             </v-layout>

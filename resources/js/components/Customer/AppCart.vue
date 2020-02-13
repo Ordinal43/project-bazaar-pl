@@ -89,7 +89,7 @@
                 </v-flex>
             </template>
             <template v-else>
-                <v-flex xs12>
+                <v-flex xs12 class="mt-5">
                     <v-img
                         src="/assets/svg/empty_cart.svg"
                         height="130"
@@ -98,7 +98,7 @@
                 </v-flex>
                 <v-flex xs12 class="text-xs-center">
                     <p class="subheading grey--text text--darken-1">
-                        Keranjangmu masih kosong nih. Yuk mulai pesan!
+                        Keranjang anda masih kosong. Yuk mulai pesan!
                     </p>
                 </v-flex>
                 <v-flex xs12 class="text-xs-center">

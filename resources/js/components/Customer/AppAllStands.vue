@@ -20,7 +20,7 @@
         </v-layout>
 
         <v-layout row wrap>
-            <v-flex xs6 md4 lg3 v-for="(item, id) in getFilteredStands" :key="`stand-${id}`">
+            <v-flex xs6 md4 lg3 xl2 v-for="(item, id) in getFilteredStands" :key="`stand-${id}`">
                 <stand-card :item="item"></stand-card>
             </v-flex>
         </v-layout>

@@ -47,10 +47,10 @@
             </v-flex>
         </v-layout>
         <v-layout row wrap justify-center v-else>
-            <v-flex xs6 md4 lg3 v-for="(item, id) in products" :key="`produk-${id}`">
+            <v-flex xs6 md4 lg3 xl2 v-for="(item, id) in products" :key="`produk-${id}`">
                 <ProductCard :item="item" :noAddButton="true" />
             </v-flex>
-            <v-flex xs6 md4 lg3 v-show="!randomProductLoading">
+            <v-flex xs6 md4 lg3 xl2 v-show="!randomProductLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
                     to="/products" height="100%"
@@ -151,7 +151,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .pl-pay {
         margin-top: -55px;
         &__contents {

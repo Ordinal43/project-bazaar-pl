@@ -17,6 +17,9 @@ Route::post('/products/{product}', 'ProductController@update');
 //Voucher
 Route::post('/voucher', 'VoucherController@store');
 Route::patch('/voucher/{qrcode}/{userid}', 'VoucherController@redeem');
+Route::get('/voucher','VoucherController@index'); //Return all Voucher with all conditions
+Route::get('/voucher-unredeem','VoucherController@indexUnredeem'); //Return all Voucher with unredeem conditions
+Route::get('/voucher-redeemed','VoucherController@indexRedeemed'); //Return all Voucher with redeemed conditions
 
 //Users
 Route::get('/users','UserController@index');

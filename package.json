@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@chenfengyuan/vue-qrcode": "^1.0.2",
         "@mdi/font": "^4.8.95",
         "autonumeric": "^4.5.10",
         "firebase": "^7.8.0",

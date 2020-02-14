@@ -7,6 +7,7 @@ import store from './store'
 import axios from 'axios'
 import '@mdi/font/css/materialdesignicons.css'
 import VInputNumber from './components/VInputNumber'
+import VueQrcode from '@chenfengyuan/vue-qrcode';
 
 window.EventBus = new Vue()
 window.axios = axios.create()
@@ -22,6 +23,7 @@ Vue.use(Vuetify, {
 });
 
 Vue.component('VInputNumber', VInputNumber)
+Vue.component(VueQrcode.name, VueQrcode);
 
 Vue.prototype.$rupiahFormat = function(value) {
     value = parseFloat(value)

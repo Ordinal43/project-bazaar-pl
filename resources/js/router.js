@@ -67,7 +67,12 @@ const routes = [
         children: [
             {
                 path: '', 
-                redirect: 'all-stands',
+                redirect: 'admin-topup',
+            },
+            {
+                path: 'admin-topup', 
+                component: () => import('./components/Admin/Pages/AppAdminTopup' /* webpackChunkName: "js/chunk-app-admin-topup" */),
+                meta: { roleId: 1 },
             },
             {
                 path: 'all-stands', 
@@ -135,7 +140,7 @@ router.beforeEach(async (to, from, next) => {
                     // redirect accordingly
                     switch(User.info().role_id) {
                         case 1:
-                            next({path: '/all-stands', replace: true});
+                            next({path: '/admin-topup', replace: true});
                             return;
                         case 2:
                             next({path: '/my-stand', replace: true});

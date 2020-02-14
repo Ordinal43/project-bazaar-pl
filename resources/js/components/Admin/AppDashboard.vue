@@ -76,6 +76,12 @@ export default {
                 for_admin: false,
             },
             {
+                icon: "local_atm",
+                title: "Isi saldo",
+                route: "/admin-topup",
+                for_admin: true,
+            },
+            {
                 icon: "store_mall_directory",
                 title: "Semua stand",
                 route: "/all-stands",

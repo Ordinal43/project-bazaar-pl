@@ -13,11 +13,7 @@
         <template v-else>
         <v-layout row wrap>
             <v-flex xs12>
-            <v-layout justify-space-between align-center>
-                <v-flex>
-                    <p class="headline primary--text">Semua Stand</p>
-                </v-flex>
-            </v-layout>
+                <p class="headline primary--text">Semua Stand</p>
             </v-flex>
             <v-flex xs12 md6 xl4 v-for="(item, i) in stands" :key="`prod-${i}`">
                 <v-card class="rounded" height="100%">

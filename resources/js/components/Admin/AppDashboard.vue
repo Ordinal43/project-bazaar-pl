@@ -7,48 +7,37 @@
             <v-spacer></v-spacer>
         </v-toolbar>
         <v-navigation-drawer app v-model="drawer">
+            <v-container grid-list-lg class="headline">
+                <span class="font-weight-light">Halo,</span>
+                <span class="font-weight-me primary--text">{{ $user.info().name }}</span>
+            </v-container>
             <v-list>
-                <v-list-group
-                    prepend-icon="more_horiz"
-                    :value="isChildRouteActive"
-                    no-action
-                >
-                    <template v-slot:activator>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Penjual/admin</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-
-                    <template v-for="(item, index) in routes">
-                        <v-list-tile
-                            v-if="$user.info().role_id == 1 && item.for_admin"
-                            :key="`menu-${index}`"
-                            router sub-group
-                            :to="item.route"
-                        >
-                            <v-list-tile-action>
-                                <v-icon>{{ item.icon }}</v-icon>
-                            </v-list-tile-action>
-
-                            <v-list-tile-content>
-                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-                    
-                    <v-list-tile @click="logout">
+                <template v-for="(item, index) in routes">
+                    <v-list-tile
+                        v-if="$user.info().role_id == 1 && item.for_admin"
+                        :key="`menu-${index}`"
+                        router sub-group
+                        :to="item.route"
+                    >
                         <v-list-tile-action>
-                            <v-icon>power_settings_new</v-icon>
+                            <v-icon>{{ item.icon }}</v-icon>
                         </v-list-tile-action>
 
                         <v-list-tile-content>
-                            <v-list-tile-title>Logout</v-list-tile-title>
+                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                </v-list-group>
+                </template>
                 
+                <v-list-tile @click="logout">
+                    <v-list-tile-action>
+                        <v-icon>power_settings_new</v-icon>
+                    </v-list-tile-action>
+
+                    <v-list-tile-content>
+                        <v-list-tile-title>Logout</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
         </v-navigation-drawer>
         <v-content>
@@ -71,7 +60,7 @@ export default {
             },
             {
                 icon: "store_mall_directory",
-                title: "Tambah Menu",
+                title: "Stand saya",
                 route: "/my-stand",
                 for_admin: false,
             },
@@ -98,11 +87,7 @@ export default {
     computed: {
         ...mapGetters([
             'getCartItems'
-        ]),
-        isChildRouteActive() {
-            const currentPath = this.$router.history.current.path
-            return this.routes.map(item => item.route).indexOf(currentPath) !== -1;
-        },
+        ])
     },
     methods: {
         async logout() {

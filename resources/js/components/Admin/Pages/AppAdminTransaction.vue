@@ -159,8 +159,8 @@ export default {
         fetchOngoingOrders() {
             this.loadingOngoingOrders = true;
             axios.get('/api/orders-all-null').then(res => {
-                const tes = res.data.filter(item => !!item.product);
-                this.listOngoingOrders = tes.map(item => ({
+                const orders = res.data.filter(item => !!item.product);
+                this.listOngoingOrders = orders.map(item => ({
                     id: item.id,
                     stand_name: item.product.stand.stand_name,
                     date: item.created_at,
@@ -178,8 +178,8 @@ export default {
         fetchFinishedOrders() {
             this.loadingFinishedOrders = true;
             axios.get('/api/orders-all-true').then(res => {
-                const tes = res.data.filter(item => !!item.product);
-                this.listFinishedOrders = tes.map(item => ({
+                const orders = res.data.filter(item => !!item.product);
+                this.listFinishedOrders = orders.map(item => ({
                     id: item.id,
                     stand_name: item.product.stand.stand_name,
                     date: item.created_at,
@@ -197,8 +197,8 @@ export default {
         fetchCanceledOrders() {
             this.loadingCanceledOrders = true;
             axios.get('/api/orders-all-false').then(res => {
-                const tes = res.data.filter(item => !!item.product);
-                this.listCanceledOrders = tes.map(item => ({
+                const orders = res.data.filter(item => !!item.product);
+                this.listCanceledOrders = orders.map(item => ({
                     id: item.id,
                     stand_name: item.product.stand.stand_name,
                     date: item.created_at,

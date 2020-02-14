@@ -15,7 +15,7 @@ class VoucherController extends Controller
         return response()->json(Voucher::get(),200);
     }
 
-    public function indexUnredeem(){
+    public function indexUnredeemed(){
         return response()->json(Voucher::where('is_redeem', '=', false)->get(),200);
     }
 

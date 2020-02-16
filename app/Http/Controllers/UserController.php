@@ -48,6 +48,7 @@ class UserController extends Controller
             $data = $request->only(['name', 'role_id', 'email', 'password']);
             $data['password'] = bcrypt($data['password']);
             $data['role_id'] = 3;
+            $data['balance'] = 0;
             $user = User::create($data);
 
             return response()->json([
@@ -76,6 +77,7 @@ class UserController extends Controller
             $data = $request->only(['name', 'email', 'password', 'role_id']);
             $data['password'] = bcrypt($data['password']);
             $data['role_id'] = 2;
+            $data['balance'] = 0;
             $user = User::create($data);
             //create stand
             $stand = Stand::create([

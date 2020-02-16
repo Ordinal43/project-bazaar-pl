@@ -7,9 +7,9 @@
             <v-spacer></v-spacer>
         </v-toolbar>
         <v-navigation-drawer app v-model="drawer">
-            <v-container grid-list-lg class="headline">
+            <v-container grid-list-lg class="title">
                 <span class="font-weight-light">Halo,</span>
-                <span class="font-weight-me primary--text">{{ $user.info().name }}</span>
+                <span class="font-weight-medium primary--text">{{ $user.info().name }}</span>
             </v-container>
             <v-list>
                 <template v-for="(item, index) in routes">

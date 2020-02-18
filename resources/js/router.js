@@ -157,6 +157,11 @@ router.beforeEach(async (to, from, next) => {
                                 return;
                         }
                     }
+                    // user with balance over 1.000.000 can't topup
+                    if(User.info().balance > 1000000 && to.path === '/topup') {
+                        next({path: '/home', replace: true});
+                        return;
+                    }
                 }
             } catch (error) {
                 console.log(error);

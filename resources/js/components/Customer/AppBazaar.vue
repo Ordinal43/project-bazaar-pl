@@ -5,7 +5,7 @@
         <v-card class="rounded">
             <v-card-text>
                 <div class="font-weight-medium grey--text text--darken-1">
-                    PL Pay
+                    PL Pay <span class="red--text pl-1" v-if="!underBalance">(saldo maksimal)</span>
                 </div>
                 <div class="pl-pay__contents primary--text">
                     <div class="d-flex">
@@ -13,10 +13,10 @@
                             Rp
                         </span>
                         <span class="headline font-weight-bold">
-                            {{ balanceFormat(1000000) }}
+                            {{ balanceFormat($user.info().balance) }}
                         </span>
                     </div>
-                    <v-btn round color="accent" class="ma-0" to="/topup">
+                    <v-btn round color="accent" class="ma-0" to="/topup" v-if="underBalance">
                         top up
                     </v-btn>
                 </div>
@@ -98,6 +98,9 @@ export default {
         ...mapGetters([
             'getCartItems'
         ]),
+        underBalance() {
+            return this.$user.info().balance <= 1000000
+        }
     },
     methods: {
         balanceFormat(value) {

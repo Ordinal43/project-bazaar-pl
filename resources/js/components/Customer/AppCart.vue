@@ -107,7 +107,7 @@
                         large round
                         to="/"
                     >
-                        lihat daftar menu
+                        ke laman utama
                     </v-btn>
                 </v-flex>
             </template>

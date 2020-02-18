@@ -139,27 +139,35 @@ router.beforeEach(async (to, from, next) => {
             next({path: '/login', replace: true})
             return
         } else {
-            // check if there's a valid roleId meta tag 
-            if(to.matched.some(route => (route.meta.roleId >= 0 && route.meta.roleId <= 3))) {
-                if(User.info().role_id != to.meta.roleId) {
-                    // redirect accordingly
-                    switch(User.info().role_id) {
-                        case 1:
-                            next({path: '/admin-topup', replace: true});
-                            return;
-                        case 2:
-                            next({path: '/my-stand', replace: true});
-                            return;
-                        case 3:
-                            next({path: '/home', replace: true});
-                            return;
+            try {
+                await User.getInfo()
+                // check if there's a valid roleId meta tag 
+                if(to.matched.some(route => (route.meta.roleId >= 0 && route.meta.roleId <= 3))) {
+                    if(User.info().role_id != to.meta.roleId) {
+                        // redirect accordingly
+                        switch(User.info().role_id) {
+                            case 1:
+                                next({path: '/admin-topup', replace: true});
+                                return;
+                            case 2:
+                                next({path: '/my-stand', replace: true});
+                                return;
+                            case 3:
+                                next({path: '/home', replace: true});
+                                return;
+                        }
                     }
                 }
+            } catch (error) {
+                console.log(error);
+                next({path: '/login', replace: true})
+                return
+                
             }
         }
     } else {
         if(User.loggedIn()) {
-            next({path: '/', replace: true})
+            next({path: '/login', replace: true})
             return
         }
     }

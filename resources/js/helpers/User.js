@@ -54,7 +54,7 @@ class User {
             setTimeout(() => {
                 AppStorage.clear();
                 resolve();
-            }, 500);
+            }, 300);
         })
     }
 
@@ -63,6 +63,24 @@ class User {
             return AppStorage.getUser();
         }
         return console.log("please login first");
+    }
+
+    getInfo() {
+        return new Promise((resolve, reject) => {
+            const id = (this.info() || {}).id
+            if(!!id) {
+                axios.get(`/api/users/${id}`).then(res => {
+                    AppStorage.storeUser(JSON.stringify(res.data))
+                    resolve();
+                }).catch(err => {
+                    this.logout()
+                    reject(err);
+                })
+            } else {
+                this.logout()
+                reject(err);
+            }
+        })
     }
 
     updateInfo() {

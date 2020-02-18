@@ -22,7 +22,11 @@ class AppStorage
     }
     getUser() {
         let user = localStorage.getItem('bazaar-pl-user');
-        return JSON.parse(user);
+        try {
+            return JSON.parse(user);
+        } catch (error) {
+            return {}
+        }
     }
 }
 export default AppStorage = new AppStorage();

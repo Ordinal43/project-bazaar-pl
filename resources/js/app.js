@@ -24,16 +24,22 @@ Vue.use(Vuetify, {
     }
 });
 
+// custom number input component
 Vue.component('VInputNumber', VInputNumber)
 
+// vue-qrcode
 Vue.component(VueQrcode.name, VueQrcode);
 
-Vue.prototype.$rupiahFormat = function(value) {
-    value = parseFloat(value)
-    return "Rp " + value.toLocaleString(
-        "de-DE", { minimumFractionDigits: 2 }
-    )
-}
+Vue.use(VueProgressBar, {
+    color: '#FF9800',
+    failedColor: 'red',
+    thickness: '3px',
+    transition: {
+        speed: '0.2s',
+        opacity: '0.6s',
+        termination: 300
+    }
+})
 
 // vue sweet-alert
 Vue.use(VueSwal)
@@ -53,8 +59,17 @@ Vue.use(VueHtmlToPaper, {
     ],
 });
 
+// Prototypes =================================
 
+Vue.prototype.$rupiahFormat = function(value) {
+    value = parseFloat(value)
+    return "Rp " + value.toLocaleString(
+        "de-DE", { minimumFractionDigits: 2 }
+    )
+}
 Vue.prototype.$user = User
+
+// ============================================
 
 Vue.config.productionTip = false
 

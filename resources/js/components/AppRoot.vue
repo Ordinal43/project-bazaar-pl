@@ -9,30 +9,26 @@
 </template>
 
 <script>
-const NOLOGINPATHS = [
-    "/login",
-    "/register",
-    "/admin/register",
-    "/etalase",
-];
-
 export default {
     data: () => ({
         loading: false
     }),
     mounted () {
-        //  [App.vue specific] When App.vue is finish loading finish the progress bar
+        //  [AppRoot.vue specific] When AppRoot.vue is finish loading finish the progress bar
         this.$Progress.finish();
+        this.loading = false;
     },
     created () {
-        //  [App.vue specific] When App.vue is first loaded start the progress bar
+        //  [AppRoot.vue specific] When AppRoot.vue is first loaded start the progress bar
         this.$Progress.start();
-
+        this.loading = true;
+        
         this.$router.beforeEach(async (to, from, next) => {
             this.loading = true;
             this.$Progress.start();
-
+            
             if(to.matched.some(route => route.meta.requiresAuth)) {
+                
                 if(!this.$user.loggedIn()) {
                     next({path: '/login', replace: true})
                     return
@@ -70,18 +66,11 @@ export default {
                 }
             } else {
                 if(this.$user.loggedIn()) {
-                    next({path: '/login', replace: true})
+                    next({path: '/', replace: true})
                     return
                 }
             }
             
-            if(NOLOGINPATHS.includes(to.path)) {
-                if(this.$user.loggedIn()) {
-                    next({path: '/login', replace: true})
-                    return
-                }
-            }
-
             next();
         })
 

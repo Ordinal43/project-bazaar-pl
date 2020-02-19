@@ -17,6 +17,10 @@ const routes = [
         component: () => import('./components/AppRegister' /* webpackChunkName: "js/chunk-app-register" */), 
     },
     {
+        path: '/register/seller',
+        component: () => import('./components/Admin/AppRegister' /* webpackChunkName: "js/chunk-app-seller-register" */), 
+    },
+    {
         path:'/', 
         component: () => import('./components/Customer/RootCustomer' /* webpackChunkName: "js/chunk-root-customer" */),
         children: [
@@ -61,10 +65,6 @@ const routes = [
             },
         ],
         meta: { requiresAuth: true },
-    },
-    {
-        path: '/register/seller',
-        component: () => import('./components/Admin/AppRegister' /* webpackChunkName: "js/chunk-app-seller-register" */), 
     },
     {
         path: '/',
@@ -122,6 +122,56 @@ const router = new VueRouter({
     routes,
     hashbang: false,
     mode: 'history',
+})
+
+import User from './helpers/User'
+
+router.beforeEach(async (to, from, next) => {
+    if(to.matched.some(route => route.meta.requiresAuth)) {
+        
+        if(!User.loggedIn()) {
+            next({path: '/login', replace: true})
+            return
+        } else {
+            try {
+                await User.getInfo()
+                // check if there's a valid roleId meta tag 
+                if(to.matched.some(route => (route.meta.roleId >= 0 && route.meta.roleId <= 3))) {
+                    if(User.info().role_id != to.meta.roleId) {
+                        // redirect accordingly
+                        switch(User.info().role_id) {
+                            case 1:
+                                next({path: '/admin-topup', replace: true});
+                                return;
+                            case 2:
+                                next({path: '/my-stand', replace: true});
+                                return;
+                            case 3:
+                                next({path: '/home', replace: true});
+                                return;
+                        }
+                    }
+                    // user with balance over 1.000.000 can't topup
+                    if(User.info().balance > 1000000 && to.path === '/topup') {
+                        next({path: '/home', replace: true});
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.log(error);
+                next({path: '/login', replace: true})
+                return
+                
+            }
+        }
+    } else {
+        if(User.loggedIn()) {
+            next({path: '/', replace: true})
+            return
+        }
+    }
+    
+    next();
 })
 
 export default router;

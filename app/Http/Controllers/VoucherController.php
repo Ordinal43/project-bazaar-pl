@@ -44,15 +44,22 @@ class VoucherController extends Controller
 
     public function redeem(Request $request, $qrcode, $userid){
         if($qrcode != null){
-            $status = Voucher::where('qrcode','=', $qrcode);
+            $status = Voucher::where('qrcode','=', $qrcode)->first();
             if(!$status){
-                return response()->json('Invalid Code');
+                return response()->json([
+                    'status' => false,
+                    'message'=>'Invalid Code'
+                    ]);
             }else{
-                $check = $status->value('is_redeem');
-                if($check == 1){
-                    return response()->json('QR Already Redeemed');
+                $check = $status->where('qrcode','=', $qrcode)->where('is_redeem',true)->first();
+                if($check){
+                    return response()->json([
+                        'status' => false,
+                        'message'=>'QR Already Redeemed'
+                    ]);
                 }
                 else{
+                    $status = Voucher::where('qrcode','=', $qrcode);
                     $process= DB::transaction(function () use ($status,&$userid){
                         $redeem = $status->update(['is_redeem'=> true , 'user_id'=> $userid]);
 

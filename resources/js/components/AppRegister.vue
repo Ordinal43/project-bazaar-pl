@@ -43,7 +43,8 @@
                                 <v-text-field
                                     label="Konfirmasi Password"
                                     v-model="cpassword"
-                                    :rules="[rules.required, rules.password]"
+                                    :rules="[rules.required, rules.password, samePasswordRule]"
+                                    :success="samePasswordSuccess"
                                     :append-icon="showCPassword ? 'visibility_off' : 'visibility'"
                                     @click:append="showCPassword = !showCPassword"
                                     :type="showCPassword ? 'text' : 'password'"
@@ -90,6 +91,14 @@ export default {
             password: v => String(v).length >= 6 || 'Password minimal 6 karakter',
         },
     }),
+    computed: {
+        samePasswordRule() {
+            return this.password === this.cpassword || 'Password tidak sesuai'
+        },
+        samePasswordSuccess() {
+            return !!this.cpassword && (this.password === this.cpassword) 
+        }
+    },
     methods: {
         async register() {
             if(this.$refs.login_form.validate()) {

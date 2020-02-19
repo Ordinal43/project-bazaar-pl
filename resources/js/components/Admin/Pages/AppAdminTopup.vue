@@ -17,7 +17,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="primary" large round
-                            :disabled="amount <= 0"
+                            :disabled="amount <= 0 || !amount"
                             :loading="loadingVoucher"
                             @click="generateVoucher"
                         >

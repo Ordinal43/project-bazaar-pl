@@ -117,22 +117,25 @@ export default {
             this.camera = CAMERA_OFF;
             try {
                 const res = await this.validateScanResult(result)
-                if(res) {
-                    console.log(result);
+                if(!!res.data.status) {
+                    this.$router.replace({path: "/topup-success"});
                 } else {
-
+                    swal({
+                        title: "Redeem gagal!",
+                        text: res.data.message,
+                        icon: "error",
+                        button: "Kembali",
+                    });
                 }
-                // pretend wait
-                await this.validateScanResult(result)
-                this.camera = CAMERA_ON;
             } catch (error) {
-                
+                console.log(error);
             }
+            this.camera = CAMERA_ON;
         },
         validateScanResult(result) {
-            return new Promise(resolve => {
-                window.setTimeout(resolve(true), 4000)
-                // call api confirm
+            return axios.post('/api/redeem', {
+                qrcode: result,
+                user_id: this.$user.info().id,
             });
         },
         async onInit (promise) {

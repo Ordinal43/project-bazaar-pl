@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-const CART_KEY = 'bazaar_PL_cart'
+const CART_KEY = 'bazaar-pl-cart'
 
 Vue.use(Vuex)
 

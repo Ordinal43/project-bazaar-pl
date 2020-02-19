@@ -15,6 +15,7 @@ class AppStorage
     clear() {
         localStorage.removeItem('bazaar-pl-token');
         localStorage.removeItem('bazaar-pl-user');
+        localStorage.removeItem('bazaar-pl-cart');
     }
 
     getToken() {

@@ -18,7 +18,7 @@
                                     <v-icon>visibility</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Selesai</span>
+                            <span>Lihat Kode</span>
                         </v-tooltip>
                         <span v-else class="danger--text font-weight-bold">
                             Sudah diambil

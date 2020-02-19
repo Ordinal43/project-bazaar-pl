@@ -48,14 +48,14 @@ class VoucherController extends Controller
             if(!$status){
                 return response()->json([
                     'status' => false,
-                    'message'=>'Invalid Code'
-                    ]);
+                    'message'=>'Kode voucher tidak valid!'
+                ]);
             }else{
                 $check = $status->where('qrcode','=', $qrcode)->where('is_redeem',true)->first();
                 if($check){
                     return response()->json([
                         'status' => false,
-                        'message'=>'QR Already Redeemed'
+                        'message'=>'Kode voucher sudah diambil'
                     ]);
                 }
                 else{

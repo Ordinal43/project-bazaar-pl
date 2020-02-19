@@ -107,10 +107,11 @@ class VoucherController extends Controller
                         $user = User::find($userid);
                         $user->balance += $status->value('nominal');
                         $user->save();
+                        return true;
                     }, 3);
                     return response()->json([
                         'status' =>$process,
-                        'message'=>$process ? 'Error Redeem QR' : 'Redeem Success'
+                        'message'=>$process ? 'Redeem Success' : 'Error Redeem QR'
                     ]);
                 }
 

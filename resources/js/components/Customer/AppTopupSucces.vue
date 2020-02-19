@@ -9,7 +9,7 @@
             </v-flex>
             <v-flex xs12>
                 <p class="subheading text-xs-center">Saldo anda</p>
-                <p class="display-1 text-xs-center primary--text font-weight-bold">{{ $rupiahFormat(50000) }}</p>
+                <p class="display-1 text-xs-center primary--text font-weight-bold">{{ $rupiahFormat($user.info().balance) }}</p>
             </v-flex>
             <v-flex xs12 class="text-xs-center mt-4">
                 <v-btn

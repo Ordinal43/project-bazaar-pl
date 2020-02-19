@@ -7,6 +7,7 @@ import axios from 'axios'
 import '@mdi/font/css/materialdesignicons.css'
 import VInputNumber from './components/VInputNumber'
 import VueQrcode from '@chenfengyuan/vue-qrcode';
+import VueProgressBar from 'vue-progressbar'
 import VueSwal from 'vue-swal'
 import User from './helpers/User'
 import AppRoot from './components/AppRoot'

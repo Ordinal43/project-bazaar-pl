@@ -11,7 +11,7 @@ class CreateNotasTable extends Migration
         Schema::create('notas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->double('harga_total');
-            $table->string("customer");
+            $table->unsignedInteger('user_id');
             $table->timestamps();
         });
     }

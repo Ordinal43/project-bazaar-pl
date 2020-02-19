@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
         {
-            return response()->json(User::with(['orders'])->get());
+            return response()->json(User::with(['notas'])->get());
         }
 
         public function login(Request $request)
@@ -98,6 +98,28 @@ class UserController extends Controller
         {
             return response()->json($user);
         }
+
+        public function history(User $user){
+            return response()->json(User::with('notas','notas.Order')->where('id',$user->id)->first(),200);
+        }
+
+        // public function history(User $user){
+        //     return response()->json(User::with([
+        //         // 'notas',
+        //         'notas.Order' => function($query){
+        //             $query->where('is_ready',true);
+        //         }
+        //         ])->where('id',$user->id)->first(),200);
+        // }
+
+        // public function onGoing(User $user){
+        //     return response()->json(User::with([
+        //         // 'notas',
+        //         'notas.Order' => function($query){
+        //             $query->where('is_ready',null);
+        //         }
+        //     ])->where('id', $user->id)->first(),200);
+        // }
 
 
 }

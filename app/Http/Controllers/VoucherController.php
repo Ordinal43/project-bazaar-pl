@@ -42,16 +42,54 @@ class VoucherController extends Controller
         return md5(uniqid(rand(),true));
     }
 
-    public function redeem(Request $request, $qrcode, $userid){
-        if($qrcode != null){
-            $status = Voucher::where('qrcode','=', $qrcode)->first();
+    // public function redeem(Request $request, $qrcode, $userid){
+    //     if($qrcode != null){
+    //         $status = Voucher::where('qrcode','=', $qrcode)->first();
+    //         if(!$status){
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'message'=>'Kode voucher tidak valid!'
+    //             ]);
+    //         }else{
+    //             $check = $status->where('qrcode','=', $qrcode)->where('is_redeem',true)->first();
+    //             if($check){
+    //                 return response()->json([
+    //                     'status' => false,
+    //                     'message'=>'Kode voucher sudah diambil'
+    //                 ]);
+    //             }
+    //             else{
+    //                 $status = Voucher::where('qrcode','=', $qrcode);
+    //                 $process= DB::transaction(function () use ($status,&$userid){
+    //                     $redeem = $status->update(['is_redeem'=> true , 'user_id'=> $userid]);
+
+    //                     // Adding Credit For User
+
+    //                     $user = User::find($userid);
+    //                     $user->balance += $status->value('nominal');
+    //                     $user->save();
+    //                 }, 3);
+    //                 return response()->json([
+    //                     'status' =>$process,
+    //                     'message'=>$process ? 'Error Redeem QR' : 'Redeem Success'
+    //                 ]);
+    //             }
+
+    //         }
+    //     }
+    //     return response()->json('Scan Please...');
+    // }
+
+    public function redeem(Request $request){
+        if($request->has('qrcode')){
+            $status = Voucher::where('qrcode','=', $request->input('qrcode'))->first();
             if(!$status){
                 return response()->json([
                     'status' => false,
                     'message'=>'Kode voucher tidak valid!'
                 ]);
             }else{
-                $check = $status->where('qrcode','=', $qrcode)->where('is_redeem',true)->first();
+                $check = $status->where('qrcode','=', $request->input('qrcode'))->where('is_redeem',true)->first();
                 if($check){
                     return response()->json([
                         'status' => false,
@@ -59,9 +97,10 @@ class VoucherController extends Controller
                     ]);
                 }
                 else{
-                    $status = Voucher::where('qrcode','=', $qrcode);
-                    $process= DB::transaction(function () use ($status,&$userid){
-                        $redeem = $status->update(['is_redeem'=> true , 'user_id'=> $userid]);
+                    $userid = $request->input('user_id');
+                    $status = Voucher::where('qrcode','=', $request->input('qrcode'));
+                    $process= DB::transaction(function () use ($status, &$userid){
+                        $redeem = $status->update(['is_redeem'=> true , 'user_id'=> $userid ]);
 
                         // Adding Credit For User
 

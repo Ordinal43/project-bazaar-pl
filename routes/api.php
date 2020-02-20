@@ -24,6 +24,8 @@ Route::get('/voucher-redeemed','VoucherController@indexRedeemed'); //Return all 
 //Users
 Route::get('/users','UserController@index');
 Route::get('users/{user}','UserController@show');
+Route::get('history/{user}','UserController@history');
+Route::get('ongoing/{user}','UserController@onGoing');
 Route::patch('users/{user}','UserController@update');
 //Random API
 Route::get('/stands/random', 'StandController@random');

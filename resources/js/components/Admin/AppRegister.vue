@@ -12,7 +12,7 @@
                         ></v-img>
                     </v-flex>
                     <v-flex xs12 md7 lg9 style="max-width: 600px">
-                        <v-card elevation-10>
+                        <v-card elevation-10 class="rounded">
                         <v-form ref="login_form" @submit.prevent="register">
                             <v-card-title>
                                 <h3 class="headline">
@@ -45,9 +45,7 @@
                                     v-model="cpassword"
                                     :rules="[rules.required, rules.password, samePasswordRule]"
                                     :success="samePasswordSuccess"
-                                    :append-icon="showCPassword ? 'visibility_off' : 'visibility'"
-                                    @click:append="showCPassword = !showCPassword"
-                                    :type="showCPassword ? 'text' : 'password'"
+                                    type="password"
                                 ></v-text-field>
                             </v-card-text>
 
@@ -82,7 +80,7 @@
                             </v-card-text>
                             <v-card-text class="text-xs-center">
                                 <span>Sudah punya akun?</span>
-                                <v-btn color="grey" round outline to="/login">
+                                <v-btn color="accent" round to="/login">
                                     masuk
                                 </v-btn>
                             </v-card-text>
@@ -103,7 +101,6 @@ export default {
         password: null,
         showPassword: false,
         cpassword: null,
-        showCPassword: false,
         standName: null,
         standDescription: null,
         loading: false,

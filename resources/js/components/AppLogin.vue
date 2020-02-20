@@ -12,7 +12,7 @@
                         ></v-img>
                     </v-flex>
                     <v-flex xs12 md7 lg9 style="max-width: 600px">
-                        <v-card elevation-10>
+                        <v-card elevation-10 class="rounded">
                         <v-form ref="login_form" @submit.prevent="login">
                             <v-card-text>
                                 <v-text-field
@@ -77,9 +77,13 @@ export default {
                     this.$router.replace({path: "/"});
                 } catch (err) {
                     const code = err.response.status;
+                    let text = `Terjadi Error [${code}]. Silahkan coba beberapa saat lagi.`;
+                    if(code === 401) {
+                        text = 'Email/Password salah!'
+                    }
                     swal({
                         title: "Oops!",
-                        text: `Error [${code}]. Please try again later.`,
+                        text: text,
                         icon: "error",
                     });
                 }

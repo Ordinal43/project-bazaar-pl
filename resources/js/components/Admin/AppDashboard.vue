@@ -14,7 +14,7 @@
             <v-list>
                 <template v-for="(item, index) in routes">
                     <v-list-tile
-                        v-if="$user.info().role_id == 1 && item.for_admin"
+                        v-if="$user.info().role_id == item.roleId"
                         :key="`menu-${index}`"
                         router sub-group
                         :to="item.route"
@@ -48,39 +48,42 @@
 <script>
 import { mapGetters } from 'vuex'
 
+const ROLE_ADMIN = 1;
+const ROLE_SELLER = 2;
+
 export default {
     data: () => ({
         drawer: true,
         routes: [
             {
-                icon: "assignment",
-                title: "Daftar Transaksi",
-                route: "/stand-transactions",
-                for_admin: false,
-            },
-            {
                 icon: "store_mall_directory",
                 title: "Stand saya",
                 route: "/my-stand",
-                for_admin: false,
+                roleId: ROLE_SELLER,
+            },
+            {
+                icon: "assignment",
+                title: "Daftar Transaksi",
+                route: "/stand-transactions",
+                roleId: ROLE_SELLER,
             },
             {
                 icon: "local_atm",
                 title: "Isi saldo",
                 route: "/admin-topup",
-                for_admin: true,
+                roleId: ROLE_ADMIN,
             },
             {
                 icon: "store_mall_directory",
                 title: "Semua stand",
                 route: "/all-stands",
-                for_admin: true,
+                roleId: ROLE_ADMIN,
             },
             {
                 icon: "receipt",
                 title: "Transaksi",
                 route: "/transactions",
-                for_admin: true,
+                roleId: ROLE_ADMIN,
             },
         ],
     }),

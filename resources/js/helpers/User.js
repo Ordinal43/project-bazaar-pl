@@ -30,9 +30,12 @@ class User {
 
     storeSession(data) {
         const user = JSON.stringify(data.user);
-        
         const token = data.token;
-        AppStorage.store(user,token);
+        AppStorage.store(user, token);
+        if(data.user.role_id === 2) {
+            const stand = JSON.stringify(data.user.stands);
+            AppStorage.storeStand(stand);
+        }
     }
 
     loggedIn() {
@@ -61,6 +64,13 @@ class User {
     info() {
         if(this.loggedIn) {
             return AppStorage.getUser();
+        }
+        return console.log("please login first");
+    }
+
+    getStand() {
+        if(this.loggedIn) {
+            return AppStorage.getStand();
         }
         return console.log("please login first");
     }

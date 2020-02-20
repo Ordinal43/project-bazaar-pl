@@ -115,7 +115,7 @@ export default {
         DialogEditStand: () => import('./DialogEditStand' /* webpackChunkName: "js/chunk-dialog-edit-stand" */),
     },
     data: (vm) => ({
-        stand: !!vm.$route.params.standId? vm.$route.params.standId : vm.$user.info().stands.id,
+        stand: !!vm.$route.params.standId? vm.$route.params.standId : vm.$user.getStand().id,
         productId: 0,
         loading: false,
         name: "",

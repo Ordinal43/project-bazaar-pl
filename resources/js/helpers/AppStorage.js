@@ -1,10 +1,13 @@
 class AppStorage
 {
     storeToken(token) {
-        localStorage.setItem('bazaar-pl-token',token);
+        localStorage.setItem('bazaar-pl-token', token);
     }
     storeUser(user) {
-        localStorage.setItem('bazaar-pl-user',user);
+        localStorage.setItem('bazaar-pl-user', user);
+    }
+    storeStand(stand) {
+        localStorage.setItem('bazaar-pl-stand', stand);
     }
 
     store(user,token) {
@@ -16,6 +19,7 @@ class AppStorage
         localStorage.removeItem('bazaar-pl-token');
         localStorage.removeItem('bazaar-pl-user');
         localStorage.removeItem('bazaar-pl-cart');
+        localStorage.removeItem('bazaar-pl-stand');
     }
 
     getToken() {
@@ -25,6 +29,14 @@ class AppStorage
         let user = localStorage.getItem('bazaar-pl-user');
         try {
             return JSON.parse(user);
+        } catch (error) {
+            return {}
+        }
+    }
+    getStand() {
+        let stand = localStorage.getItem('bazaar-pl-stand');
+        try {
+            return JSON.parse(stand);
         } catch (error) {
             return {}
         }

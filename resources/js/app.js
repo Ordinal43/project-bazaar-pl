@@ -64,9 +64,10 @@ Vue.use(VueHtmlToPaper, {
 
 Vue.prototype.$rupiahFormat = function(value) {
     value = parseFloat(value)
-    return "Rp " + value.toLocaleString(
+    const absValueLocale = Math.abs(value).toLocaleString(
         "de-DE", { minimumFractionDigits: 2 }
-    )
+    );
+    return `${value<0? '- ' : ''} Rp ${absValueLocale}`;
 }
 Vue.prototype.$user = User
 

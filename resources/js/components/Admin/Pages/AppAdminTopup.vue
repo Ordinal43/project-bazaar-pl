@@ -11,6 +11,8 @@
                             label="Nominal"
                             v-model="amount"
                             prefix="Rp"
+                            ref="inputAmount"
+                            focus
                             :rules="[rules.required, rules.tooMuch]"
                         ></v-input-number>
                     </v-card-text>
@@ -121,7 +123,7 @@
                 <v-card-title>
                     <h3 class="subheading font-weight-bold">Kode Voucher</h3>
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="dialogQR = false">
+                    <v-btn icon @click="closeDialog">
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-card-title>
@@ -196,6 +198,7 @@ export default {
                 }
                 this.shownQR = res.data.data.qrcode;
                 this.dialogQR = true;
+                this.amount = 0;
             } catch (err) {
                 const code = err.response.status;
                 swal({
@@ -244,6 +247,12 @@ export default {
         showQR(qrcode) {
             this.shownQR = qrcode;
             this.dialogQR = true;
+        },
+        closeDialog() {
+            this.dialogQR = false;
+            this.$nextTick(() => {
+                this.$refs.inputAmount.focus();
+            })
         }
     },
 }

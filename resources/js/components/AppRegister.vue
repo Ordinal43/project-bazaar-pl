@@ -63,9 +63,9 @@
                                     masuk
                                 </v-btn>
                                 <div class="mb-5"></div>
-                                <span>Mendaftarkan stand?</span>
+                                <span>Penjual stand?</span>
                                 <v-btn color="grey" small round outline to="/register/seller">
-                                    Daftar stand
+                                    Daftar seller
                                 </v-btn>
                             </v-card-text>
                         </v-form>

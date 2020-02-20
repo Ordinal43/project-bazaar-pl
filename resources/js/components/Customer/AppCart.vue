@@ -6,7 +6,7 @@
 
         <v-divider class="my-2"></v-divider>
 
-        <v-layout row wrap>
+        <v-layout row wrap justify-center>
             <template v-if="!!getCartItems.length">
                 <v-flex xs12 sm7 lg8>
                     <v-layout row wrap>
@@ -22,11 +22,11 @@
                                             class="card-container__thumbnail__image"
                                         >
                                     </div>
-                                    <div class="pl-3 card-container__contents font-weight-bold subheading">
+                                    <div class="pl-3 card-container__contents subheading">
                                         <div class="mb-2">
                                             {{ item.name }}
                                         </div>
-                                        <div class="primary--text">
+                                        <div class="primary--text font-weight-medium">
                                             {{ $rupiahFormat(item.price) }}
                                         </div>
                                     </div>
@@ -62,31 +62,6 @@
                         </v-flex>
                     </v-layout>
                 </v-flex>
-                <v-flex sm5 lg4 class="hidden-xs-only">
-                    <v-card class="rounded">
-                        <v-card-title class="font-weight-bold">
-                            Ringkasan Belanja
-                        </v-card-title>
-                        <v-card-text class="py-0">
-                            <v-divider></v-divider>
-                        </v-card-text>
-                        <v-card-title class="subheading">
-                            Total harga
-                            <v-spacer></v-spacer>
-                            <span class="font-weight-bold">
-                                {{ $rupiahFormat(getSubtotal) }}
-                            </span>
-                        </v-card-title>
-                        <v-card-title>
-                            <v-btn 
-                                color="primary" large round block
-                                @click="openDialogConfirm"
-                            >
-                                Beli ({{ getMenuAmount }})
-                            </v-btn>
-                        </v-card-title>
-                    </v-card>
-                </v-flex>
             </template>
             <template v-else>
                 <v-flex xs12 class="mt-5">
@@ -113,6 +88,60 @@
             </template>
         </v-layout>
 
+        <div class="bottom-spacer"></div>
+
+        <div class="review">
+            <v-card class="rounded review__card">
+                <v-card-title class="subheading pb-1">
+                    PL Pay
+                    <v-spacer></v-spacer>
+                    <span class="font-weight-medium primary--text">
+                        {{ $rupiahFormat($user.info().balance) }}
+                    </span>
+                </v-card-title>
+                <v-card-title class="subheading py-0">
+                    Total harga
+                    <v-spacer></v-spacer>
+                    <span>
+                        - {{ $rupiahFormat(getSubtotal) }}
+                    </span>
+                </v-card-title>
+                
+                <v-card-text class="py-2">
+                    <v-divider></v-divider>
+                </v-card-text>
+                
+                <v-card-title :class="{
+                    'subheading': true,
+                    'pt-0': true,
+                    'red--text': notEnoughBalance 
+                }">
+                    {{ notEnoughBalance? 'Saldo kurang' : 'Sisa saldo' }}
+                    <v-spacer></v-spacer>
+                    <span class="font-weight-medium">
+                        {{ $rupiahFormat($user.info().balance - getSubtotal) }}
+                    </span>
+                </v-card-title>
+
+                <v-card-title class="pt-2">
+                    <v-btn 
+                        color="accent" large round block
+                        to="/topup"
+                        v-if="notEnoughBalance"
+                    >
+                        Topup pl pay
+                    </v-btn>
+                    <v-btn 
+                        color="accent" large round block
+                        @click="openDialogConfirm"
+                        v-else
+                    >
+                        Beli ({{ getMenuAmount }})
+                    </v-btn>
+                </v-card-title>
+            </v-card>
+        </div>
+        
         <v-dialog
             v-model="dialogConfirmPayment"
             lazy max-width="600"
@@ -148,6 +177,9 @@ export default {
                 acc + (item.qty * item.price)
             , 0)
         },
+        notEnoughBalance() {
+            return this.$user.info().balance < this.getSubtotal;
+        }
     },
     methods: {
         ...mapActions([
@@ -164,6 +196,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    .bottom-spacer {
+        height: 210px;
+    }
+
     .card-container {
         display: flex;
         &__thumbnail {
@@ -177,6 +213,20 @@ export default {
         }
         &__contents {
             flex: 1 0 auto;
+        }
+    }
+
+    .review {
+        left: 0;
+        position: fixed;
+        bottom: 70px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__card {
+            width: 95%;
+            max-width: 400px;
         }
     }
 </style>

@@ -55,7 +55,7 @@
                         v-if="$route.path !== '/cart'"
                     >
                         <v-icon left>shopping_basket</v-icon>
-                        {{ getMenuAmount }} menu
+                        {{ getCartItems.length }} menu ({{ getMenuAmount }} porsi)
                     </v-btn>
                 </div>
             </v-expand-x-transition>
@@ -223,6 +223,7 @@ export default {
 
     .basket {
         position: fixed;
+        left: 0;
         bottom: 60px;
         width: 100%;
         display: flex;

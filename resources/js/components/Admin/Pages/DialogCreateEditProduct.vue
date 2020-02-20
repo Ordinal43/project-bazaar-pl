@@ -28,12 +28,18 @@
                         contain
                     ></v-img>
                 </v-slide-y-transition>
-                
-                <div class="mt-3"></div>
+
+                <div style="height: 21px">
+                    <v-slide-y-transition>
+                        <div class="red--text" v-if="noImageError">
+                            Gambar produk harus diupload!
+                        </div>
+                    </v-slide-y-transition>
+                </div>
 
                 <v-btn color="primary" outline round @click="pickFile">
                     <v-icon left>add_a_photo</v-icon>
-                    Unggah Gambar
+                    Upload Gambar
                 </v-btn>
                 
                 <input type="file"
@@ -111,6 +117,7 @@ export default {
 
         fileUrl: '',
         fileBin: '',
+        noImageError: false,
         name: null,
         description: null,
         stock: null,
@@ -149,12 +156,14 @@ export default {
                 } else {
                     this.fileUrl = URL.createObjectURL(imageFile);
                     this.fileBin = imageFile;
+                    this.noImageError = false;
                     // this.copyFrom(formData);
                 }
             }
         },
         async createNewMenu() {
-            if(this.$refs.form_new_menu.validate()) {
+            if(this.$refs.form_new_menu.validate() && !!this.fileUrl) {
+                this.noImageError = false;
                 this.btnLoading = true;
                 const data = new FormData();
                 data.append(`name`, this.name); 
@@ -184,6 +193,8 @@ export default {
                 } catch (err) {
                     console.log(err);
                 }
+            } else {
+                this.noImageError = true;
             }
         }
     },

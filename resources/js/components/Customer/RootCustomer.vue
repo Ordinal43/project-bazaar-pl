@@ -154,13 +154,16 @@ export default {
                 icon: "home",
                 title: "Beranda",
                 route: "/home",
-                for_admin: false,
             },
             {
                 icon: "store_mall_directory",
                 title: "Daftar Stand",
                 route: "/stands",
-                for_admin: false,
+            },
+            {
+                icon: "receipt",
+                title: "Pesanan",
+                route: "/orders",
             },
         ],
         dialogConfirm: false,

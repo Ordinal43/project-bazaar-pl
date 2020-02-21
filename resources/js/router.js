@@ -136,7 +136,7 @@ router.beforeEach(async (to, from, next) => {
             try {
                 await User.getInfo()
                 // check if there's a valid roleId meta tag 
-                if(to.matched.some(route => (route.meta.roleId >= 0 && route.meta.roleId <= 3))) {
+                if(to.matched.some(route => (route.meta.roleId >= 1 && route.meta.roleId <= 3))) {
                     if(User.info().role_id != to.meta.roleId) {
                         // redirect accordingly
                         switch(User.info().role_id) {

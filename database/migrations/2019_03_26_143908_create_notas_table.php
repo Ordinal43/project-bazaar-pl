@@ -12,6 +12,10 @@ class CreateNotasTable extends Migration
             $table->bigIncrements('id');
             $table->double('harga_total');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('stand_id');
+            $table->String('qrcode')->unique();
+            $table->boolean('is_paid')->default(false);
+            $table->boolean('is_cancel')->default(false);
             $table->timestamps();
         });
     }

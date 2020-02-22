@@ -5,19 +5,60 @@ namespace App\Http\Controllers;
 use App\Nota;
 use App\Order;
 use App\Product;
+use App\User;
+use App\Stand;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class NotaController extends Controller
 {
-
+    public function generateQr(){
+        return md5(uniqid(rand(),true));
+    }
    
     public function index()
     {
         return response()->json(Nota::with(['Order', 'Order.Product:id,name'])->get(),200);
     }
 
+    public function paid(Request $request){
+        if($request->has('qrcode')){
+            $status = Nota::where('qrcode', '=', $request->input('qrcode'))->first();
+            if(!$status){
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Nota tidak valid!'
+                ]);
+            }else{
+                $check = $status->where('qrcode','=', $request->input('qrcode'))->where('is_paid',true)->first();
+                if($check){
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'Nota sudah dibayar'
+                    ]);
+                }
+                else{
+                    $userid = $request->input('user_id');
+                    $status = Nota::where('qrcode', '=', $request->input('qrcode'));
+                    $process = DB::transaction(function () use ($status){
+                        $paid = $status->update(['is_paid'=>true]);
+                        //Adding Balance to Stand
+                        $stand = Stand::find($status->value('stand_id'));
+                        $user = User::find($stand->value('user_id'));
+                        $user->balance += $status->value('harga_total');
+                        $user->save();
+                        return true;
+                    },3);
+                    return response()->json([
+                        'status' =>$process,
+                        'message' => $process ? 'Success' : 'Error' 
+                    ]);
+                }
+            }
+        }
+        return response()->json('Scan Please...');
+    }
    
     public function store(Request $request)
     {
@@ -27,7 +68,9 @@ class NotaController extends Controller
             //Creating a new transaction
             $nota = Nota::create([
                 'harga_total' => $request->input('harga_total'),
-                'user_id' => $request->input('user_id')
+                'user_id' => $request->input('user_id'),
+                'stand_id' => $request->input('stand_id'),
+                'qrcode' => $this->generateQr(),
             ]);
 
             //Creating order details
@@ -38,14 +81,38 @@ class NotaController extends Controller
                     'quantity' => $detail['quantity'],
                     'nota_id' => $nota->id
                 ]);
-
             }
+            //Get Saldo
+            $user = User::find($nota['user_id']);
+            $user->balance -= $nota['harga_total'];
+            $user->save(); 
         }, 3);
 
         return response()->json([
             'status' => (bool) $nota,
             'nota_id'   => $nota ? $nota->id : null,
             'message' => $nota ? 'Nota Created!' : 'Error Creating Nota'
+        ]);
+    }
+
+    public function cancel(Nota $nota){
+        if($nota['is_cancel'] = true){
+            return response()->json([
+                'status' => 'Failed',
+                'message' => 'Nota sudah dicancel'
+            ]);            
+        }
+        $status = DB::transaction (function () use ($nota){
+            $nota->is_cancel = true;
+            $save = $nota->save();
+            $user = User::find($nota['user_id']);
+            $user->balance += $nota['harga_total'];
+            $user->save();
+            return true;
+        },3);
+        return response()->json([
+            'status' => $status,
+            'message' => $status ? 'Succsess' : 'Failed'
         ]);
     }
 

@@ -33,6 +33,8 @@ Route::get('/products/random', 'ProductController@random');
 Route::get('/products/all', 'ProductController@allProduct');
 
 //Nota&Order
+Route::post('/pay', 'NotaController@paid');
+Route::patch('nota/cancel/{nota}', 'NotaController@cancel');
 Route::get('/nota/{nota}', 'NotaController@show');
 Route::patch('/cancel/{order}', 'OrderController@canceled');
 Route::patch('/ready/{order}', 'OrderController@ready');

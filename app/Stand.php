@@ -22,6 +22,10 @@ class Stand extends Model
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    public function notas(){
+        return $this->hasMany(Nota::class);
+    }
     
     public function users(){
         return $this->belongsTo(User::class);

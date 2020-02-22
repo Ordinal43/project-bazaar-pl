@@ -8,7 +8,9 @@ class Nota extends Model
 {
     protected $fillable = [
         'harga_total',
-        'user_id'
+        'user_id',
+        'qrcode',
+        'stand_id',
     ];
 
     public function Order(){
@@ -17,5 +19,9 @@ class Nota extends Model
     
     public function Users(){
         return $this->belongsTo(User::class);
+    }
+
+    public function Stands(){
+        return $this->belongsTo(Stand::class);
     }
 }

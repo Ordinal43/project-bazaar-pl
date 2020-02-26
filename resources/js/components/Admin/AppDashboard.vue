@@ -10,6 +10,15 @@
             <v-container grid-list-lg class="title">
                 <span class="font-weight-light">Halo,</span>
                 <span class="font-weight-medium primary--text">{{ $user.info().name }}</span>
+
+                <div class="my-4 primary--text balance" justify-content-start v-if="$user.info().role_id == 2">
+                    <span class="mr-1">
+                        Rp
+                    </span>
+                    <span class="headline font-weight-bold">
+                        {{ balanceFormat($user.info().balance) }}
+                    </span>
+                </div>
             </v-container>
             <v-list>
                 <template v-for="(item, index) in routes">
@@ -93,6 +102,12 @@ export default {
         ])
     },
     methods: {
+        balanceFormat(value) {
+            value = parseFloat(value);
+            return value.toLocaleString(
+                "de-DE", { minimumFractionDigits: 0 }
+            );
+        },
         async logout() {
             try {
                 await this.$user.logout();
@@ -109,3 +124,9 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    .balance {
+        display: flex;
+    }
+</style>

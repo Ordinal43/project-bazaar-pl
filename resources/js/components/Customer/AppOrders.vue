@@ -141,6 +141,7 @@
                         </v-btn>
                         <v-btn color="primary" round
                             v-if="!currentItem.is_paid && !currentItem.is_cancel"
+                            @click="openScanQR(currentItem)"
                         >
                             <v-icon left>local_dining</v-icon>
                             ambil
@@ -149,16 +150,35 @@
                 </template>
             </v-card>
         </v-dialog>
+
+        <v-dialog
+            v-model="dialogScan"
+            persistent lazy
+            max-width="500px"
+        >
+            <ScanTransaction
+                :isOpen="dialogScan"
+                :item="currentItem"
+                @close="dialogScan = false"
+                :key="scanComponentKey"
+            ></ScanTransaction>
+        </v-dialog>
     </v-container>
 </template>
 
 <script>
 export default {
+    components: {
+        ScanTransaction: () => import('./ScanTransaction' /* webpackChunkName: "js/chunk-scan-transaction" */)
+    },
     data: () => ({
         listOrders: [],
         loading: true,
         dialogDetail: false,
         currentItem: null,
+
+        dialogScan: false,
+        scanComponentKey: 0,
     }),
     methods: {
         getListOrders() {
@@ -228,7 +248,12 @@ export default {
                 }
                 this.dialogDetail = false
             }
-        }
+        },
+        openScanQR(item) {
+            this.currentItem = item;
+            this.scanComponentKey = !!this.scanComponentKey? 0 : 1;
+            this.dialogScan = true;
+        },
     },
     mounted() {
         this.getListOrders();

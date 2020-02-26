@@ -90,22 +90,6 @@ export default {
             this.standId = id;
             this.openStandDialog();
         },
-        async deleteStand(id) {
-            const willDelete = confirm("Anda yakin ingin menghapus?");
-            if(willDelete) {
-                try {
-                    await axios.delete(`/api/stands/${id}`, null);
-                    this.getStands();
-                } catch (err) {
-                    const code = err.response.status;
-                    swal({
-                        title: "Oops!",
-                        text: `Error ${code}.`,
-                        icon: "error",
-                    });
-                }
-            }
-        },
         closeStand() {
             this.dialogEditStand = false;
             this.standId = 0;

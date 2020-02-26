@@ -14,6 +14,11 @@
             app right
             v-model="drawer"
         >
+            <v-container grid-list-lg class="subheading text-xs-right mt-3">
+                <span class="font-weight-light">Halo,</span>
+                <span class="font-weight-medium primary--text">{{ $user.info().name }}</span>
+            </v-container>
+            <v-divider></v-divider>
             <v-list>
                 <v-list-tile
                     v-for="(item, i) in routes" :key="`navdraw-${i}`"

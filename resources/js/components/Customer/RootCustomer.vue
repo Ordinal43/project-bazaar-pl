@@ -20,21 +20,6 @@
             </v-container>
             <v-divider></v-divider>
             <v-list>
-                <v-list-tile
-                    v-for="(item, i) in routes" :key="`navdraw-${i}`"
-                    router
-                    :to="item.route"
-                    class="my-3"
-                >
-                    <v-list-tile-action>
-                        <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-tile-action>
-
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-
                 <v-list-tile @click="logout">
                     <v-list-tile-action>
                         <v-icon>power_settings_new</v-icon>

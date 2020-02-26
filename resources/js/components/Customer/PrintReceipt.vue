@@ -5,7 +5,7 @@
             <div>
                 <div>No Nota: {{ nota.id }}</div>
                 <div>Cust : {{ nota.customer }}</div>
-                <div>Tgl: {{ nota.created_at }}</div>
+                <div>Tgl: {{ $getDateString(nota.created_at) }}, {{ $getTimeString(nota.created_at) }}</div>
             </div>
             <v-divider class="my-2"></v-divider>
             <table style="width: 100%;">

@@ -9,7 +9,7 @@
                 rows-per-page-text="Baris per halaman"
             >
                 <template v-slot:items="props">
-                    <td>{{ props.item.created_at }}</td>
+                    <td>{{ $getDateString(props.item.created_at) }}</td>
                     <td>{{ $rupiahFormat(props.item.nominal) }}</td>
                     <td>
                         <v-tooltip bottom v-if="!props.item.is_redeem">

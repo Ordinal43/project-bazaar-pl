@@ -33,7 +33,7 @@
                 rows-per-page-text="Baris per halaman"
             >
                 <template v-slot:items="props">
-                    <td>{{ props.item.date }}</td>
+                    <td>{{ $getDateString(props.item.date) }}</td>
                     <td v-if="isAdmin">{{ props.item.stand_name }}</td>
                     <td>{{ props.item.menu }}</td>
                     <td>{{ props.item.customer }}</td>

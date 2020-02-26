@@ -19,7 +19,10 @@ class NotaController extends Controller
    
     public function index()
     {
-        return response()->json(Nota::with(['Order', 'Order.Product:id,name'])->get(),200);
+        return response()->json(Nota::with([
+           'Order', 'Order.Product.Stand:id,stand_name'
+            ])
+                ->get(),200);
     }
 
     public function paid(Request $request){

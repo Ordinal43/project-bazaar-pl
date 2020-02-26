@@ -165,7 +165,7 @@ export default {
             this.loading = true;
             axios.get(`/api/nota-user/${this.$user.info().id}`)
             .then(res => {
-                this.listOrders = res.data.reverse();
+                this.listOrders = res.data;
                 this.loading = false;
             })
             .catch(err => {

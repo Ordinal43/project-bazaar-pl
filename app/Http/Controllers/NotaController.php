@@ -117,7 +117,7 @@ class NotaController extends Controller
     }
 
     public function cancel(Nota $nota){
-        if($nota['is_cancel'] = true){
+        if($nota['is_cancel'] == true){
             return response()->json([
                 'status' => 'Failed',
                 'message' => 'Nota sudah dicancel'

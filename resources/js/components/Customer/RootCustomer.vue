@@ -41,7 +41,7 @@
                         color="accent" dark
                         class="basket__button rounded"
                         large
-                        @click="dialogBasket = true"
+                        to="/cart"
                         v-if="$route.path !== '/cart'"
                     >
                         <v-icon left>shopping_basket</v-icon>
@@ -65,26 +65,10 @@
                 <v-icon>{{ item.icon }}</v-icon>
             </v-btn>
         </v-bottom-nav>
-        
-        <v-dialog
-            v-model="dialogBasket" lazy
-            persistent max-width="600px"
-        >
-            <v-card class="rounded">
-                <v-card-title>
-                    <h3 class="subheading font-weight-bold">Keranjang</h3>
-                    <v-spacer></v-spacer>
-                    <v-btn icon @click="dialogBasket = false">
-                        <v-icon>close</v-icon>
-                    </v-btn>
-                </v-card-title>
-                <CartPreview />
-            </v-card>
-        </v-dialog>
 
         <v-dialog
             v-model="dialogConfirm" lazy
-            persistent max-width="600px"
+            max-width="600px"
         >
             <v-card class="rounded" v-if="!!selectedItem">
                 <v-card-title>
@@ -118,9 +102,8 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="accent" round to="/cart">
-                                <v-icon left>shopping_basket</v-icon>
-                                keranjang
+                            <v-btn color="accent" round @click="dialogConfirm = false">
+                                oke
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -133,9 +116,6 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    components: {
-        CartPreview: () => import('./CartPreview' /* webpackChunkName: "js/chunk-cart-preview" */),
-    },
     data: () => ({
         routerKey: 0,
         drawer: false,
@@ -158,7 +138,6 @@ export default {
         ],
         dialogConfirm: false,
         selectedItem: null,
-        dialogBasket: false,
     }),
     computed: {
         ...mapGetters([

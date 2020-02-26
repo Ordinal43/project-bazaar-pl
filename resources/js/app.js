@@ -62,6 +62,8 @@ Vue.use(VueHtmlToPaper, {
 
 // Prototypes =================================
 
+Vue.prototype.$user = User
+
 Vue.prototype.$rupiahFormat = function(value) {
     value = parseFloat(value)
     const absValueLocale = Math.abs(value).toLocaleString(
@@ -69,7 +71,27 @@ Vue.prototype.$rupiahFormat = function(value) {
     );
     return `${value<0? '- ' : ''} Rp ${absValueLocale}`;
 }
-Vue.prototype.$user = User
+
+Vue.prototype.$getDateString = function(dateString) {
+    const days = [
+        "Senin","Selasa","Rabu",
+        "Kamis","Jumat","Sabtu","Minggu"
+    ];
+
+    const months = [
+        "Jan","Feb","Mar",
+        "Apr","Mei","Jun",
+        "Jul","Ags","Sep",
+        "Okt","Nov","Des"
+    ];
+    let date = new Date(Date.parse(dateString));
+    return `${days[date.getDay()-1]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+Vue.prototype.$getTimeString = function(dateString) {
+    let date = new Date(Date.parse(dateString));
+    return `${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
+}
 
 // ============================================
 

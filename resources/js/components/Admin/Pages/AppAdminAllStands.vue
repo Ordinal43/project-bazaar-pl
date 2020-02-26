@@ -69,14 +69,11 @@ export default {
         dialogEditStandKey: 0,
     }),
     methods: {
-        fetchStands() {
-            return axios.get('/api/stands')
-        },
         async getStands() {
             this.loading = true;
             try {
-                const res = await this.fetchStands();
-                this.stands = res.data.reverse();
+                const res = await axios.get('/api/stands');
+                this.stands = res.data;
             } catch (err) {
                 console.log(err);
             }

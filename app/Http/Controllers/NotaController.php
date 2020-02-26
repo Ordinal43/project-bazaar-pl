@@ -22,7 +22,25 @@ class NotaController extends Controller
         return response()->json(Nota::with([
            'Order', 'Order.Product.Stand:id,stand_name'
             ])
-                ->get(),200);
+            ->get(),200);
+    }
+
+    public function notaByStand(Request $request, $stand)
+    {
+        return response()->json(Nota::with([
+           'Order', 'Order.Product.Stand:id,stand_name'
+            ])
+            ->where('stand_id',$stand)
+            ->get(),200);
+    }
+
+    public function notaByUser(Request $request, $user)
+    {
+        return response()->json(Nota::with([
+           'Order', 'Order.Product.Stand:id,stand_name'
+            ])
+            ->where('user_id',$user)
+            ->get(),200);
     }
 
     public function paid(Request $request){

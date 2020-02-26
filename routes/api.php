@@ -36,6 +36,8 @@ Route::get('/products/all', 'ProductController@allProduct');
 Route::post('/pay', 'NotaController@paid');
 Route::patch('nota/cancel/{nota}', 'NotaController@cancel');
 Route::get('/nota/{nota}', 'NotaController@show');
+Route::get('/nota-stand/{stand}','NotaController@notaByStand');
+Route::get('/nota-user/{user}','NotaController@notaByUser');
 Route::patch('/cancel/{order}', 'OrderController@canceled');
 Route::patch('/ready/{order}', 'OrderController@ready');
 Route::get('/orders-all', 'OrderController@all'); //Return All Statement (True/ False/ Null)

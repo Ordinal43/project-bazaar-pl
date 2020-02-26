@@ -62,6 +62,52 @@
                         </v-flex>
                     </v-layout>
                 </v-flex>
+
+                <div class="review">
+                    <v-card class="rounded review__card">
+                        <v-card-title class="subheading pb-1">
+                            Total harga
+                            <v-spacer></v-spacer>
+                            <span class="font-weight-medium primary--text">
+                                {{ $rupiahFormat(getSubtotal) }}
+                            </span>
+                        </v-card-title>
+                        
+                        <v-card-text class="py-2">
+                            <v-divider></v-divider>
+                        </v-card-text>
+                        
+                        <v-card-title :class="{
+                            'subheading': true,
+                            'pt-0': true,
+                            'red--text': notEnoughBalance 
+                        }">
+                            {{ notEnoughBalance? 'Saldo kurang' : 'Sisa saldo' }}
+                            <v-spacer></v-spacer>
+                            <span>
+                                {{ $rupiahFormat($user.info().balance - getSubtotal) }}
+                            </span>
+                        </v-card-title>
+
+                        <v-card-title class="pt-2">
+                            <v-btn 
+                                color="accent" large round block
+                                to="/topup"
+                                v-if="notEnoughBalance"
+                            >
+                                Topup pl pay
+                            </v-btn>
+                            <v-btn 
+                                color="accent" large round block
+                                @click="confirmOrder"
+                                :loading="loadingMakeOrder"
+                                v-else
+                            >
+                                Pesan ({{ getMenuAmount }})
+                            </v-btn>
+                        </v-card-title>
+                    </v-card>
+                </div>
             </template>
             <template v-else>
                 <v-flex xs12 class="mt-5">
@@ -90,65 +136,11 @@
 
         <div class="bottom-spacer"></div>
 
-        <div class="review">
-            <v-card class="rounded review__card">
-                <v-card-title class="subheading pb-1">
-                    PL Pay
-                    <v-spacer></v-spacer>
-                    <span class="font-weight-medium primary--text">
-                        {{ $rupiahFormat($user.info().balance) }}
-                    </span>
-                </v-card-title>
-                <v-card-title class="subheading py-0">
-                    Total harga
-                    <v-spacer></v-spacer>
-                    <span>
-                        - {{ $rupiahFormat(getSubtotal) }}
-                    </span>
-                </v-card-title>
-                
-                <v-card-text class="py-2">
-                    <v-divider></v-divider>
-                </v-card-text>
-                
-                <v-card-title :class="{
-                    'subheading': true,
-                    'pt-0': true,
-                    'red--text': notEnoughBalance 
-                }">
-                    {{ notEnoughBalance? 'Saldo kurang' : 'Sisa saldo' }}
-                    <v-spacer></v-spacer>
-                    <span class="font-weight-medium">
-                        {{ $rupiahFormat($user.info().balance - getSubtotal) }}
-                    </span>
-                </v-card-title>
-
-                <v-card-title class="pt-2">
-                    <v-btn 
-                        color="accent" large round block
-                        to="/topup"
-                        v-if="notEnoughBalance"
-                    >
-                        Topup pl pay
-                    </v-btn>
-                    <v-btn 
-                        color="accent" large round block
-                        @click="openDialogConfirm"
-                        v-else
-                    >
-                        Beli ({{ getMenuAmount }})
-                    </v-btn>
-                </v-card-title>
-            </v-card>
-        </div>
-        
         <v-dialog
-            v-model="dialogConfirmPayment"
+            v-model="dialogOrderSuccess"
             lazy max-width="600"
         >
-            <dialog-confirm-payment
-                @close="dialogConfirmPayment = false"
-            ></dialog-confirm-payment>
+            
         </v-dialog>
     </v-container>
 </template>
@@ -157,11 +149,9 @@
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
-    components: {
-        DialogConfirmPayment: () => import('./DialogConfirmPayment' /* webpackChunkName: "js/dialog-confirm-payment" */) 
-    },
     data: () => ({
-        dialogConfirmPayment: false,
+        dialogOrderSuccess: false,
+        loadingMakeOrder: false,
     }),
     computed: {
         ...mapGetters([
@@ -185,12 +175,58 @@ export default {
         ...mapActions([
             'addToCart',
             'removeFromCart',
+            'makeOrder',
         ]),
         ...mapMutations([
             'subtractFromCart',
+            'emptyCart',
         ]),
-        openDialogConfirm() {
-            this.dialogConfirmPayment = true;
+        async confirmOrder() {
+            this.loadingMakeOrder = true;
+            const willOrder = await swal({
+                title: "Buat pesanan?",
+                text: "Pesanan tetap bisa dibatalkan dan saldo akan kembali.",
+                icon: "warning",
+                closeOnClickOutside: false,
+                buttons: {
+                    cancel: {
+                        text: "Kembali",
+                        value: false,
+                        visible: true,
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Pesan",
+                        value: true,
+                        visible: true,
+                        closeModal: false
+                    }
+                }
+            });
+
+            if(willOrder) {
+                try {
+                    const res = await this.makeOrder(this.$user.info().id);
+                    swal({
+                        title: "Pesanan dibuat!",
+                        icon: "success",
+                        button: "Close",
+                    });
+
+                    this.$router.push('/orders');
+                    this.emptyCart();
+                } catch (err) {
+                    console.log(err);
+                    const code = err.response.status;
+                    swal({
+                        title: "Oops!",
+                        text: `Error ${code}.`,
+                        icon: "error",
+                    });
+                }
+            } else {
+                this.loadingMakeOrder = false;
+            }
         }
     },
 }

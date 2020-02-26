@@ -61,9 +61,8 @@ export default new Vuex.Store({
         removeFromCart(state, inCartIdx) {
             state.cartItems.splice(inCartIdx, 1);
         },
-        emptyCart(state, item) {
+        emptyCart(state) {
             state.cartItems = [];
-            item.qty = 0;
         },
     },
     actions: {
@@ -98,7 +97,8 @@ export default new Vuex.Store({
                     });
                     
                     if(res) {
-                        commit('emptyCart', item);
+                        commit('emptyCart');
+                        item.qty = 0;
                     } else {
                         return Promise.resolve(false);
                     }
@@ -139,35 +139,31 @@ export default new Vuex.Store({
                 });
             }
         },
-        makeOrder({ state }, name) {
-            return new Promise((resolve, reject) => {
-                const total = state.cartItems.reduce((acc, item) => 
-                    acc + (item.price * item.qty)
-                , 0)
-    
-                const data = state.cartItems.map(
-                    (item) => ({
-                        product_id: item.id,
-                        harga_satuan: item.price,
-                        quantity: item.qty
-                    })
-                );
-    
-                axios.post('/api/nota', {
-                    customer: name,
-                    harga_total: total,
-                    products: data
-                },{
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json',
-                    }
-                }).then(res => {
-                    resolve(res);
-                }).catch(err => {
-                    reject(err);
-                })
-            })
+        makeOrder({ state }, userId) {
+            let total = 0;
+            const data = state.cartItems.map(item => {
+                total += item.price * item.qty;
+                return {
+                    product_id: item.id,
+                    harga_satuan: item.price,
+                    quantity: item.qty
+                }
+            });
+
+            const standId = state.cartItems[0].stand_id;
+
+            return axios.post('/api/nota', {
+                user_id: userId,
+                stand_id: standId,
+                harga_total: total,
+                products: data
+            },{
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                }
+            });
+
         },
     }
 })

@@ -24,7 +24,7 @@
                             <span class="subheading font-weight-medium">Stand {{ getStandName(item) }}</span>
                             <v-spacer></v-spacer>
                             <v-chip
-                                color="red" text-color="white"
+                                color="error" text-color="white"
                                 v-if="!!item.is_cancel"
                             >
                                 <strong>Batal</strong>
@@ -57,15 +57,16 @@
                             </div>
                         </v-card-text>
                         <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="accent" flat round
+                            <v-btn color="primary" flat round
                                 @click="seeOrderDetail(item)"
                             >
-                                <v-icon left>info</v-icon>
+                                <v-icon left>description</v-icon>
                                 detail
                             </v-btn>
-                            <v-btn color="primary" round
+                            <v-spacer></v-spacer>
+                            <v-btn color="success" round
                                 v-if="!item.is_paid && !item.is_cancel"
+                                @click="openScanQR(item)"
                             >
                                 <v-icon left>local_dining</v-icon>
                                 ambil
@@ -131,15 +132,15 @@
                         </span>
                     </v-card-title>
                     <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="red" flat round
+                        <v-btn color="error" round
                             @click="cancelOrder(currentItem)"
                             v-if="!currentItem.is_paid && !currentItem.is_cancel"
                         >
                             <v-icon left>cancel</v-icon>
                             batal
                         </v-btn>
-                        <v-btn color="primary" round
+                        <v-spacer></v-spacer>
+                        <v-btn color="success" round
                             v-if="!currentItem.is_paid && !currentItem.is_cancel"
                             @click="openScanQR(currentItem)"
                         >

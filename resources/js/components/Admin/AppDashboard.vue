@@ -66,31 +66,31 @@ export default {
         routes: [
             {
                 icon: "store_mall_directory",
-                title: "Stand saya",
+                title: "Stand Saya",
                 route: "/my-stand",
                 roleId: ROLE_SELLER,
             },
             {
                 icon: "assignment",
-                title: "Daftar Transaksi",
+                title: "Rekap Transaksi",
                 route: "/stand-transactions",
                 roleId: ROLE_SELLER,
             },
             {
                 icon: "local_atm",
-                title: "Isi saldo",
+                title: "Isi Saldo",
                 route: "/admin-topup",
                 roleId: ROLE_ADMIN,
             },
             {
                 icon: "store_mall_directory",
-                title: "Semua stand",
+                title: "Semua Stand",
                 route: "/all-stands",
                 roleId: ROLE_ADMIN,
             },
             {
                 icon: "receipt",
-                title: "Transaksi",
+                title: "Rekap Transaksi",
                 route: "/transactions",
                 roleId: ROLE_ADMIN,
             },

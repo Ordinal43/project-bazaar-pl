@@ -65,6 +65,12 @@ export default {
         drawer: true,
         routes: [
             {
+                icon: "receipt",
+                title: "Daftar Pesanan",
+                route: "/seller-orders",
+                roleId: ROLE_SELLER,
+            },
+            {
                 icon: "store_mall_directory",
                 title: "Stand Saya",
                 route: "/my-stand",

@@ -35,7 +35,6 @@
                                 <stand-order-table
                                     :items="listOngoingOrders"
                                     :loading="loadingOngoingOrders"
-                                    :isOngoing="true"
                                     @fetchData="fetchOngoingOrders"
                                     :hideSummary="true"
                                 ></stand-order-table>

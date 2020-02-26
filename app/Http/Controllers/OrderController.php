@@ -14,7 +14,7 @@ class OrderController extends Controller
         if ($request->has('stand')) {
             return response()->json(
                 Order::with([
-                    'Nota:id,customer',
+                    'Nota:id,user_id',
                     'Product'=> function($query) use ($request) {
                         $query->where('stand_id', '=', $request->input('stand'));
                         $query->select('id', 'name');
@@ -26,7 +26,7 @@ class OrderController extends Controller
             );
         }
 
-        return response()->json(Order::with(['Nota:id,customer', 'Product:id,name'])->get(),200);
+        return response()->json(Order::with(['Nota:id,user_id', 'Product:id,name'])->get(),200);
     }
 
 
@@ -35,7 +35,7 @@ class OrderController extends Controller
         if ($request->has('stand')) {
             return response()->json(
                 Order::with([
-                    'Nota:id,customer',
+                    'Nota:id,user_id',
                     'Product'=> function($query) use ($request) {
                         $query->where('stand_id', '=', $request->input('stand'));
                         $query->select('id', 'name');
@@ -45,7 +45,7 @@ class OrderController extends Controller
             );
         }
 
-        return response()->json(Order::with(['Nota:id,customer', 'Product:id,name'])->get(),200);
+        return response()->json(Order::with(['Nota:id,user_id', 'Product:id,name'])->get(),200);
     }
 
     public function indexNull(Request $request)
@@ -53,7 +53,7 @@ class OrderController extends Controller
         if ($request->has('stand')) {
             return response()->json(
                 Order::with([
-                    'Nota:id,customer',
+                    'Nota:id,user_id',
                     'Product'=> function($query) use ($request) {
                         $query->where('stand_id', '=', $request->input('stand'));
                         $query->select('id', 'name');
@@ -63,7 +63,7 @@ class OrderController extends Controller
             );
         }
 
-        return response()->json(Order::with(['Nota:id,customer', 'Product:id,name'])->get(),200);
+        return response()->json(Order::with(['Nota:id,user_id', 'Product:id,name'])->get(),200);
     }
 
     public function all()
@@ -71,7 +71,7 @@ class OrderController extends Controller
         return response()->json(Order::with([
             'Nota' => function($query)
             {
-                $query->select('id','customer');
+                $query->select('id','user_id');
             },
             'Product'=> function($query){
                 $query->withTrashed();
@@ -88,7 +88,7 @@ class OrderController extends Controller
         return response()->json(Order::with([
             'Nota' => function($query)
             {
-                $query->select('id','customer');
+                $query->select('id','user_id');
             },
             'Product'=> function($query){
                 $query->withTrashed();
@@ -105,7 +105,7 @@ class OrderController extends Controller
         return response()->json(Order::with([
             'Nota' => function($query)
             {
-                $query->select('id','customer');
+                $query->select('id','user_id');
             },
             'Product'=> function($query){
                 $query->withTrashed();
@@ -122,7 +122,7 @@ class OrderController extends Controller
         return response()->json(Order::with([
             'Nota' => function($query)
             {
-                $query->select('id','customer');
+                $query->select('id','user_id');
             },
             'Product'=> function($query){
                 $query->withTrashed();

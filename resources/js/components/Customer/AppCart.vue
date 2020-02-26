@@ -82,7 +82,7 @@
                             'pt-0': true,
                             'red--text': notEnoughBalance 
                         }">
-                            {{ notEnoughBalance? 'Saldo kurang' : 'Sisa saldo' }}
+                            {{ notEnoughBalance? 'PL Pay kurang' : 'Sisa PL Pay' }}
                             <v-spacer></v-spacer>
                             <span>
                                 {{ $rupiahFormat($user.info().balance - getSubtotal) }}

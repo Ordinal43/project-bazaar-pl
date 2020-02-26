@@ -82,7 +82,7 @@
         >
             <v-card class="rounded">
                 <v-card-title>
-                    <h3 class="title">Keranjang</h3>
+                    <h3 class="subheading font-weight-bold">Keranjang</h3>
                     <v-spacer></v-spacer>
                     <v-btn icon @click="dialogBasket = false">
                         <v-icon>close</v-icon>

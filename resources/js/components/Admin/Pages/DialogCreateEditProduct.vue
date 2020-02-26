@@ -19,36 +19,6 @@
         </v-card-text>
         <v-form ref="form_new_menu" @submit.prevent="createNewMenu"
         v-show="!dialogLoading">
-            <v-card-text class="text-xs-center">
-                <v-slide-y-transition>
-                    <v-img class="menu-img"
-                        v-if="!!fileUrl"
-                        :src="fileUrl"
-                        max-height="200px"
-                        contain
-                    ></v-img>
-                </v-slide-y-transition>
-
-                <div style="height: 21px">
-                    <v-slide-y-transition>
-                        <div class="red--text" v-if="noImageError">
-                            Gambar produk harus diupload!
-                        </div>
-                    </v-slide-y-transition>
-                </div>
-
-                <v-btn color="primary" outline round @click="pickFile">
-                    <v-icon left>add_a_photo</v-icon>
-                    Upload Gambar
-                </v-btn>
-                
-                <input type="file"
-                    ref="file"
-                    name="thumbnail"
-                    @change="onFileChange(
-                        $event.target.name, $event.target.files)"
-                    style="display:none">
-            </v-card-text>
             <v-card-text>
             <v-container grid-list-lg>
                 <v-layout row wrap>
@@ -86,6 +56,36 @@
                     </v-flex>
                 </v-layout>
             </v-container>     
+            </v-card-text>
+            <v-card-text class="text-xs-center">
+                <v-slide-y-transition>
+                    <v-img class="menu-img"
+                        v-if="!!fileUrl"
+                        :src="fileUrl"
+                        max-height="200px"
+                        contain
+                    ></v-img>
+                </v-slide-y-transition>
+
+                <div style="height: 21px">
+                    <v-slide-y-transition>
+                        <div class="red--text" v-if="noImageError">
+                            Gambar produk harus diupload!
+                        </div>
+                    </v-slide-y-transition>
+                </div>
+
+                <v-btn color="primary" outline round @click="pickFile">
+                    <v-icon left>add_a_photo</v-icon>
+                    Upload Gambar
+                </v-btn>
+                
+                <input type="file"
+                    ref="file"
+                    name="thumbnail"
+                    @change="onFileChange(
+                        $event.target.name, $event.target.files)"
+                    style="display:none">
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>

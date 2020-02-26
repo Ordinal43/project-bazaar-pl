@@ -15,7 +15,7 @@ class OrderSeeder extends Seeder
                 'product_id' => $faker->numberBetween(2,6),
                 'harga_satuan' => $faker->randomNumber(2),
                 'quantity' => $faker->randomNumber(1),
-                'nota_id' => $faker->numberBetween(2,6),   
+                'nota_id' => $i,   
             ]);
         }
     }

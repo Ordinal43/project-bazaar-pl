@@ -1,5 +1,5 @@
 <template>
-    <v-container grid-list-lg class="my-3">
+    <v-container grid-list-lg>
         <v-layout row wrap justify-center>
             <v-flex xs12>
                 <p class="headline primary--text">Isi saldo</p>

@@ -1,96 +1,99 @@
 <template>
     <v-container grid-list-lg>
-        <v-layout row wrap v-if="loading">
-            <v-flex xs12 class="text-xs-center">
-                <v-progress-circular
-                    :size="70"
-                    :width="7"
-                    color="primary"
-                    indeterminate
-                ></v-progress-circular>
-            </v-flex>
-        </v-layout>
-        <div v-show="!loading">
-            <v-layout row align-center>
-                <v-btn fab dark color="primary" to="/all-stands" v-if="$user.info().role_id == 1">
-                    <v-icon>arrow_back</v-icon>
-                </v-btn>
-                <div class="ml-4">
-                    <v-layout row wrap align-center>
-                        <span class="headline font-weight-bold mr-1">
-                            Stand {{ name }}
-                        </span>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-btn flat icon color="primary" 
-                                    @click="editStand" v-on="on">
-                                    <v-icon>create</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Tooltip</span>
-                        </v-tooltip>
-                    </v-layout>
-                    <v-layout row wrap>
-                        <div class="subheading">{{ description }}</div>
-                    </v-layout>
-                </div>
-            </v-layout>
-            <v-divider class="mt-4"></v-divider>
-            <v-container grid-list-lg>
-                <v-layout row align-center class="mt-2 mb-3">
-                    <v-flex xs6 class="title font-weight-bold">
-                        Daftar Menu
-                    </v-flex>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="openProductDialog">
-                        <v-icon left>add</v-icon>
-                        menu baru
+        <v-layout row wrap>
+            <template v-if="loading">
+                <v-flex xs12 class="text-xs-center">
+                    <v-progress-circular
+                        :size="70"
+                        :width="7"
+                        color="primary"
+                        indeterminate
+                    ></v-progress-circular>
+                </v-flex>
+            </template>
+            <template v-else>
+                <v-flex xs12 class="flex-container">
+                    <v-btn fab dark color="primary" 
+                        to="/all-stands" 
+                        v-if="$user.info().role_id == 1"
+                    >
+                        <v-icon>arrow_back</v-icon>
                     </v-btn>
-                </v-layout>
-                <v-layout row wrap>
-                    <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
-                        <v-card class="rounded menu-card" height="100%">
+                    <div :class="`${$user.info().role_id == 1? 'ml-3' : ''}`">
+                        <div class="flex-container">
+                            <span class="headline primary--text mr-1">
+                                Stand {{ name }}
+                            </span>
                             <div>
-                            <v-img class="menu-img"
-                            :src="item.image"
-                            :aspect-ratio="16/9"
-                            ></v-img>
-
-                            <v-card-text>
-                                <p class="title font-weight-regular">{{ item.name }}</p>
-                                <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
-                                <div class="subheading">Sisa {{ item.units }}</div>
-                            </v-card-text>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn flat icon color="primary" 
+                                            @click="editStand" v-on="on">
+                                            <v-icon>create</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>Tooltip</span>
+                                </v-tooltip>
                             </div>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="warning" flat round @click="editProduct(item.id)">
-                                    <v-icon left>create</v-icon>
-                                    edit
-                                </v-btn>
-                                <v-btn color="error" flat round @click="deleteProduct(item.id)">
-                                    <v-icon left>delete</v-icon>
-                                    delete
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-                <v-dialog
-                    v-model="dialogCreateEditProduct"
-                    persistent max-width="600px"
-                    lazy
-                >
-                    <dialog-create-edit-product 
-                        @close="closeProduct" 
-                        @create_success="reloadProduct"
-                        :productId="parseInt(productId)" 
-                        :stand="parseInt(stand)"
-                        :key="dialogCreateEditProductKey">
-                    </dialog-create-edit-product>
-                </v-dialog>
-            </v-container>
-        </div>
+                        </div>
+                        <div class="subheading">{{ description }}</div>
+                    </div>
+                </v-flex>
+                <v-flex xs12>
+                    <v-layout row align-center class="mt-2 mb-3">
+                        <v-flex xs6 class="subheading font-weight-bold">
+                            Daftar Menu
+                        </v-flex>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" @click="openProductDialog">
+                            <v-icon left>add</v-icon>
+                            menu baru
+                        </v-btn>
+                    </v-layout>
+                </v-flex>
+                <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                    <v-card class="rounded menu-card" height="100%">
+                        <div>
+                        <v-img class="menu-img"
+                        :src="item.image"
+                        :aspect-ratio="16/9"
+                        ></v-img>
+
+                        <v-card-text>
+                            <p class="title font-weight-regular">{{ item.name }}</p>
+                            <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
+                            <div class="subheading">Sisa {{ item.units }}</div>
+                        </v-card-text>
+                        </div>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="warning" flat round @click="editProduct(item.id)">
+                                <v-icon left>create</v-icon>
+                                edit
+                            </v-btn>
+                            <v-btn color="error" flat round @click="deleteProduct(item.id)">
+                                <v-icon left>delete</v-icon>
+                                delete
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-flex>
+            </template>
+        </v-layout>
+
+        <v-dialog
+            v-model="dialogCreateEditProduct"
+            persistent max-width="600px"
+            lazy
+        >
+            <dialog-create-edit-product 
+                @close="closeProduct" 
+                @create_success="reloadProduct"
+                :productId="parseInt(productId)" 
+                :stand="parseInt(stand)"
+                :key="dialogCreateEditProductKey">
+            </dialog-create-edit-product>
+        </v-dialog>
 
         <v-dialog
             v-model="dialogEditStand"
@@ -220,3 +223,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+    .flex-container {
+        display: flex;
+        align-items: center;
+    }
+</style>

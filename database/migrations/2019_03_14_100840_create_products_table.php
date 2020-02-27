@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->Integer('units')->default(0);
+            $table->boolean('is_available')->default(true);
             $table->string('image');
             $table->unsignedInteger('stand_id');
             $table->double('price');

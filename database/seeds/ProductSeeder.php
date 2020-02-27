@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => $faker->name,
                 'description' => $faker->name,
-                'units' => $faker->numberBetween(10,20),
+                'is_available' => true,
                 'stand_id' => $faker->numberBetween(2,6),
                 'price' => $faker->randomNumber(4),
                 'image' => $faker->imageUrl($width = 640, $height = 480),

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductController extends Controller
 {
-  
+   
     
     public function random()
     {
@@ -16,7 +16,7 @@ class ProductController extends Controller
     }
 
     public function allProduct(){
-        return response()->json(Product::select('id','name','units','image','price','stand_id')
+        return response()->json(Product::select('id','name','is_available','image','price','stand_id')
         ->with([
             'Stand:id,stand_name'
             ])->get(),200);
@@ -38,7 +38,7 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->name,
             'description' => $request->description,
-            'units' => $request->units,
+            'is_available' => true,
             'price' => $request->price,
             'image' => $this->uploadImage($request),
             'stand_id' => $request->stand_id
@@ -83,15 +83,11 @@ class ProductController extends Controller
 
     public function update(Request $request, $product)
     {
-        // $data = $request->only(['name', 'description', 'units', 'price', 'stand_id']);
-        // $data['image'] = $this->uploadImage($request, $product->image);
-
-        // $status = $product->update($data);
 
         $status = Product::find($product);
         $status->name = $request['name'];
         $status->description = $request['description'];
-        $status->units = $request['units'];
+        $status->is_available = $request['is_available'];
         $status->price = $request['price'];
         $status->stand_id = $request['stand_id'];
         if($request->hasFile('image')){

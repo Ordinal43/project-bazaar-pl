@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { QrcodeStream } from 'vue-qrcode-reader'
 
 const CAMERA_ON = 'auto'
@@ -113,11 +114,15 @@ export default {
         },
     },
     methods: {
+        ...mapActions([
+            'firebaseAddQR',
+        ]),
         async onDecode (result) {
             this.camera = CAMERA_OFF;
             try {
                 const res = await this.validateScanResult(result)
                 if(!!res.data.status) {
+                    await this.firebaseAddQR(result);
                     this.$router.replace({path: "/topup-success"});
                 } else {
                     swal({

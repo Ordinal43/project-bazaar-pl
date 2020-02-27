@@ -136,6 +136,8 @@
 </template>
 
 <script>
+import { firebaseDB } from '../../../helpers/Firebase'
+
 export default {
     components: {
         TopupTable: () => import('./TopupTable' /* webpackChunkName: "js/chunk-topup-table" */),
@@ -162,18 +164,10 @@ export default {
         listAvailableVoucher: [],
         listRedeemedVoucher: [],
         listAllVoucher: [],
-
     }),
     watch: {
-        activeTab(val) {
-            switch(val) {
-                case "tab-0": this.fetchAvailableVoucher()
-                    break;
-                case "tab-1": this.fetchRedeemedVoucher()
-                    break;
-                case "tab-2": this.fetchAllVoucher()
-                    break;
-            }
+        activeTab() {
+            this.getVouchers();
         }
     },
     methods: {
@@ -206,6 +200,16 @@ export default {
                     text: `Error [${code}]. Please try again later.`,
                     icon: "error",
                 });
+            }
+        },
+        getVouchers() {
+            switch(this.activeTab) {
+                case "tab-0": this.fetchAvailableVoucher()
+                    break;
+                case "tab-1": this.fetchRedeemedVoucher()
+                    break;
+                case "tab-2": this.fetchAllVoucher()
+                    break;
             }
         },
         fetchAvailableVoucher() {
@@ -254,6 +258,13 @@ export default {
                 this.$refs.inputAmount.focus();
             })
         }
+    },
+    mounted() {
+        firebaseDB.collection("redeemed_qr")
+        .onSnapshot(() => {
+            this.closeDialog();
+            this.getVouchers();
+        });
     },
 }
 </script>

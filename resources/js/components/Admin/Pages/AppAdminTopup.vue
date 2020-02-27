@@ -20,7 +20,7 @@
                         <v-spacer></v-spacer>
                         <v-btn color="primary" large round
                             :disabled="amount <= 0 || !amount"
-                            :loading="loadingVoucher"
+                            :loading="loadingCreateVoucher"
                             @click="generateVoucher"
                         >
                             buat kode
@@ -148,7 +148,7 @@ export default {
             required: v => !!v || 'Harus diisi',
             tooMuch: v => v < 100000 || 'Nilai terlalu besar!',
         },
-        loadingVoucher: false,
+        loadingCreateVoucher: false,
         dialogQR: false,
         shownQR: '',
 
@@ -172,7 +172,7 @@ export default {
     },
     methods: {
         async generateVoucher() {
-            this.loadingVoucher = true;
+            this.loadingCreateVoucher = true;
             try {
                 const res = await axios.post('/api/voucher', {
                     nominal: this.amount,
@@ -184,7 +184,7 @@ export default {
                 });
 
 
-                this.loadingVoucher = false;
+                this.loadingCreateVoucher = false;
                 if(this.activeTab === 'tab-0') {
                     this.fetchAvailableVoucher();
                 } else {

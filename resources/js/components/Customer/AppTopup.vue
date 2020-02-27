@@ -125,7 +125,7 @@ export default {
                     await this.notifyQRChange(result);
                     this.$router.replace({path: "/topup-success"});
                 } else {
-                    swal({
+                    await swal({
                         title: "Redeem gagal!",
                         text: res.data.message,
                         icon: "error",

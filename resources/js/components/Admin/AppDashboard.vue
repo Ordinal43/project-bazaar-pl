@@ -10,6 +10,15 @@
             <v-container grid-list-lg class="title">
                 <span class="font-weight-light">Halo,</span>
                 <span class="font-weight-medium primary--text">{{ $user.info().name }}</span>
+
+                <div class="my-4 primary--text balance" justify-content-start v-if="$user.info().role_id == 2">
+                    <span class="mr-1">
+                        Rp
+                    </span>
+                    <span class="headline font-weight-bold">
+                        {{ balanceFormat($user.info().balance) }}
+                    </span>
+                </div>
             </v-container>
             <v-list>
                 <template v-for="(item, index) in routes">
@@ -56,32 +65,38 @@ export default {
         drawer: true,
         routes: [
             {
+                icon: "receipt",
+                title: "Daftar Pesanan",
+                route: "/seller-orders",
+                roleId: ROLE_SELLER,
+            },
+            {
                 icon: "store_mall_directory",
-                title: "Stand saya",
+                title: "Stand Saya",
                 route: "/my-stand",
                 roleId: ROLE_SELLER,
             },
             {
                 icon: "assignment",
-                title: "Daftar Transaksi",
+                title: "Rekap Transaksi",
                 route: "/stand-transactions",
                 roleId: ROLE_SELLER,
             },
             {
                 icon: "local_atm",
-                title: "Isi saldo",
+                title: "Isi Saldo",
                 route: "/admin-topup",
                 roleId: ROLE_ADMIN,
             },
             {
                 icon: "store_mall_directory",
-                title: "Semua stand",
+                title: "Semua Stand",
                 route: "/all-stands",
                 roleId: ROLE_ADMIN,
             },
             {
                 icon: "receipt",
-                title: "Transaksi",
+                title: "Rekap Transaksi",
                 route: "/transactions",
                 roleId: ROLE_ADMIN,
             },
@@ -93,6 +108,12 @@ export default {
         ])
     },
     methods: {
+        balanceFormat(value) {
+            value = parseFloat(value);
+            return value.toLocaleString(
+                "de-DE", { minimumFractionDigits: 0 }
+            );
+        },
         async logout() {
             try {
                 await this.$user.logout();
@@ -109,3 +130,9 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    .balance {
+        display: flex;
+    }
+</style>

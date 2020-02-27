@@ -2,6 +2,7 @@
     <v-card class="rounded" hover
         :ripple="{ class: 'primary--text' }"
         :to="`stands/${item.id}`"
+        height="100%"
     >
         <v-img
             src="/assets/stand_placeholder.jpg"

@@ -22,6 +22,7 @@ class NotaController extends Controller
         return response()->json(Nota::with([
            'Order', 'Order.Product.Stand:id,stand_name'
             ])
+            ->orderBy('id','DESC')
             ->get(),200);
     }
 
@@ -31,6 +32,7 @@ class NotaController extends Controller
            'Order', 'Order.Product.Stand:id,stand_name','Users:id,name'
             ])
             ->where('stand_id',$stand)
+            ->orderBy('id','DESC')
             ->get(),200);
     }
 
@@ -40,6 +42,7 @@ class NotaController extends Controller
            'Order', 'Order.Product.Stand:id,stand_name'
             ])
             ->where('user_id',$user)
+            ->orderBy('id','DESC')
             ->get(),200);
     }
 

@@ -1,80 +1,65 @@
 <template>
-    <v-container grid-list-lg class="mb-5">
-        <div class="subheading font-weight-bold">
-            Daftar pesanan
-        </div>
-
-        <v-divider class="my-2"></v-divider>
-    
+    <v-container grid-list-lg>
         <v-layout row wrap>
-            <template v-if="loading">
-                <v-flex xs12 class="text-xs-center">
-                    <v-progress-circular
-                        :size="70"
-                        :width="7"
-                        color="primary"
-                        indeterminate
-                    ></v-progress-circular>
-                </v-flex>
-            </template>
-            <template v-else>
-                <v-flex xs12 md6 xl4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
-                    <v-card class="rounded">
-                        <v-card-title class="pb-1">
-                            <span class="subheading font-weight-medium">Stand {{ getStandName(item) }}</span>
-                            <v-spacer></v-spacer>
-                            <v-chip
-                                color="error" text-color="white"
-                                v-if="!!item.is_cancel"
-                            >
-                                <strong>Batal</strong>
-                            </v-chip>
-                            <v-chip
-                                color="success" text-color="white"
-                                v-else-if="!!item.is_paid"
-                            >
-                                <strong>Selesai</strong>
-                            </v-chip>
-                            <v-chip
-                                color="warning" text-color="white"
-                                v-else
-                            >
-                                <strong>Belum ambil</strong>
-                            </v-chip>
-                        </v-card-title>
-                        <v-card-text class="pt-0 pb-0">
-                            <div class="pb-1">
-                                {{ $getDateString(item.created_at) }}, {{ $getTimeString(item.created_at) }}
-                            </div>
-                            <div>
-                                <span class="font-weight-medium primary--text">
-                                    {{ $rupiahFormat(item.harga_total) }}
-                                </span>
-                                <span class="grey--text px-1">|</span>
-                                <span class="grey--text text--darken-1">
-                                    {{ item.order.length }} Menu, {{ getTotalPortion(item) }} porsi
-                                </span>
-                            </div>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-btn color="primary" flat round
-                                @click="seeOrderDetail(item)"
-                            >
-                                <v-icon left>description</v-icon>
-                                detail
-                            </v-btn>
-                            <v-spacer></v-spacer>
-                            <v-btn color="success" round
-                                v-if="!item.is_paid && !item.is_cancel"
-                                @click="openScanQR(item)"
-                            >
-                                <v-icon left>local_dining</v-icon>
-                                ambil
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-flex>
-            </template>        
+            <v-flex xs12>
+                <p class="headline primary--text">Daftar Pesanan</p>
+            </v-flex>
+            <v-flex xs12 md6 lg4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
+                <v-card class="rounded">
+                    <v-card-title class="pb-1">
+                        <span class="subheading font-weight-medium">{{ "Nama user" }}</span>
+                        <v-spacer></v-spacer>
+                        <v-chip
+                            color="red" text-color="white"
+                            v-if="!!item.is_cancel"
+                        >
+                            <strong>Batal</strong>
+                        </v-chip>
+                        <v-chip
+                            color="success" text-color="white"
+                            v-else-if="!!item.is_paid"
+                        >
+                            <strong>Selesai</strong>
+                        </v-chip>
+                        <v-chip
+                            color="warning" text-color="white"
+                            v-else
+                        >
+                            <strong>Belum ambil</strong>
+                        </v-chip>
+                    </v-card-title>
+                    <v-card-text class="pt-0 pb-0">
+                        <div class="pb-1">
+                            {{ $getDateString(item.created_at) }}, {{ $getTimeString(item.created_at) }}
+                        </div>
+                        <div>
+                            <span class="font-weight-medium primary--text">
+                                {{ $rupiahFormat(item.harga_total) }}
+                            </span>
+                            <span class="grey--text px-1">|</span>
+                            <span class="grey--text text--darken-1">
+                                {{ item.order.length }} Menu, {{ getTotalPortion(item) }} porsi
+                            </span>
+                        </div>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-btn color="primary" flat round
+                            @click="seeOrderDetail(item)"
+                        >
+                            <v-icon left>description</v-icon>
+                            detail
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn color="success" round
+                            v-if="!item.is_paid && !item.is_cancel"
+                            @click="showQR(item)"
+                        >
+                            <v-icon left>done</v-icon>
+                            selesai
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-flex>
         </v-layout>
 
         <v-dialog
@@ -86,7 +71,7 @@
                 <template v-if="!!currentItem">
                     <v-card-title>
                         <div>
-                            <h3 class="subheading font-weight-bold">Stand {{ getStandName(currentItem) }}</h3>
+                            <h3 class="subheading font-weight-bold">{{ "Nama user" }}</h3>
                             <span>
                                 {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
                             </span>
@@ -142,10 +127,10 @@
                         <v-spacer></v-spacer>
                         <v-btn color="success" round
                             v-if="!currentItem.is_paid && !currentItem.is_cancel"
-                            @click="openScanQR(currentItem)"
+                            @click="showQR(currentItem)"
                         >
-                            <v-icon left>local_dining</v-icon>
-                            ambil
+                            <v-icon left>done</v-icon>
+                            selesai
                         </v-btn>
                     </v-card-actions>
                 </template>
@@ -153,38 +138,63 @@
         </v-dialog>
 
         <v-dialog
-            v-model="dialogScan"
-            persistent lazy
+            v-model="dialogQR"
             max-width="500px"
         >
-            <ScanTransaction
-                :isOpen="dialogScan"
-                :item="currentItem"
-                @close="dialogScan = false"
-                :key="scanComponentKey"
-            ></ScanTransaction>
+            <v-card class="rounded">
+                <v-card-title class="pb-0">
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="dialogQR = false">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </v-card-title>
+                <v-card-text class="text-xs-center">
+                    <div class="mb-2 text-xs-center subheading" v-if="currentItem">
+                        <div>
+                            Pemesan: <strong>User</strong>
+                        </div>
+                        <div>
+                            Tanggal pesan:
+                            <strong>
+                                {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
+                            </strong>
+                        </div>
+                        <div>
+                            Harga total: <strong>{{ $rupiahFormat(currentItem.harga_total) }}</strong>
+                        </div>
+                    </div>
+                    <qrcode v-if="!!shownQR" :value="shownQR" :options="{ width: 300 }"></qrcode>
+                    <div class="text-xs-center">
+                        Jika makanan 
+                        <span class="font-weight-bold accent--text">sudah diambil</span>
+                        , minta
+                        <span class="font-weight-bold accent--text">customer</span>
+                        anda untuk
+                        <span class="font-weight-bold accent--text">scan kode ini</span>
+                        sebagai tanda
+                        <span class="font-weight-bold accent--text">transaksi selesai</span>
+                        !
+                    </div>
+                </v-card-text>
+            </v-card>
         </v-dialog>
     </v-container>
 </template>
 
 <script>
 export default {
-    components: {
-        ScanTransaction: () => import('./ScanTransaction' /* webpackChunkName: "js/chunk-scan-transaction" */)
-    },
     data: () => ({
         listOrders: [],
         loading: true,
         dialogDetail: false,
         currentItem: null,
 
-        dialogScan: false,
-        scanComponentKey: 0,
+        dialogQR: false,
+        shownQR: '',
     }),
     methods: {
-        getListOrders() {
-            this.loading = true;
-            axios.get(`/api/nota-user/${this.$user.info().id}`)
+        getStandOrders() {
+            axios.get(`/api/nota-stand/${this.$user.getStand().id}`)
             .then(res => {
                 this.listOrders = res.data;
                 this.loading = false;
@@ -192,11 +202,6 @@ export default {
             .catch(err => {
                 console.log(err);
             })
-        },
-        getStandName(item) {
-            const product = (item.order[0] || {}).product || {};
-            const standName = (product.stand || {}).stand_name || "??" 
-            return standName;
         },
         getTotalPortion(item) {
             return item.order.reduce((acc, item) => acc + item.quantity, 0);
@@ -208,7 +213,7 @@ export default {
         async cancelOrder(item) {
             const willCancel = await swal({
                 title: "Batalkan pesanan?",
-                text: "Saldo PL Pay anda akan dikembalikan.",
+                text: "Saldo PL Pay anda akan dikembalikan ke customer.",
                 icon: "warning",
                 dangerMode: true,
                 buttons: {
@@ -232,11 +237,10 @@ export default {
                     const res = await axios.patch(`/api/nota/cancel/${item.id}`)
                     swal({
                         title: "Pesanan dibatalkan!",
-                        text: "Saldo PL Pay dikembalikan.",
                         icon: "success",
                         button: "Close",
                     });
-                    this.getListOrders();
+                    this.getStandOrders();
                 } catch (err) {
                     console.log(err);
                     swal({
@@ -250,14 +254,14 @@ export default {
                 this.dialogDetail = false
             }
         },
-        openScanQR(item) {
+        showQR(item) {
             this.currentItem = item;
-            this.scanComponentKey = !!this.scanComponentKey? 0 : 1;
-            this.dialogScan = true;
+            this.shownQR = item.qrcode;
+            this.dialogQR = true;
         },
     },
     mounted() {
-        this.getListOrders();
+        this.getStandOrders();
     },
 }
 </script>

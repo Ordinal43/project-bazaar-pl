@@ -18,6 +18,7 @@ class StandController extends Controller
             Stand::with([
                 'Products'
             ])
+            ->orderBy('id','DESC')
             ->get(),200);
     }
 

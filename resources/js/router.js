@@ -59,6 +59,11 @@ const routes = [
                 meta: { roleId: 3 },
             },
             {
+                path: 'payment-success', 
+                component: () => import('./components/Customer/AppPaymentSuccess' /* webpackChunkName: "js/chunk-app-payment-success" */),
+                meta: { roleId: 3 },
+            },
+            {
                 path: 'products',
                 component: () => import('./components/Customer/AppAllProducts' /* webpackChunkName: "js/chunk-app-all-products" */),
                 meta: { roleId: 3 },
@@ -105,6 +110,11 @@ const routes = [
             //     meta: { roleId: 2 },
             // },
             {
+                path: 'seller-orders', 
+                component: () => import('./components/Admin/Pages/AppSellerOrders' /* webpackChunkName: "js/chunk-app-seller-orders" */),
+                meta: { roleId: 2 },
+            },
+            {
                 path: 'my-stand', 
                 component: () => import('./components/Admin/Pages/AppStandDetails' /* webpackChunkName: "js/chunk-app-my-stand-details" */),
                 meta: { roleId: 2 },
@@ -133,7 +143,6 @@ import User from './helpers/User'
 
 router.beforeEach(async (to, from, next) => {
     if(to.matched.some(route => route.meta.requiresAuth)) {
-        
         if(!User.loggedIn()) {
             next({path: '/login', replace: true})
             return
@@ -149,7 +158,7 @@ router.beforeEach(async (to, from, next) => {
                                 next({path: '/admin-topup', replace: true});
                                 return;
                             case 2:
-                                next({path: '/my-stand', replace: true});
+                                next({path: '/seller-orders', replace: true});
                                 return;
                             case 3:
                                 next({path: '/home', replace: true});

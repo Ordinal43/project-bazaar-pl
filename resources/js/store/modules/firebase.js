@@ -7,11 +7,16 @@ const getters = {}
 const mutations = {}
 
 const actions = {
-    notifyQRChange(context, qrcode) {
-        return firebaseDB.collection('pkwu_pl')
-            .doc('refresh_qr')
-            .set({ qrcode })
-    }
+    async notifyQRChange(context, qrcode) {
+        const ref = firebaseDB
+        .collection('pkwu_pl').doc('refresh_qr')
+        
+        try {
+            return ref.set({ qrcode })
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
     async notifyNotaToSeller(context, standId) {
         const ref = firebaseDB
         .collection('pkwu_pl').doc('nota')

@@ -66,10 +66,10 @@
                                 v-if="!isError"
                                 class="qr-scanner"
                             >
-                                <div class="text-xs-center" v-if="loading">
+                                <div class="camera-pending primary--text" v-if="loading">
                                     Memuat...
                                 </div>
-                                <div v-if="validationPending" class="validation-pending">
+                                <div class="camera-pending primary--text" v-else-if="validationPending">
                                     Memvalidasi...
                                 </div>
                             </qrcode-stream>
@@ -147,10 +147,11 @@ export default {
             this.loading = true;
             try {
                 await promise;
-                this.isValid = undefined;
-                this.isError = false;
-                this.isRefreshable = false;
-                this.camera = CAMERA_ON;
+                if(!this.validationPending) {
+                    this.isError = false;
+                    this.isRefreshable = false;
+                    this.camera = CAMERA_ON;
+                }
             } catch (error) {
                 console.log(error);
                 this.isError = true;
@@ -178,7 +179,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .validation-pending {
+    .camera-pending {
         position: absolute;
         width: 100%;
         height: 100%;

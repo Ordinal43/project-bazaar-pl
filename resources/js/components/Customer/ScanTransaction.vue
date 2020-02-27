@@ -39,10 +39,10 @@
                         v-if="!isError"
                         class="qr-scanner"
                     >
-                        <div class="text-xs-center" v-if="loading">
+                        <div class="camera-pending primary--text" v-if="loading">
                             Memuat...
                         </div>
-                        <div v-if="validationPending" class="validation-pending">
+                        <div class="camera-pending primary--text" v-else-if="validationPending">
                             Memvalidasi...
                         </div>
                     </qrcode-stream>
@@ -93,8 +93,6 @@ export default {
             } else {
                 try {
                     const res = await this.validateScanResult(result)
-                    console.log(res.data);
-                    
                     if(!!res.data.status) {
                         this.$router.replace({path: "/payment-success"});
                     } else {
@@ -120,10 +118,12 @@ export default {
             this.loading = true;
             try {
                 await promise;
-                this.isValid = undefined;
-                this.isError = false;
-                this.isRefreshable = false;
-                this.camera = CAMERA_ON;
+                if(!this.validationPending) {
+                    this.isError = false;
+                    this.isRefreshable = false;
+                    this.camera = CAMERA_ON;
+                }
+                
             } catch (error) {
                 console.log(error);
                 this.isError = true;
@@ -151,14 +151,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .validation-pending {
+    .camera-pending {
         position: absolute;
         width: 100%;
         height: 100%;
 
         background-color: rgba(255, 255, 255, .8);
         text-align: center;
-        font-weight: bold;
         font-size: 1.4rem;
         padding: 10px;
 

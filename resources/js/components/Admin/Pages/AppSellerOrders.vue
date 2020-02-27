@@ -7,7 +7,7 @@
             <v-flex xs12 md6 lg4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
                 <v-card class="rounded">
                     <v-card-title class="pb-1">
-                        <span class="subheading font-weight-medium">{{ "Nama user" }}</span>
+                        <span class="subheading font-weight-medium">{{ item.users.name }}</span>
                         <v-spacer></v-spacer>
                         <v-chip
                             color="red" text-color="white"
@@ -71,7 +71,7 @@
                 <template v-if="!!currentItem">
                     <v-card-title>
                         <div>
-                            <h3 class="subheading font-weight-bold">{{ "Nama user" }}</h3>
+                            <h3 class="subheading font-weight-bold">{{ currentItem.users.name }}</h3>
                             <span>
                                 {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
                             </span>
@@ -151,7 +151,7 @@
                 <v-card-text class="text-xs-center">
                     <div class="mb-2 text-xs-center subheading" v-if="currentItem">
                         <div>
-                            Pemesan: <strong>User</strong>
+                            Pemesan: <strong>{{ currentItem.users.name }}</strong>
                         </div>
                         <div>
                             Tanggal pesan:

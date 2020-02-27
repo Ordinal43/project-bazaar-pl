@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { firebaseDB } from './helpers/Firebase'
+
 const CART_KEY = 'bazaar-pl-cart'
 
 Vue.use(Vuex)
@@ -165,5 +167,10 @@ export default new Vuex.Store({
             });
 
         },
+        firebaseAddQR({ state }, qrcode) {
+            return firebaseDB.collection('redeemed_qr').add({
+                qrcode,
+            })
+        }
     }
 })

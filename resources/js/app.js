@@ -9,6 +9,7 @@ import VInputNumber from './components/VInputNumber'
 import VueQrcode from '@chenfengyuan/vue-qrcode';
 import VueProgressBar from 'vue-progressbar'
 import VueSwal from 'vue-swal'
+import { firestorePlugin } from 'vuefire'
 import User from './helpers/User'
 import AppRoot from './components/AppRoot'
 
@@ -59,6 +60,9 @@ Vue.use(VueHtmlToPaper, {
         '/css/app.css',
     ],
 });
+
+// VueFire
+Vue.use(firestorePlugin)
 
 // Prototypes =================================
 

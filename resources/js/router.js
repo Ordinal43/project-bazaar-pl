@@ -104,11 +104,6 @@ const routes = [
                 component: () => import('./components/Admin/Pages/AppAdminTransaction' /* webpackChunkName: "js/chunk-app-admin-transaction" */), 
                 meta: { roleId: 1 },
             },
-            // {
-            //     path: 'order-menu', 
-            //     component: () => import('./components/Admin/Pages/AppOrder' /* webpackChunkName: "js/chunk-app-order" */),
-            //     meta: { roleId: 2 },
-            // },
             {
                 path: 'seller-orders', 
                 component: () => import('./components/Admin/Pages/AppSellerOrders' /* webpackChunkName: "js/chunk-app-seller-orders" */),

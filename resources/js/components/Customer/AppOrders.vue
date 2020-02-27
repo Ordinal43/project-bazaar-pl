@@ -168,6 +168,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { firebaseDB } from '../../helpers/Firebase'
+
 export default {
     components: {
         ScanTransaction: () => import('./ScanTransaction' /* webpackChunkName: "js/chunk-scan-transaction" */)
@@ -182,6 +185,9 @@ export default {
         scanComponentKey: 0,
     }),
     methods: {
+        ...mapActions([
+            'notifyNotaToSeller'
+        ]),
         getListOrders() {
             this.loading = true;
             axios.get(`/api/nota-user/${this.$user.info().id}`)
@@ -230,6 +236,7 @@ export default {
             if(willCancel) {
                 try {
                     const res = await axios.patch(`/api/nota/cancel/${item.id}`)
+                    await this.notifyNotaToSeller(item.stand_id);
                     swal({
                         title: "Pesanan dibatalkan!",
                         text: "Saldo PL Pay dikembalikan.",
@@ -258,6 +265,14 @@ export default {
     },
     mounted() {
         this.getListOrders();
+        const custId = (this.$user.info().id).toString();
+
+        firebaseDB
+        .collection('pkwu_pl').doc('nota')
+        .collection('customer').doc(custId.toString())
+        .onSnapshot((querySnapshot) => {
+            this.getListOrders();
+        });
     },
 }
 </script>

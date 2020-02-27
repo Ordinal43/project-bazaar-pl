@@ -175,6 +175,7 @@ export default {
             'addToCart',
             'removeFromCart',
             'makeOrder',
+            'notifyNotaToSeller'
         ]),
         ...mapMutations([
             'subtractFromCart',
@@ -205,7 +206,12 @@ export default {
 
             if(willOrder) {
                 try {
-                    const res = await this.makeOrder(this.$user.info().id);
+                    const custId = this.$user.info().id;
+                    const standId = this.getCartItems[0].stand_id;
+
+                    const res = await this.makeOrder(custId);
+                    await this.notifyNotaToSeller(standId);
+                    
                     swal({
                         title: "Pesanan dibuat!",
                         icon: "success",

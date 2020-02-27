@@ -58,6 +58,7 @@
     </v-card>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import { QrcodeStream } from 'vue-qrcode-reader'
 
 const CAMERA_ON = 'auto'
@@ -81,6 +82,9 @@ export default {
         },
     },
     methods: {
+        ...mapActions([
+            'notifyNotaToSeller'
+        ]),
         async onDecode (result) {
             this.camera = CAMERA_OFF;
             if(result !== this.item.qrcode) {
@@ -94,6 +98,7 @@ export default {
                 try {
                     const res = await this.validateScanResult(result)
                     if(!!res.data.status) {
+                        await this.notifyNotaToSeller(this.item.stand_id);
                         this.$router.replace({path: "/payment-success"});
                     } else {
                         await swal({

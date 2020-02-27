@@ -183,6 +183,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import { firebaseDB } from '../../../helpers/Firebase'
+
 export default {
     data: () => ({
         listOrders: [],
@@ -194,6 +197,9 @@ export default {
         shownQR: '',
     }),
     methods: {
+        ...mapActions([
+            'notifyNotaToCustomer'
+        ]),
         getStandOrders() {
             axios.get(`/api/nota-stand/${this.$user.getStand().id}`)
             .then(res => {
@@ -236,6 +242,7 @@ export default {
             if(willCancel) {
                 try {
                     const res = await axios.patch(`/api/nota/cancel/${item.id}`)
+                    await this.notifyNotaToCustomer(item.users.id);
                     swal({
                         title: "Pesanan dibatalkan!",
                         icon: "success",
@@ -263,6 +270,16 @@ export default {
     },
     mounted() {
         this.getStandOrders();
+
+        const standId = this.$user.getStand().id;        
+        
+        firebaseDB
+        .collection('pkwu_pl').doc('nota')
+        .collection('seller').doc(standId.toString())
+        .onSnapshot((doc) => {
+            this.dialogQR = false;
+            this.getStandOrders();
+        });
     },
 }
 </script>

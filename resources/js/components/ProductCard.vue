@@ -6,15 +6,17 @@
                 :aspect-ratio="4/3"
             ></v-img>
 
-            <v-card-text>
-                <div class="subheading mb-2">{{ item.name }}</div>
-                <div class="subheading font-weight-bold mb-4">{{ $rupiahFormat(item.price) }}</div>
-                <div class="blue--text font-weight-bold" v-if="item.units > 0">Sisa {{ item.units }}</div>
-                <div class="red--text text-uppercase font-weight-bold" v-else>habis!</div>
+            <v-card-text class="subheading">
+                <div class="mb-2">{{ item.name }}</div>
+                <div class="font-weight-bold mb-4">{{ $rupiahFormat(item.price) }}</div>
+                
+                <div :class="`font-weight-medium text-xs-right ${!!item.is_available? 'success' : 'error'}--text`">
+                    {{ !!item.is_available? 'Tersedia' : 'Habis' }}
+                </div>
             </v-card-text>
         </div>
         
-        <v-card-actions v-if="item.units > 0">
+        <v-card-actions v-if="!!item.is_available">
             <v-spacer></v-spacer>
             <v-btn 
                 color="accent"
@@ -28,7 +30,6 @@
             <v-btn 
                 color="primary" round 
                 @click="addItem(item)"
-                :disabled="isEnough"
                 v-else
             >
                 <v-icon left>add_shopping_cart</v-icon>
@@ -38,7 +39,7 @@
     </v-card>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
     props: {
@@ -50,19 +51,6 @@ export default {
             type: Boolean,
             default: false,
         }
-    },
-    computed: {
-        ...mapGetters([
-            'getCartItems'
-        ]),
-        isEnough() {
-            let current = this.getCartItems.find(o => o.id === this.item.id);
-            if(!!current) {
-                return current.qty >= this.item.units; 
-            } else {
-                return false;
-            }
-        },
     },
     methods: {
         ...mapActions([

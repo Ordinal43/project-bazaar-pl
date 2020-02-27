@@ -38,21 +38,21 @@
                             rows="3"
                         ></v-textarea>
                     </v-flex>
-                    <v-flex xs12 md8>
+                    <v-flex xs12 :md8="!!productId">
                         <v-input-number
                             label="Harga"
                             v-model="price"
                             prefix="Rp"
-                            suffix="/pcs"
+                            suffix="/ item"
                             :rules="[rules.required, rules.tooMuch]"
                         ></v-input-number>
                     </v-flex>
-                    <v-flex xs12 md4>
-                        <v-input-number
-                            label="Stok"
-                            v-model="stock"
-                            :rules="[rules.required, rules.tooMuch]"
-                        ></v-input-number>
+                    <v-flex xs12 md4 v-if="!!productId">
+                        <v-switch
+                            color="success"
+                            v-model="isAvailable"
+                            :label="`${isAvailable? 'Tersedia' : 'Habis'}`"
+                        ></v-switch>
                     </v-flex>
                 </v-layout>
             </v-container>     
@@ -120,7 +120,7 @@ export default {
         noImageError: false,
         name: null,
         description: null,
-        stock: null,
+        isAvailable: true,
         price: null,
 
         rules: {
@@ -167,11 +167,13 @@ export default {
                 this.btnLoading = true;
                 const data = new FormData();
                 data.append(`name`, this.name); 
-                data.append(`price`, this.price); 
-                data.append(`units`, this.stock);
+                data.append(`price`, this.price);
                 data.append(`description`, this.description);
                 if(this.fileBin) {
                     data.append(`image`, this.fileBin);
+                }
+                if(!!this.productId) {
+                    data.append(`is_available`, !!this.isAvailable? 1 : 0);
                 }
                 data.append(`stand_id`, this.stand); 
                 
@@ -204,7 +206,7 @@ export default {
             this.fileUrl = res.data.image;
             this.name = res.data.name;
             this.description = res.data.description;
-            this.stock = res.data.units;
+            this.isAvailable = !!res.data.is_available;
             this.price = res.data.price;
         }
         this.dialogLoading = false;

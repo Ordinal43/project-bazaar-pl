@@ -65,21 +65,21 @@
                                 {{ $rupiahFormat(getCurrentItem.price) }}
                             </div>
                         </v-flex>
-                        <template v-if="getCurrentItem.units > 0">
+                        <template v-if="!!getCurrentItem.is_available">
                             <v-flex xs12 class="mb-4">
                                 <h1 class="display-1 grey--text text--darken-2 font-weight-medium">
                                     Stand {{ getCurrentItem.stand.stand_name }}
                                 </h1>
                             </v-flex>
                             <v-flex xs12>
-                                <h1 class="display-1 grey--text text--darken-1">
-                                    {{ getCurrentItem.units }} tersisa
+                                <h1 class="display-1 success--text">
+                                    Tersedia
                                 </h1>
                             </v-flex>
                         </template>
                         <template v-else>
                             <v-flex xs12 class="mb-4">
-                                <h1 class="display-2 red--text font-weight-bold">
+                                <h1 class="display-2 error--text font-weight-bold">
                                     Habis!
                                 </h1>
                             </v-flex>

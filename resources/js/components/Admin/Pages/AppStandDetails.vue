@@ -59,10 +59,12 @@
                         :aspect-ratio="16/9"
                         ></v-img>
 
-                        <v-card-text>
+                        <v-card-text class="subheading">
                             <p class="title font-weight-regular">{{ item.name }}</p>
-                            <div class="subheading">{{ $rupiahFormat(item.price) }}</div>
-                            <div class="subheading">Sisa {{ item.units }}</div>
+                            <div class="mb-2">{{ $rupiahFormat(item.price) }}</div>
+                            <div :class="`font-weight-medium ${!!item.is_available? 'success' : 'error'}--text`">
+                                {{ !!item.is_available? 'Tersedia' : 'Habis' }}
+                            </div>
                         </v-card-text>
                         </div>
                         <v-card-actions>

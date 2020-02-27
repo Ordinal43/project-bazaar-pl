@@ -53,7 +53,6 @@
                                     <v-btn 
                                         icon color="primary" 
                                         @click="addToCart(item)" 
-                                        :disabled="item.qty >= item.units"
                                     >
                                         <v-icon>add</v-icon>
                                     </v-btn>

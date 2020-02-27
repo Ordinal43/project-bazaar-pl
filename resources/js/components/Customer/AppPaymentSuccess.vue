@@ -13,7 +13,7 @@
                     large round
                     @click="$router.replace('/')"
                 >
-                    ke laman utama
+                    ke beranda
                 </v-btn>
             </v-flex>
         </v-layout>

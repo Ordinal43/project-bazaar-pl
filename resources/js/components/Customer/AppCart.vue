@@ -127,7 +127,7 @@
                         large round
                         to="/"
                     >
-                        ke laman utama
+                        ke beranda
                     </v-btn>
                 </v-flex>
             </template>

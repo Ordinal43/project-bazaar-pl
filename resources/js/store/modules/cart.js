@@ -3,7 +3,7 @@ const state = {
 }
 
 const getters = {
-    getCartItems: (state) => state.cartItems,
+    getCartItems: (state) => state.cartItems
 }
 
 const mutations = {

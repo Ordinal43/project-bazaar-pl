@@ -114,7 +114,6 @@ export default {
         validateScanResult(result) {
             return axios.post('/api/pay', {
                 qrcode: result,
-                user_id: this.$user.info().id,
             });
         },
         async onInit (promise) {

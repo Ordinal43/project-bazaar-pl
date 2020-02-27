@@ -18,7 +18,7 @@ class Nota extends Model
     }
     
     public function Users(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function Stands(){

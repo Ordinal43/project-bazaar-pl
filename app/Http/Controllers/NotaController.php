@@ -29,7 +29,7 @@ class NotaController extends Controller
     public function notaByStand(Request $request, $stand)
     {
         return response()->json(Nota::with([
-           'Order', 'Order.Product.Stand:id,stand_name'
+           'Order', 'Order.Product.Stand:id,stand_name','Users:id,name'
             ])
             ->where('stand_id',$stand)
             ->orderBy('id','DESC')
@@ -65,13 +65,16 @@ class NotaController extends Controller
                 else{
                     $userid = $request->input('user_id');
                     $status = Nota::where('qrcode', '=', $request->input('qrcode'));
-                    $process = DB::transaction(function () use ($status){
+                    $process = DB::transaction(function () use ($status, &$order){
                         $paid = $status->update(['is_paid'=>true]);
                         //Adding Balance to Stand
                         $stand = Stand::find($status->value('stand_id'));
                         $user = User::find($stand->value('user_id'));
                         $user->balance += $status->value('harga_total');
                         $user->save();
+                        //order complete/ Ready
+                        $order = Order::where('nota_id', '=', $status->value('id'));
+                        $order->update(['is_ready'=>true]);
                         return true;
                     },3);
                     return response()->json([
@@ -126,12 +129,15 @@ class NotaController extends Controller
                 'message' => 'Nota sudah dicancel'
             ]);            
         }
-        $status = DB::transaction (function () use ($nota){
+        $status = DB::transaction (function () use ($nota, &$order){
             $nota->is_cancel = true;
             $save = $nota->save();
             $user = User::find($nota['user_id']);
             $user->balance += $nota['harga_total'];
             $user->save();
+            //order complete/ Ready
+            $order = Order::where('nota_id', '=', $nota->value('id'));
+            $order->update(['is_ready'=>false]);
             return true;
         },3);
         return response()->json([

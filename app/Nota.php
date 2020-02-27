@@ -22,6 +22,6 @@ class Nota extends Model
     }
 
     public function Stands(){
-        return $this->belongsTo(Stand::class);
+        return $this->belongsTo(Stand::class, 'stand_id');
     }
 }

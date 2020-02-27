@@ -67,6 +67,7 @@ class NotaController extends Controller
                         'Stands:id,user_id'
                         ])
                         ->where('qrcode', '=', $request->input('qrcode'))->first();
+                    // $cek = $status->harga_total;
                     $userid = $status->stands->user_id;
                     $process = DB::transaction(function () use ($status, &$request, &$paid, &$user, &$order, &$userid){
                         $transaction = Nota::where('qrcode', '=', $request->input('qrcode'));
@@ -74,7 +75,7 @@ class NotaController extends Controller
                         //Adding Balance to Stand
                         // $stand = Stand::find($status->value('stand_id'));
                         $user = User::find($userid);
-                        $user->balance += $status->value('harga_total');
+                        $user->balance += $status->harga_total;
                         $user->save();
                         //order complete/ Ready
                         $order = Order::where('nota_id', '=', $status->value('id'));

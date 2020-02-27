@@ -42,9 +42,6 @@
                     indeterminate
                 ></v-progress-circular>
             </v-flex>
-            <v-flex class="title font-weight-light">
-                Memuat menu...
-            </v-flex>
         </v-layout>
         <v-layout row wrap justify-center v-else>
             <v-flex xs6 md4 lg3 xl2 v-for="(item, id) in products" :key="`produk-${id}`">

@@ -42,7 +42,7 @@
                             </span>
                         </div>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions class="pt-4">
                         <v-btn color="primary" flat round
                             @click="seeOrderDetail(item)"
                         >
@@ -143,6 +143,7 @@
         >
             <v-card class="rounded">
                 <v-card-title class="pb-0">
+                    <span class="subheading font-weight-medium">Selesaikan transaksi</span>
                     <v-spacer></v-spacer>
                     <v-btn icon @click="dialogQR = false">
                         <v-icon>close</v-icon>

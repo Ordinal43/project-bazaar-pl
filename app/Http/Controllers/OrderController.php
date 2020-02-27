@@ -182,9 +182,6 @@ class OrderController extends Controller
     public function ready(Order $order){
 
          DB::transaction(function () use ($order, &$status) {            
-            // $product = Product::find($order['product_id']);
-            // $product->units -= $order['quantity'];
-            // $product->save();
             $order->is_ready = true;
             $status = $order->save();        
     }, 3);
@@ -198,10 +195,6 @@ class OrderController extends Controller
     {
 
          $status = DB::transaction(function () use ($order) {
-            
-                // $product = Product::find($order['product_id']);
-                // $product->units += $order['quantity'];
-                // $product->save();
                 $order->delete();
             
         }, 3);

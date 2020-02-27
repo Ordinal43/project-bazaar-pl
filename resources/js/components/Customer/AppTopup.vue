@@ -115,14 +115,14 @@ export default {
     },
     methods: {
         ...mapActions([
-            'firebaseAddQR',
+            'notifyQRChange',
         ]),
         async onDecode (result) {
             this.camera = CAMERA_OFF;
             try {
                 const res = await this.validateScanResult(result)
                 if(!!res.data.status) {
-                    await this.firebaseAddQR(result);
+                    await this.notifyQRChange(result);
                     this.$router.replace({path: "/topup-success"});
                 } else {
                     swal({

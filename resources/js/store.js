@@ -167,10 +167,10 @@ export default new Vuex.Store({
             });
 
         },
-        firebaseAddQR({ state }, qrcode) {
-            return firebaseDB.collection('redeemed_qr').add({
-                qrcode,
-            })
+        notifyQRChange({ state }, qrcode) {
+            return firebaseDB.collection('pkwu_pl')
+                .doc('refresh_qr')
+                .set({ qrcode })
         }
     }
 })

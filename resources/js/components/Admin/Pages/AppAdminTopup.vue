@@ -260,8 +260,9 @@ export default {
         }
     },
     mounted() {
-        firebaseDB.collection("redeemed_qr")
-        .onSnapshot(() => {
+        firebaseDB.collection("pkwu_pl")
+        .doc('refresh_qr')
+        .onSnapshot((doc) => {
             this.closeDialog();
             this.getVouchers();
         });

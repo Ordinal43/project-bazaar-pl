@@ -7,7 +7,7 @@ const getters = {}
 const mutations = {}
 
 const actions = {
-    async notifyQRChange(context, qrcode) {
+    notifyQRChange(context, qrcode) {
         const ref = firebaseDB
         .collection('pkwu_pl').doc('refresh_qr')
         

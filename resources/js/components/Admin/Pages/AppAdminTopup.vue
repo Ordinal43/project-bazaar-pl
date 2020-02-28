@@ -127,8 +127,19 @@
                         <v-icon>close</v-icon>
                     </v-btn>
                 </v-card-title>
-                <v-card-text class="text-xs-center">
-                    <qrcode v-if="!!shownQR" :value="shownQR" :options="{ width: 250 }"></qrcode>
+                <v-card-text class="text-xs-center" v-if="currentItem">
+                    <div class="mb-2 text-xs-center subheading">
+                        <div>
+                            Tanggal buat:
+                            <strong>
+                                {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
+                            </strong>
+                        </div>
+                        <div>
+                            Nominal: <strong>{{ $rupiahFormat(currentItem.nominal) }}</strong>
+                        </div>
+                    </div>
+                    <qrcode :value="currentItem.qrcode" :options="{ width: 250 }"></qrcode>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -150,7 +161,7 @@ export default {
         },
         loadingCreateVoucher: false,
         dialogQR: false,
-        shownQR: '',
+        currentItem: '',
 
         activeTab: null,
         tabItems: [
@@ -183,14 +194,13 @@ export default {
                     }
                 });
 
-
                 this.loadingCreateVoucher = false;
                 if(this.activeTab === 'tab-0') {
                     this.fetchAvailableVoucher();
                 } else {
                     this.activeTab = 'tab-0'
                 }
-                this.shownQR = res.data.data.qrcode;
+                this.currentItem = res.data.data;
                 this.dialogQR = true;
                 this.amount = 0;
             } catch (err) {
@@ -248,8 +258,8 @@ export default {
                 console.log(err);
             });
         },
-        showQR(qrcode) {
-            this.shownQR = qrcode;
+        showQR(item) {
+            this.currentItem = item;
             this.dialogQR = true;
         },
         closeDialog() {

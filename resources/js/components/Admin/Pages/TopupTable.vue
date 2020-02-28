@@ -42,7 +42,7 @@ export default {
     }),
     methods: {
         showQR(item) {
-            this.$emit('showQR', item.qrcode)
+            this.$emit('showQR', item)
         }
     }
 }

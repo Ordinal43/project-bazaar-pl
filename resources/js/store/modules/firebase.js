@@ -23,10 +23,7 @@ const actions = {
         .collection('seller').doc(standId.toString())
 
         try {
-            const doc = await ref.get();
-            // handle undefined object
-            const flag = !(doc.data() || {}).flag;
-            return ref.set({ flag });
+            return ref.set({ value: Math.random() });
         } catch (error) {
             return Promise.reject(error);
         }
@@ -37,10 +34,7 @@ const actions = {
         .collection('customer').doc(custId.toString())
 
         try {
-            const doc = await ref.get();
-            // handle undefined object
-            const flag = !(doc.data() || {}).flag;
-            return ref.set({ flag });
+            return ref.set({ value: Math.random() });
         } catch (error) {
             return Promise.reject(error);
         }

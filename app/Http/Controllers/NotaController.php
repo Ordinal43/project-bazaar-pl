@@ -78,7 +78,7 @@ class NotaController extends Controller
                         $user->balance += $status->harga_total;
                         $user->save();
                         //order complete/ Ready
-                        $order = Order::where('nota_id', '=', $status->value('id'));
+                        $order = Order::where('nota_id', '=', $nota['id']);
                         $order->update(['is_ready'=>true]);
                         return true;
                     },3);
@@ -141,7 +141,7 @@ class NotaController extends Controller
             $user->balance += $nota['harga_total'];
             $user->save();
             //order complete/ Ready
-            $order = Order::where('nota_id', '=', $nota->value('id'));
+            $order = Order::where('nota_id', '=', $nota['id']);
             $order->update(['is_ready'=>false]);
             return true;
         },3);

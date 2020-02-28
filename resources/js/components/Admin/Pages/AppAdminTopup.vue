@@ -262,7 +262,7 @@ export default {
     mounted() {
         firebaseDB.collection("pkwu_pl")
         .doc('refresh_qr')
-        .onSnapshot((doc) => {
+        .onSnapshot(() => {
             this.closeDialog();
             this.getVouchers();
         });

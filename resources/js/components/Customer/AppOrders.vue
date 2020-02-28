@@ -275,7 +275,7 @@ export default {
         firebaseDB
         .collection('pkwu_pl').doc('nota')
         .collection('customer').doc(custId.toString())
-        .onSnapshot((querySnapshot) => {
+        .onSnapshot(() => {
             this.getListOrders();
         });
     },

@@ -281,7 +281,7 @@ export default {
         firebaseDB
         .collection('pkwu_pl').doc('nota')
         .collection('seller').doc(standId.toString())
-        .onSnapshot((doc) => {
+        .onSnapshot(() => {
             this.dialogQR = false;
             this.getStandOrders();
         });

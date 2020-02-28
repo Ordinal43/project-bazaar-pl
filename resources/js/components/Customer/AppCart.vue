@@ -175,7 +175,8 @@ export default {
             'addToCart',
             'removeFromCart',
             'makeOrder',
-            'notifyNotaToSeller'
+            'notifyNotaToSeller',
+            'notifyOrder'
         ]),
         ...mapMutations([
             'subtractFromCart',
@@ -210,7 +211,10 @@ export default {
                     const standId = this.getCartItems[0].stand_id;
 
                     const res = await this.makeOrder(custId);
-                    await this.notifyNotaToSeller(standId);
+                    await Promise.all([
+                        this.notifyNotaToSeller(standId),
+                        this.notifyOrder(standId)
+                    ]);
                     
                     swal({
                         title: "Pesanan dibuat!",

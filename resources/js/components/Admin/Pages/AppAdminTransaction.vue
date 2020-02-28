@@ -15,7 +15,7 @@
                 <div class="ml-4">
                     <v-layout row wrap align-center>
                         <span class="headline font-weight-bold mr-1">
-                            Daftar Transaksi
+                            Rekap Transaksi
                         </span>
                     </v-layout>
                 </div>
@@ -121,6 +121,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import { firebaseDB } from '../../../helpers/Firebase'
 
 export default {
     components: {
@@ -145,7 +146,12 @@ export default {
     }),
     watch: {
         activeTab(val) {
-            switch(val) {
+            this.getOrders();
+        }
+    },
+    methods: {
+        getOrders() {
+            switch(this.activeTab) {
                 case "tab-0": this.fetchOngoingOrders()
                     break;
                 case "tab-1": this.fetchFinishedOrders()
@@ -153,9 +159,7 @@ export default {
                 case "tab-2": this.fetchCanceledOrders()
                     break;
             }
-        }
-    },
-    methods: {
+        },
         fetchOngoingOrders() {
             this.loadingOngoingOrders = true;
             axios.get('/api/orders-all-null').then(res => {
@@ -213,6 +217,15 @@ export default {
                 console.log(err);
             });
         },
+    },
+    mounted() {
+        const ref = firebaseDB
+        .collection('pkwu_pl').doc('order')
+        .collection('seller');
+        
+        ref.onSnapshot(() => {
+            this.getOrders();
+        });
     },
 }
 </script>

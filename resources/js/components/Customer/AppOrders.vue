@@ -186,7 +186,8 @@ export default {
     }),
     methods: {
         ...mapActions([
-            'notifyNotaToSeller'
+            'notifyNotaToSeller',
+            'notifyOrder'
         ]),
         getListOrders() {
             this.loading = true;
@@ -235,8 +236,12 @@ export default {
 
             if(willCancel) {
                 try {
-                    const res = await axios.patch(`/api/nota/cancel/${item.id}`)
-                    await this.notifyNotaToSeller(item.stand_id);
+                    await axios.patch(`/api/nota/cancel/${item.id}`)
+                    await Promise.all([
+                        this.notifyNotaToSeller(item.stand_id),
+                        this.notifyOrder(item.stand_id)
+                    ]);
+
                     swal({
                         title: "Pesanan dibatalkan!",
                         text: "Saldo PL Pay dikembalikan.",

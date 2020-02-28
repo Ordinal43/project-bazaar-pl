@@ -39,6 +39,17 @@ const actions = {
             return Promise.reject(error);
         }
     },
+    async notifyOrder(context, standId) {
+        const ref = firebaseDB
+        .collection('pkwu_pl').doc('order')
+        .collection('seller').doc(standId.toString())
+
+        try {
+            return ref.set({ value: Math.random() });
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
 }
 
 export default {

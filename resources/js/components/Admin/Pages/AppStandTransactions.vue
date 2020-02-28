@@ -2,7 +2,7 @@
     <v-container grid-list-lg>
         <v-layout row wrap>
             <v-flex xs12>
-                <p class="headline primary--text">Daftar Transaksi</p>
+                <p class="headline primary--text">Rekap Transaksi</p>
             </v-flex>
             <v-flex xs12>
                 <v-tabs
@@ -103,6 +103,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import { firebaseDB } from '../../../helpers/Firebase'
 
 export default {
     components: {
@@ -127,7 +128,12 @@ export default {
     }),
     watch: {
         activeTab(val) {
-            switch(val) {
+            this.getOrders();
+        }
+    },
+    methods: {
+        getOrders() {
+            switch(this.activeTab) {
                 case "tab-0": this.fetchOngoingOrders()
                     break;
                 case "tab-1": this.fetchFinishedOrders()
@@ -135,9 +141,7 @@ export default {
                 case "tab-2": this.fetchCanceledOrders()
                     break;
             }
-        }
-    },
-    methods: {
+        },
         fetchOngoingOrders() {
             this.loadingOngoingOrders = true;
             axios.get('/api/orders-null', {
@@ -204,6 +208,15 @@ export default {
                 console.log(err);
             });
         },
+    },
+    mounted() {
+        const ref = firebaseDB
+        .collection('pkwu_pl').doc('order')
+        .collection('seller').doc(this.$user.getStand().id.toString());
+        
+        ref.onSnapshot(() => {
+            this.getOrders();
+        });
     },
 }
 </script>

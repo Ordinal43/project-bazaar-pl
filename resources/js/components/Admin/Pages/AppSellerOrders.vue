@@ -198,7 +198,8 @@ export default {
     }),
     methods: {
         ...mapActions([
-            'notifyNotaToCustomer'
+            'notifyNotaToCustomer',
+            'notifyOrder'
         ]),
         getStandOrders() {
             axios.get(`/api/nota-stand/${this.$user.getStand().id}`)
@@ -241,8 +242,12 @@ export default {
 
             if(willCancel) {
                 try {
-                    const res = await axios.patch(`/api/nota/cancel/${item.id}`)
-                    await this.notifyNotaToCustomer(item.users.id);
+                    await axios.patch(`/api/nota/cancel/${item.id}`)
+                    await Promise.all([
+                        this.notifyNotaToCustomer(item.users.id),
+                        this.notifyOrder(this.$user.getStand().id)
+                    ]);
+
                     swal({
                         title: "Pesanan dibatalkan!",
                         icon: "success",

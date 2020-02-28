@@ -83,7 +83,8 @@ export default {
     },
     methods: {
         ...mapActions([
-            'notifyNotaToSeller'
+            'notifyNotaToSeller',
+            'notifyOrder'
         ]),
         async onDecode (result) {
             this.camera = CAMERA_OFF;
@@ -98,7 +99,10 @@ export default {
                 try {
                     const res = await this.validateScanResult(result)
                     if(!!res.data.status) {
-                        await this.notifyNotaToSeller(this.item.stand_id);
+                        await Promise.all([
+                            this.notifyNotaToSeller(this.item.stand_id),
+                            this.notifyOrder(this.item.stand_id)
+                        ]);
                         this.$router.replace({path: "/payment-success"});
                     } else {
                         await swal({

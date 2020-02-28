@@ -81,7 +81,7 @@ class User {
             if(!!id) {
                 axios.get(`/api/users/${id}`).then(res => {
                     AppStorage.storeUser(JSON.stringify(res.data))
-                    resolve();
+                    resolve(res.data);
                 }).catch(err => {
                     this.logout()
                     reject(err);

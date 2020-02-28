@@ -16,7 +16,7 @@
                         Rp
                     </span>
                     <span class="headline font-weight-bold">
-                        {{ balanceFormat($user.info().balance) }}
+                        {{ balanceFormat(balance) }}
                     </span>
                 </div>
             </v-container>
@@ -61,7 +61,8 @@ const ROLE_ADMIN = 1;
 const ROLE_SELLER = 2;
 
 export default {
-    data: () => ({
+    data: (vm) => ({
+        balance: vm.$user.info().balance,
         drawer: true,
         routes: [
             {
@@ -127,6 +128,12 @@ export default {
                 });
             }
         },
+    },
+    mounted() {
+        EventBus.$on('updateSellerBalance', async () => {
+            const user = await this.$user.getInfo()
+            this.balance = user.balance;
+        })
     },
 }
 </script>

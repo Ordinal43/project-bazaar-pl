@@ -215,6 +215,7 @@ export default {
         .collection('seller').doc(this.$user.getStand().id.toString());
         
         ref.onSnapshot(() => {
+            EventBus.$emit('updateSellerBalance');
             this.getOrders();
         });
     },

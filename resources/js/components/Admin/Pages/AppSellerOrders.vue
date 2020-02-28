@@ -282,6 +282,7 @@ export default {
         .collection('pkwu_pl').doc('nota')
         .collection('seller').doc(standId.toString())
         .onSnapshot(() => {
+            EventBus.$emit('updateSellerBalance');
             this.dialogQR = false;
             this.getStandOrders();
         });

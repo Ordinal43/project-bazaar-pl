@@ -72,9 +72,29 @@
                     <v-card-title>
                         <div>
                             <h3 class="subheading font-weight-bold">{{ currentItem.users.name }}</h3>
-                            <span>
+                            <div>
                                 {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
-                            </span>
+                            </div>
+                            <div>
+                                <v-chip
+                                    color="red" text-color="white"
+                                    v-if="!!currentItem.is_cancel"
+                                >
+                                    <strong>Batal</strong>
+                                </v-chip>
+                                <v-chip
+                                    color="success" text-color="white"
+                                    v-else-if="!!currentItem.is_paid"
+                                >
+                                    <strong>Selesai</strong>
+                                </v-chip>
+                                <v-chip
+                                    color="warning" text-color="white"
+                                    v-else
+                                >
+                                    <strong>Belum ambil</strong>
+                                </v-chip>
+                            </div>
                         </div>
                         <v-spacer></v-spacer>
                         <v-btn icon @click="dialogDetail = false">

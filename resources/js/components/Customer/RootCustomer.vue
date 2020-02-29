@@ -135,6 +135,11 @@ export default {
                 title: "Pesanan",
                 route: "/orders",
             },
+            {
+                icon: "history",
+                title: "Riwayat",
+                route: "/history",
+            },
         ],
         dialogConfirm: false,
         selectedItem: null,

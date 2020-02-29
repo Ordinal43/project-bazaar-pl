@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-lg class="mb-5">
         <div class="subheading font-weight-bold">
-            Daftar pesanan
+            Riwayat transaksi
         </div>
 
         <v-divider class="my-2"></v-divider>
@@ -17,29 +17,25 @@
                     ></v-progress-circular>
                 </v-flex>
             </template>
-            <template v-else>
+            <template v-if="!!listOrders.length">
                 <v-flex xs12 md6 xl4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
                     <v-card class="rounded">
                         <v-card-title class="pb-1">
-                            <span class="subheading font-weight-medium">Stand {{ getStandName(item) }}</span>
+                            <span class="subheading font-weight-medium">Stand {{ item.stands.stand_name }}</span>
                             <v-spacer></v-spacer>
                             <v-chip
                                 color="error" text-color="white"
+                                class="mx-0"
                                 v-if="!!item.is_cancel"
                             >
                                 <strong>Batal</strong>
                             </v-chip>
                             <v-chip
                                 color="success" text-color="white"
+                                class="mx-0"
                                 v-else-if="!!item.is_paid"
                             >
                                 <strong>Selesai</strong>
-                            </v-chip>
-                            <v-chip
-                                color="warning" text-color="white"
-                                v-else
-                            >
-                                <strong>Belum ambil</strong>
                             </v-chip>
                         </v-card-title>
                         <v-card-text class="pt-0 pb-0">
@@ -63,16 +59,34 @@
                                 <v-icon left>description</v-icon>
                                 detail
                             </v-btn>
-                            <v-spacer></v-spacer>
-                            <v-btn color="success" round
-                                v-if="!item.is_paid && !item.is_cancel"
-                                @click="openScanQR(item)"
-                            >
-                                <v-icon left>local_dining</v-icon>
-                                ambil
-                            </v-btn>
                         </v-card-actions>
                     </v-card>
+                </v-flex>
+            </template>
+            <template v-if="!listOrders.length && !loading">
+                <v-flex xs12 class="mt-5">
+                    <v-img
+                        src="/assets/svg/empty_cart.svg"
+                        height="130"
+                        contain
+                    ></v-img>
+                </v-flex>
+                <v-flex xs12 class="text-xs-center mt-3">
+                    <p class="subheading grey--text text--darken-1">
+                        Tidak ada pesanan.
+                        <br />
+                        Mulai pesan makanan sekarang!
+                    </p>
+                </v-flex>
+                <v-flex xs12 class="text-xs-center">
+                    <v-btn
+                        color="primary"
+                        large round
+                        to="/stands"
+                    >
+                        <v-icon left>store_mall_directory</v-icon>
+                        Lihat stand
+                    </v-btn>
                 </v-flex>
             </template>        
         </v-layout>
@@ -86,28 +100,24 @@
                 <template v-if="!!currentItem">
                     <v-card-title>
                         <div>
-                            <h3 class="subheading font-weight-bold">Stand {{ getStandName(currentItem) }}</h3>
+                            <h3 class="subheading font-weight-bold">Stand {{ currentItem.stands.stand_name }}</h3>
                             <div>
                                 {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
                             </div>
-                            <div>
+                            <div class="mt-1">
                                 <v-chip
                                     color="red" text-color="white"
+                                    class="mx-0"
                                     v-if="!!currentItem.is_cancel"
                                 >
                                     <strong>Batal</strong>
                                 </v-chip>
                                 <v-chip
                                     color="success" text-color="white"
+                                    class="mx-0"
                                     v-else-if="!!currentItem.is_paid"
                                 >
                                     <strong>Selesai</strong>
-                                </v-chip>
-                                <v-chip
-                                    color="warning" text-color="white"
-                                    v-else
-                                >
-                                    <strong>Belum ambil</strong>
                                 </v-chip>
                             </div>
                         </div>
@@ -151,67 +161,26 @@
                             {{ $rupiahFormat(currentItem.harga_total) }}
                         </span>
                     </v-card-title>
-                    <v-card-actions>
-                        <v-btn color="error" round
-                            @click="cancelOrder(currentItem)"
-                            v-if="!currentItem.is_paid && !currentItem.is_cancel"
-                        >
-                            <v-icon left>cancel</v-icon>
-                            batal
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn color="success" round
-                            v-if="!currentItem.is_paid && !currentItem.is_cancel"
-                            @click="openScanQR(currentItem)"
-                        >
-                            <v-icon left>local_dining</v-icon>
-                            ambil
-                        </v-btn>
-                    </v-card-actions>
                 </template>
             </v-card>
-        </v-dialog>
-
-        <v-dialog
-            v-model="dialogScan"
-            persistent lazy
-            max-width="500px"
-        >
-            <ScanTransaction
-                :isOpen="dialogScan"
-                :item="currentItem"
-                @close="dialogScan = false"
-                :key="scanComponentKey"
-            ></ScanTransaction>
         </v-dialog>
     </v-container>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { firebaseDB } from '../../helpers/Firebase'
 
 export default {
-    components: {
-        ScanTransaction: () => import('./ScanTransaction' /* webpackChunkName: "js/chunk-scan-transaction" */)
-    },
     data: () => ({
         listOrders: [],
         loading: true,
         dialogDetail: false,
         currentItem: null,
-
-        dialogScan: false,
-        scanComponentKey: 0,
     }),
     methods: {
-        ...mapActions([
-            'notifyNotaToSeller',
-            'notifyOrder'
-        ]),
         getListOrders() {
             this.loading = true;
-            axios.get(`/api/nota-user/${this.$user.info().id}`)
+            axios.get(`/api/nota-cust-finished/${this.$user.info().id}`)
             .then(res => {
                 this.listOrders = res.data;
                 this.loading = false;
@@ -220,72 +189,12 @@ export default {
                 console.log(err);
             })
         },
-        getStandName(item) {
-            const product = (item.order[0] || {}).product || {};
-            const standName = (product.stand || {}).stand_name || "??" 
-            return standName;
-        },
         getTotalPortion(item) {
             return item.order.reduce((acc, item) => acc + item.quantity, 0);
         },
         seeOrderDetail(item) {
             this.currentItem = item;
             this.dialogDetail = true;
-        },
-        async cancelOrder(item) {
-            const willCancel = await swal({
-                title: "Batalkan pesanan?",
-                text: "Saldo PL Pay anda akan dikembalikan.",
-                icon: "warning",
-                dangerMode: true,
-                buttons: {
-                    cancel: {
-                        text: "Kembali",
-                        value: false,
-                        visible: true,
-                        closeModal: true,
-                    },
-                    confirm: {
-                        text: "Batalkan",
-                        value: true,
-                        visible: true,
-                        closeModal: false
-                    }
-                }
-            });
-
-            if(willCancel) {
-                try {
-                    await axios.patch(`/api/nota/cancel/${item.id}`)
-                    await Promise.all([
-                        this.notifyNotaToSeller(item.stand_id),
-                        this.notifyOrder(item.stand_id)
-                    ]);
-
-                    swal({
-                        title: "Pesanan dibatalkan!",
-                        text: "Saldo PL Pay dikembalikan.",
-                        icon: "success",
-                        button: "Close",
-                    });
-                    this.getListOrders();
-                } catch (err) {
-                    console.log(err);
-                    swal({
-                        title: "Pesanan gagal dibatalkan!",
-                        text: "Terjadi kesalahan pada sistem. Mohon coba beberapa saat lagi",
-                        icon: "error",
-                        button: "Close",
-                    });
-                    
-                }
-                this.dialogDetail = false
-            }
-        },
-        openScanQR(item) {
-            this.currentItem = item;
-            this.scanComponentKey = !!this.scanComponentKey? 0 : 1;
-            this.dialogScan = true;
         },
     },
     mounted() {

@@ -55,7 +55,12 @@ const routes = [
             },
             {
                 path: 'orders',
-                component: () => import('./components/Customer/AppOrders' /* webpackChunkName: "js/chunk-app-orders" */),
+                component: () => import('./components/Customer/AppOrderOngoing' /* webpackChunkName: "js/chunk-app-order-ongoing" */),
+                meta: { roleId: 3 },
+            },
+            {
+                path: 'history',
+                component: () => import('./components/Customer/AppOrderHistory' /* webpackChunkName: "js/chunk-app-order-history" */),
                 meta: { roleId: 3 },
             },
             {

@@ -35,7 +35,6 @@ Route::get('/products/all', 'ProductController@allProduct');
 //Nota&Order
 Route::post('/pay', 'NotaController@paid');
 Route::patch('nota/cancel/{nota}', 'NotaController@cancel');
-Route::get('/nota/{nota}', 'NotaController@show');
 Route::get('/nota-stand/{stand}','NotaController@notaByStand');
 Route::get('/nota-cust-ongoing/{user}','NotaController@customerOngoingNota');
 Route::get('/nota-cust-finished/{user}','NotaController@customerFinishedNota');

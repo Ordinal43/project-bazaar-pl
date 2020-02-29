@@ -165,18 +165,6 @@ class NotaController extends Controller
         ]);
     }
 
-  
-    public function show(Nota $nota)
-    {
-        return response()->json(
-            $nota::with([
-                'Order',
-                'Order.Product.Stand:id,stand_name',                           
-                ])
-        ->where('id', '=', $nota->id)->first());
-    }
-
-   
     public function update(Request $request, Nota $nota)
     {
         $status = $nota->update(

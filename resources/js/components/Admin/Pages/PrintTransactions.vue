@@ -4,7 +4,7 @@
             <div class="text-xs-center mb-2">
                 <p class="headline">Laporan Riwayat Transaksi</p>
                 <p class="title" v-if="!isAdmin">
-                    Stand {{ $user.info().stands.stand_name }}
+                    Stand {{ $user.getStand().stand_name }}
                 </p>
                 <p class="title" v-else>
                     Seluruh Stand

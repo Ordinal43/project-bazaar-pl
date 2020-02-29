@@ -4,7 +4,7 @@
             <p class="title text-xs-center">PL Food Bazaar</p>
             <div>
                 <div>No Nota: {{ nota.id }}</div>
-                <div>Cust : {{ nota.customer }}</div>
+                <div>Cust : {{ nota.users.name }}</div>
                 <div>Tgl: {{ $getDateString(nota.created_at) }}, {{ $getTimeString(nota.created_at) }}</div>
             </div>
             <v-divider class="my-2"></v-divider>

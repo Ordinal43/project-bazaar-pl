@@ -154,7 +154,7 @@ export default {
                     id: item.id,
                     date: item.created_at,
                     menu: item.product.name,
-                    customer: item.nota.customer,
+                    customer: item.nota.users.name,
                     price: item.harga_satuan,
                     qty: item.quantity,
                     total: (item.quantity * item.harga_satuan)
@@ -176,7 +176,7 @@ export default {
                     id: item.id,
                     date: item.created_at,
                     menu: item.product.name,
-                    customer: item.nota.customer,
+                    customer: item.nota.users.name,
                     price: item.harga_satuan,
                     qty: item.quantity,
                     total: (item.quantity * item.harga_satuan)
@@ -198,7 +198,7 @@ export default {
                     id: item.id,
                     date: item.created_at,
                     menu: item.product.name,
-                    customer: item.nota.customer,
+                    customer: item.nota.users.name,
                     price: item.harga_satuan,
                     qty: item.quantity,
                     total: (item.quantity * item.harga_satuan)

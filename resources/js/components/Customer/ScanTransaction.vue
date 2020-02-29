@@ -11,7 +11,7 @@
                                 contain
                             ></v-img>
                         </v-flex>
-                        <v-flex xs12 class="text-xs-center">
+                        <v-flex xs12 class="text-xs-center mt-3">
                             <p class="subheading grey--text text--darken-1">
                                 {{ error }}
                                 <br />

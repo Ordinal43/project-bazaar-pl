@@ -20,7 +20,7 @@ class NotaController extends Controller
     public function index()
     {
         return response()->json(Nota::with([
-           'Order', 'Order.Product'
+            'Order', 'Order.Product'
             ])
             ->orderBy('id','DESC')
             ->get(),200);
@@ -29,7 +29,7 @@ class NotaController extends Controller
     public function notaByStand(Request $request, $stand)
     {
         return response()->json(Nota::with([
-           'Order', 'Order.Product','Users:id,name'
+            'Order', 'Order.Product', 'Users:id,name'
             ])
             ->where('stand_id',$stand)
             ->orderBy('id','DESC')
@@ -39,7 +39,7 @@ class NotaController extends Controller
     public function customerOngoingNota(Request $request, $user)
     {
         return response()->json(Nota::with([
-           'Order', 'Order.Product', 'Stands:id,stand_name'
+            'Order', 'Order.Product', 'Stands:id,stand_name'
             ])
             ->where('user_id',$user)
             ->where('is_paid',false)
@@ -51,7 +51,7 @@ class NotaController extends Controller
     public function customerFinishedNota(Request $request, $user)
     {
         return response()->json(Nota::with([
-           'Order', 'Order.Product', 'Stands:id,stand_name'
+            'Order', 'Order.Product', 'Stands:id,stand_name'
             ])
             ->where('user_id',$user)
             ->where('is_paid',true)

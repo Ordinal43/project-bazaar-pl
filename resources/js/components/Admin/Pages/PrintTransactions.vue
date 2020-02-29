@@ -53,7 +53,7 @@
 export default {
     props: ['list', 'isAdmin'],
     mounted() {
-        this.$htmlToPaper('printMe', () => {
+        this.$htmlToPaper('printMe', null, () => {
             this.$emit('finished'); 
         });
     },

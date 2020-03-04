@@ -74,7 +74,7 @@ class OrderController extends Controller
                 'Nota.Users:id,name',
                 'Product',
                 'Product.Stand:id,stand_name'
-            ])->orderBy('id','DESC')->get(),200);
+            ])->latest()->get(),200);
     }
 
     public function allTrue()
@@ -87,7 +87,7 @@ class OrderController extends Controller
             'Nota.Users:id,name',
             'Product',
             'Product.Stand:id,stand_name'
-            ])->where('is_ready', true)->orderBy('id','DESC')->get(),200);
+            ])->where('is_ready', true)->latest()->get(),200);
     }
 
     public function allFalse()
@@ -100,7 +100,7 @@ class OrderController extends Controller
             'Nota.Users:id,name',
             'Product',
             'Product.Stand:id,stand_name'
-            ])->where('is_ready', false)->orderBy('id','DESC')->get(),200);
+            ])->where('is_ready', false)->latest()->get(),200);
     }
 
     public function allNull()
@@ -113,7 +113,7 @@ class OrderController extends Controller
             'Nota.Users:id,name',
             'Product',
             'Product.Stand:id,stand_name'
-            ])->where('is_ready', null)->orderBy('id','DESC')->get(),200);
+            ])->where('is_ready', null)->latest()->get(),200);
     }
 
     

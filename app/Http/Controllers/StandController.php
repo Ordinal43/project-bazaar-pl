@@ -18,7 +18,7 @@ class StandController extends Controller
             Stand::with([
                 'Products'
             ])
-            ->orderBy('id','DESC')
+            ->latest()
             ->get(),200);
     }
 

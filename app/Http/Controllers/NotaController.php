@@ -22,7 +22,7 @@ class NotaController extends Controller
         return response()->json(Nota::with([
             'Order', 'Order.Product'
             ])
-            ->orderBy('id','DESC')
+            ->latest()
             ->get(),200);
     }
 
@@ -32,7 +32,7 @@ class NotaController extends Controller
             'Order', 'Order.Product', 'Users:id,name'
             ])
             ->where('stand_id',$stand)
-            ->orderBy('id','DESC')
+            ->latest()
             ->get(),200);
     }
 
@@ -44,7 +44,7 @@ class NotaController extends Controller
             ->where('user_id',$user)
             ->where('is_paid',false)
             ->where('is_cancel',false)
-            ->orderBy('id','DESC')
+            ->latest()
             ->get(),200);
     }
 
@@ -56,7 +56,7 @@ class NotaController extends Controller
             ->where('user_id',$user)
             ->where('is_paid',true)
             ->orWhere('is_cancel',true)
-            ->orderBy('id','DESC')
+            ->latest()
             ->get(),200);
     }
 

@@ -69,11 +69,6 @@ const routes = [
                 meta: { roleId: 3 },
             },
             {
-                path: 'products',
-                component: () => import('./components/Customer/AppAllProducts' /* webpackChunkName: "js/chunk-app-all-products" */),
-                meta: { roleId: 3 },
-            },
-            {
                 path: 'cart', 
                 component: () => import('./components/Customer/AppCart' /* webpackChunkName: "js/chunk-app-cart" */),
                 meta: { roleId: 3 },

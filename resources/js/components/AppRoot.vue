@@ -89,15 +89,8 @@ export default {
         height: 100vh;
         position: fixed;
         opacity: 0.8;
-        background: whitesmoke;
+        background: #fafafa;
         top: 0;
         z-index: 10;
-    }
-
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
     }
 </style>

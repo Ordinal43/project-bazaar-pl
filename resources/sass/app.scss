@@ -9,7 +9,7 @@ a {
 }
 
 .rounded {
-    border-radius: 10px !important;
+    border-radius: 6px !important;
 }
 
 .menu-card {
@@ -27,4 +27,12 @@ a {
     /* Required for text-overflow to do anything */
     white-space: pre-wrap;
     overflow: hidden;
+}
+
+// transition
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s !important;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0 !important;
 }

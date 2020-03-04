@@ -7,8 +7,8 @@
         <v-divider class="my-2"></v-divider>
     
         <v-layout row wrap>
-            <template v-if="loading">
-                <v-flex xs12 class="text-xs-center">
+            <transition name="fade">
+                <v-flex xs12 class="text-xs-center loading pt-5" v-if="loading">
                     <v-progress-circular
                         :size="70"
                         :width="7"
@@ -16,7 +16,7 @@
                         indeterminate
                     ></v-progress-circular>
                 </v-flex>
-            </template>
+            </transition>
             <template v-if="!!listOrders.length">
                 <v-flex xs12 md6 xl4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
                     <v-card class="rounded">
@@ -299,6 +299,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .loading {
+        padding: 0;
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        opacity: 0.8;
+        background: #fafafa;
+        z-index: 10;
+    }
     .item-wrapper {
         width: 100%;
         display: flex;

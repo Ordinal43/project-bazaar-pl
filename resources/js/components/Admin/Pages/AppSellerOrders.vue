@@ -4,6 +4,16 @@
             <v-flex xs12>
                 <p class="headline primary--text">Daftar Pesanan</p>
             </v-flex>
+            <transition name="fade">
+                <v-flex xs12 class="text-xs-center loading pt-5" v-if="loading">
+                    <v-progress-circular
+                        :size="70"
+                        :width="7"
+                        color="primary"
+                        indeterminate
+                    ></v-progress-circular>
+                </v-flex>
+            </transition>
             <template v-if="!!listOrders.length">
                 <v-flex xs12 md6 lg4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
                     <v-card class="rounded">
@@ -62,7 +72,7 @@
                     </v-card>
                 </v-flex>
             </template>
-            <template v-else>
+            <template v-if="!listOrders.length && !loading">
                 <v-flex xs12 class="mt-5">
                     <v-img
                         src="/assets/svg/stands.svg"
@@ -339,6 +349,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .loading {
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        opacity: 0.8;
+        background: #fafafa;
+        z-index: 10;
+    }
+    
     .item-wrapper {
         width: 100%;
         display: flex;

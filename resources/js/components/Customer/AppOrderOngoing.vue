@@ -100,7 +100,7 @@
                 <template v-if="!!currentItem">
                     <v-card-title>
                         <div>
-                            <h3 class="subheading font-weight-bold">Stand {{ currentItem.stands.stand_name }}</h3>
+                            <h3 class="subheading font-weight-bold order-title">Stand {{ currentItem.stands.stand_name }}</h3>
                             <div>
                                 {{ $getDateString(currentItem.created_at) }}, {{ $getTimeString(currentItem.created_at) }}
                             </div>
@@ -308,6 +308,12 @@ export default {
         background: #fafafa;
         z-index: 10;
     }
+
+    .order-title {
+        align-self: flex-start;
+        padding-top: 3px;
+    }
+
     .item-wrapper {
         width: 100%;
         display: flex;

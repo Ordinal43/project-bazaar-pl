@@ -18,7 +18,7 @@
                 <v-flex xs12 md6 lg4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
                     <v-card class="rounded">
                         <v-card-title class="pb-1">
-                            <span class="subheading font-weight-medium">{{ item.users.name }}</span>
+                            <span class="subheading font-weight-medium order-title">{{ item.users.name }}</span>
                             <v-spacer></v-spacer>
                             <v-chip
                                 color="red" text-color="white"
@@ -359,6 +359,11 @@ export default {
         z-index: 10;
     }
     
+    .order-title {
+        align-self: flex-start;
+        padding-top: 3px;
+    }
+
     .item-wrapper {
         width: 100%;
         display: flex;

@@ -292,6 +292,8 @@ export default {
         .collection('pkwu_pl').doc('nota')
         .collection('customer').doc(custId.toString())
         .onSnapshot(() => {
+            this.dialogDetail = false;
+            this.dialogScan = false;
             this.getListOrders();
         });
     },

@@ -341,6 +341,7 @@ export default {
         .collection('seller').doc(standId.toString())
         .onSnapshot(() => {
             EventBus.$emit('updateSellerBalance');
+            this.dialogDetail = false;
             this.dialogQR = false;
             this.getStandOrders();
         });

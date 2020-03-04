@@ -219,7 +219,7 @@ export default {
         position: absolute;
         opacity: 0.8;
         background: #fafafa;
-        z-index: 10;
+        z-index: 2;
     }
 
     .order-title {

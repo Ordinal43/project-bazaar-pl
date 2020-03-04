@@ -50,20 +50,20 @@
             <v-flex xs6 md4 lg3 xl2 v-show="!randomProductLoading">
                 <v-card class="rounded" hover
                     :ripple="{ class: 'primary--text' }"
-                    to="/products" height="100%"
+                    to="/stands" height="100%"
                 >
                     <v-card-text style="height: 100%" class="px-3">
                         <v-layout row wrap justify-center align-center fill-height>
                             <v-flex xs12 lg6>
                                 <v-img
-                                    src="/assets/svg/foods.svg"
+                                    src="/assets/svg/stands.svg"
                                     :aspect-ratio="4/3"
                                     contain
                                 ></v-img>
                             </v-flex>
                             <v-flex xs12 lg6>
                                 <v-card-text class="title primary--text text-xs-center text-lg-left">
-                                    Lihat Semua Menu <v-icon color="primary">chevron_right</v-icon>
+                                    Lihat Semua Stand <v-icon color="primary">chevron_right</v-icon>
                                 </v-card-text>
                             </v-flex>
                         </v-layout>

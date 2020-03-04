@@ -211,10 +211,9 @@ export default {
                     const standId = this.getCartItems[0].stand_id;
 
                     const res = await this.makeOrder(custId);
-                    await Promise.all([
-                        this.notifyNotaToSeller(standId),
-                        this.notifyOrder(standId)
-                    ]);
+                    
+                    this.notifyNotaToSeller(standId);
+                    this.notifyOrder(standId);
                     
                     swal({
                         title: "Pesanan dibuat!",

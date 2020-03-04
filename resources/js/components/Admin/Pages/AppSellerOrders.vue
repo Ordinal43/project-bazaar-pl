@@ -291,11 +291,10 @@ export default {
 
             if(willCancel) {
                 try {
-                    await axios.patch(`/api/nota/cancel/${item.id}`)
-                    await Promise.all([
-                        this.notifyNotaToCustomer(item.users.id),
-                        this.notifyOrder(this.$user.getStand().id)
-                    ]);
+                    await axios.patch(`/api/nota/cancel/${item.id}`);
+
+                    this.notifyNotaToCustomer(item.users.id);
+                    this.notifyOrder(this.$user.getStand().id);
 
                     swal({
                         title: "Pesanan dibatalkan!",

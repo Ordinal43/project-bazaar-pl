@@ -99,10 +99,10 @@ export default {
                 try {
                     const res = await this.validateScanResult(result)
                     if(!!res.data.status) {
-                        await Promise.all([
-                            this.notifyNotaToSeller(this.item.stand_id),
-                            this.notifyOrder(this.item.stand_id)
-                        ]);
+                        
+                        this.notifyNotaToSeller(this.item.stand_id);
+                        this.notifyOrder(this.item.stand_id);
+
                         this.$router.replace({path: "/payment-success"});
                     } else {
                         await swal({

@@ -306,6 +306,7 @@ export default {
         position: absolute;
         opacity: 0.8;
         background: #fafafa;
+        left: 0;
         z-index: 2;
     }
 

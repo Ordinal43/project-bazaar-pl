@@ -5,10 +5,23 @@
         height="100%"
     >
         <v-img
+            v-if="!item.products.length"
             src="/assets/stand_placeholder.jpg"
-            :aspect-ratio="4/3"
+            height="100"
         ></v-img>
-
+        <v-carousel
+            v-else
+            :interval="2000"
+            hide-delimiters
+            hide-controls
+            height="100"
+        >
+            <v-carousel-item
+                v-for="(item, i) in item.products"
+                :key="`prd-${item.id}-${i}`"
+                :src="item.image"
+            ></v-carousel-item>
+        </v-carousel>
         <v-card-title class="title">
             {{ item.stand_name }}
         </v-card-title>

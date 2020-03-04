@@ -4,62 +4,90 @@
             <v-flex xs12>
                 <p class="headline primary--text">Daftar Pesanan</p>
             </v-flex>
-            <v-flex xs12 md6 lg4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
-                <v-card class="rounded">
-                    <v-card-title class="pb-1">
-                        <span class="subheading font-weight-medium">{{ item.users.name }}</span>
-                        <v-spacer></v-spacer>
-                        <v-chip
-                            color="red" text-color="white"
-                            v-if="!!item.is_cancel"
-                        >
-                            <strong>Batal</strong>
-                        </v-chip>
-                        <v-chip
-                            color="success" text-color="white"
-                            v-else-if="!!item.is_paid"
-                        >
-                            <strong>Selesai</strong>
-                        </v-chip>
-                        <v-chip
-                            color="warning" text-color="white"
-                            v-else
-                        >
-                            <strong>Belum ambil</strong>
-                        </v-chip>
-                    </v-card-title>
-                    <v-card-text class="pt-0 pb-0">
-                        <div class="pb-1">
-                            {{ $getDateString(item.created_at) }}, {{ $getTimeString(item.created_at) }}
-                        </div>
-                        <div>
-                            <span class="font-weight-medium primary--text">
-                                {{ $rupiahFormat(item.harga_total) }}
-                            </span>
-                            <span class="grey--text px-1">|</span>
-                            <span class="grey--text text--darken-1">
-                                {{ item.order.length }} Menu, {{ getTotalPortion(item) }} porsi
-                            </span>
-                        </div>
-                    </v-card-text>
-                    <v-card-actions class="pt-4">
-                        <v-btn color="primary" flat round
-                            @click="seeOrderDetail(item)"
-                        >
-                            <v-icon left>description</v-icon>
-                            detail
-                        </v-btn>
-                        <v-spacer></v-spacer>
-                        <v-btn color="success" round
-                            v-if="!item.is_paid && !item.is_cancel"
-                            @click="showQR(item)"
-                        >
-                            <v-icon left>done</v-icon>
-                            selesai
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-flex>
+            <template v-if="!!listOrders.length">
+                <v-flex xs12 md6 lg4 v-for="(item, i) in listOrders" :key="`transaction-${i}`">
+                    <v-card class="rounded">
+                        <v-card-title class="pb-1">
+                            <span class="subheading font-weight-medium">{{ item.users.name }}</span>
+                            <v-spacer></v-spacer>
+                            <v-chip
+                                color="red" text-color="white"
+                                v-if="!!item.is_cancel"
+                            >
+                                <strong>Batal</strong>
+                            </v-chip>
+                            <v-chip
+                                color="success" text-color="white"
+                                v-else-if="!!item.is_paid"
+                            >
+                                <strong>Selesai</strong>
+                            </v-chip>
+                            <v-chip
+                                color="warning" text-color="white"
+                                v-else
+                            >
+                                <strong>Belum ambil</strong>
+                            </v-chip>
+                        </v-card-title>
+                        <v-card-text class="pt-0 pb-0">
+                            <div class="pb-1">
+                                {{ $getDateString(item.created_at) }}, {{ $getTimeString(item.created_at) }}
+                            </div>
+                            <div>
+                                <span class="font-weight-medium primary--text">
+                                    {{ $rupiahFormat(item.harga_total) }}
+                                </span>
+                                <span class="grey--text px-1">|</span>
+                                <span class="grey--text text--darken-1">
+                                    {{ item.order.length }} Menu, {{ getTotalPortion(item) }} porsi
+                                </span>
+                            </div>
+                        </v-card-text>
+                        <v-card-actions class="pt-4">
+                            <v-btn color="primary" flat round
+                                @click="seeOrderDetail(item)"
+                            >
+                                <v-icon left>description</v-icon>
+                                detail
+                            </v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="success" round
+                                v-if="!item.is_paid && !item.is_cancel"
+                                @click="showQR(item)"
+                            >
+                                <v-icon left>done</v-icon>
+                                selesai
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-flex>
+            </template>
+            <template v-else>
+                <v-flex xs12 class="mt-5">
+                    <v-img
+                        src="/assets/svg/stands.svg"
+                        height="130"
+                        contain
+                    ></v-img>
+                </v-flex>
+                <v-flex xs12 class="text-xs-center mt-3">
+                    <p class="subheading grey--text text--darken-1">
+                        Tidak ada pesanan menunggu.
+                        <br />
+                        Pastikan anda sudah menambahkan menu!
+                    </p>
+                </v-flex>
+                <v-flex xs12 class="text-xs-center">
+                    <v-btn
+                        color="primary"
+                        large round
+                        to="/my-stand"
+                    >
+                        <v-icon left>store_mall_directory</v-icon>
+                        stand saya
+                    </v-btn>
+                </v-flex>
+            </template>
         </v-layout>
 
         <v-dialog
@@ -222,6 +250,7 @@ export default {
             'notifyOrder'
         ]),
         getStandOrders() {
+            this.loading = true;
             axios.get(`/api/nota-stand/${this.$user.getStand().id}`)
             .then(res => {
                 this.listOrders = res.data;

@@ -45,41 +45,67 @@
                             Daftar Menu
                         </v-flex>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="openProductDialog">
+                        <v-btn color="primary" @click="openProductDialog" v-if="!!standProducts.length">
                             <v-icon left>add</v-icon>
                             menu baru
                         </v-btn>
                     </v-layout>
                 </v-flex>
-                <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
-                    <v-card class="rounded menu-card" height="100%">
-                        <div>
-                        <v-img class="menu-img"
-                        :src="item.image"
-                        :aspect-ratio="16/9"
-                        ></v-img>
+                <template v-if="!!standProducts.length">
+                    <v-flex xs12 md6 lg4 v-for="(item, i) in standProducts" :key="`am-${i}`">
+                        <v-card class="rounded menu-card" height="100%">
+                            <div>
+                            <v-img class="menu-img"
+                            :src="item.image"
+                            :aspect-ratio="16/9"
+                            ></v-img>
 
-                        <v-card-text class="subheading">
-                            <p class="title font-weight-regular">{{ item.name }}</p>
-                            <div class="mb-2">{{ $rupiahFormat(item.price) }}</div>
-                            <div :class="`font-weight-medium ${!!item.is_available? 'success' : 'error'}--text`">
-                                {{ !!item.is_available? 'Tersedia' : 'Habis' }}
+                            <v-card-text class="subheading">
+                                <p class="title font-weight-regular">{{ item.name }}</p>
+                                <div class="mb-2">{{ $rupiahFormat(item.price) }}</div>
+                                <div :class="`font-weight-medium ${!!item.is_available? 'success' : 'error'}--text`">
+                                    {{ !!item.is_available? 'Tersedia' : 'Habis' }}
+                                </div>
+                            </v-card-text>
                             </div>
-                        </v-card-text>
-                        </div>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="warning" flat round @click="editProduct(item.id)">
-                                <v-icon left>create</v-icon>
-                                edit
-                            </v-btn>
-                            <v-btn color="error" flat round @click="deleteProduct(item.id)">
-                                <v-icon left>delete</v-icon>
-                                delete
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-flex>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="warning" flat round @click="editProduct(item.id)">
+                                    <v-icon left>create</v-icon>
+                                    edit
+                                </v-btn>
+                                <v-btn color="error" flat round @click="deleteProduct(item.id)">
+                                    <v-icon left>delete</v-icon>
+                                    delete
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-flex>
+                </template>
+                <template v-else>
+                    <v-flex xs12 class="mt-5">
+                        <v-img
+                            src="/assets/svg/empty_stand.svg"
+                            height="130"
+                            contain
+                        ></v-img>
+                    </v-flex>
+                    <v-flex xs12 class="text-xs-center mt-3">
+                        <p class="subheading grey--text text--darken-1">
+                            Belum ada menu di stand ini!
+                        </p>
+                    </v-flex>
+                    <v-flex xs12 class="text-xs-center">
+                        <v-btn
+                            color="primary"
+                            large round
+                            @click="openProductDialog"
+                        >
+                            <v-icon left>add</v-icon>
+                            tambah menu
+                        </v-btn>
+                    </v-flex>
+                </template>
             </template>
         </v-layout>
 

@@ -54,7 +54,7 @@ export default {
     methods: {
         async getStands() {
             const res = await axios.get('/api/stands');
-            this.stands = res.data;
+            this.stands = res.data.filter(item => !!item.products.length);
         }
     },
     mounted() {

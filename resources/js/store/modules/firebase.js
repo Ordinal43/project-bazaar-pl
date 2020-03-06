@@ -1,4 +1,4 @@
-import { firebaseDB } from '../../helpers/Firebase'
+import { firestoreApp } from '../../helpers/Firebase'
 
 const state = {}
 
@@ -8,7 +8,7 @@ const mutations = {}
 
 const actions = {
     notifyQRChange(context, qrcode) {
-        const ref = firebaseDB
+        const ref = firestoreApp
         .collection('pkwu_pl').doc('refresh_qr')
         
         try {
@@ -18,7 +18,7 @@ const actions = {
         }
     },
     async notifyNotaToSeller(context, standId) {
-        const ref = firebaseDB
+        const ref = firestoreApp
         .collection('pkwu_pl').doc('nota')
         .collection('seller').doc(standId.toString())
 
@@ -29,7 +29,7 @@ const actions = {
         }
     },
     async notifyNotaToCustomer(context, custId) {
-        const ref = firebaseDB
+        const ref = firestoreApp
         .collection('pkwu_pl').doc('nota')
         .collection('customer').doc(custId.toString())
 
@@ -40,7 +40,7 @@ const actions = {
         }
     },
     async notifyOrder(context, standId) {
-        const ref = firebaseDB
+        const ref = firestoreApp
         .collection('pkwu_pl').doc('order')
         .collection('seller').doc(standId.toString())
 

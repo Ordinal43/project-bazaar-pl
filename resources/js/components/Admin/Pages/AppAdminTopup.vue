@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import { firebaseDB } from '../../../helpers/Firebase'
+import { firestoreApp } from '../../../helpers/Firebase'
 
 export default {
     components: {
@@ -270,7 +270,7 @@ export default {
         }
     },
     mounted() {
-        firebaseDB.collection("pkwu_pl")
+        firestoreApp.collection("pkwu_pl")
         .doc('refresh_qr')
         .onSnapshot(() => {
             this.closeDialog();

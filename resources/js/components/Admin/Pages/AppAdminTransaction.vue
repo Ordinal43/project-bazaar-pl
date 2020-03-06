@@ -121,7 +121,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import { firebaseDB } from '../../../helpers/Firebase'
+import { firestoreApp } from '../../../helpers/Firebase'
 
 export default {
     components: {
@@ -219,7 +219,7 @@ export default {
         },
     },
     mounted() {
-        const ref = firebaseDB
+        const ref = firestoreApp
         .collection('pkwu_pl').doc('order')
         .collection('seller');
         

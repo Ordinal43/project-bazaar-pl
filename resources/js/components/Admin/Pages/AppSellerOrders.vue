@@ -242,7 +242,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { firebaseDB } from '../../../helpers/Firebase'
+import { firestoreApp } from '../../../helpers/Firebase'
 
 export default {
     data: () => ({
@@ -336,7 +336,7 @@ export default {
 
         const standId = this.$user.getStand().id;        
         
-        firebaseDB
+        firestoreApp
         .collection('pkwu_pl').doc('nota')
         .collection('seller').doc(standId.toString())
         .onSnapshot(() => {

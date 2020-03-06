@@ -191,7 +191,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { firebaseDB } from '../../helpers/Firebase'
+import { firestoreApp } from '../../helpers/Firebase'
 
 export default {
     components: {
@@ -288,7 +288,7 @@ export default {
         this.getListOrders();
         const custId = (this.$user.info().id).toString();
 
-        firebaseDB
+        firestoreApp
         .collection('pkwu_pl').doc('nota')
         .collection('customer').doc(custId.toString())
         .onSnapshot(() => {

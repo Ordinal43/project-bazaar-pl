@@ -27,12 +27,17 @@
             <div>
                 <v-stepper v-model="step" vertical>
                     <v-stepper-step :complete="step > 1" step="1">
-                        Kunjungi Ruang TU
-                        <small>Ruang Tata Usaha terletak di lantai 1</small>
+                        Kunjungi lokasi isi ulang
                     </v-stepper-step>
 
                     <v-stepper-content step="1">
-                        <v-card color="grey lighten-1" class="mb-4" height="200px"></v-card>
+                        <v-card-text class="mb-3">
+                            <v-img
+                                src="/assets/svg/topup_center.svg"
+                                height="130"
+                                contain
+                            ></v-img>
+                        </v-card-text>
                         <v-card-actions>
                             <v-btn color="primary" round @click="step = 2">Lanjut</v-btn>
                             <v-spacer></v-spacer>
@@ -45,10 +50,17 @@
 
                     <v-stepper-step :complete="step > 2" step="2">
                         Sebutkan nominal saldo yang ingin diisi
+                        <small>Kemudian <span class="font-weight-medium">lakukan pembayaran</span></small>
                     </v-stepper-step>
 
                     <v-stepper-content step="2">
-                        <v-card color="grey lighten-1" class="mb-4" height="200px"></v-card>
+                        <v-card-text class="mb-3">
+                            <v-img
+                                src="/assets/svg/wallet.svg"
+                                height="130"
+                                contain
+                            ></v-img>
+                        </v-card-text>
                         <v-btn color="primary" round @click="step = 3">Lanjut</v-btn>
                         <v-btn flat round @click="step--">Kembali</v-btn>
                     </v-stepper-content>

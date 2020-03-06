@@ -9,10 +9,9 @@ const firebaseConfig = {
     measurementId: "G-2F4SWJDQ3Z"
 };
 
-import Firebase from 'firebase'
+import Firebase from 'firebase/app'
+import 'firebase/firestore'
 
 const firebaseApp = Firebase.initializeApp(firebaseConfig);
 
-// Export the database for components to use.
-// If you want to get fancy, use mixins or provide / inject to avoid redundant imports.
 export const firebaseDB = firebaseApp.firestore();

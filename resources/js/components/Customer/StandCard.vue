@@ -7,14 +7,14 @@
         <v-img
             v-if="!item.products.length"
             src="/assets/stand_placeholder.jpg"
-            height="100"
+            height="130"
         ></v-img>
         <v-carousel
             v-else
             :interval="2000"
             hide-delimiters
             hide-controls
-            height="100"
+            height="130"
         >
             <v-carousel-item
                 v-for="(item, i) in item.products"

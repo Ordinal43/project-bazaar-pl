@@ -14,7 +14,7 @@
             app right
             v-model="drawer"
         >
-            <v-container grid-list-lg class="subheading text-xs-right mt-3">
+            <v-container grid-list-lg class="subheading mt-3">
                 <span class="font-weight-light">Halo,</span>
                 <span class="font-weight-medium primary--text">{{ $user.info().name }}</span>
             </v-container>
